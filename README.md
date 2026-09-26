@@ -23,7 +23,7 @@ Items for KEP to confirm are listed in `docs/ARCHITECTURE.md` under "Open questi
 
 ## Public impact numbers
 
-The homepage's blue band shows live totals from `public_impact()`, which only returns aggregate numbers, never names or money. Every metric starts hidden, and a total under 5 shows as "Fewer than 5". Until any metric is switched on, the band shows plain facts about KEP instead. A super admin switches one on in the SQL Editor (a settings screen comes with the admin dashboard):
+`public_impact()` returns aggregate totals for a future public impact page, never names or money. Every metric starts hidden, and a total under 5 comes back as null ("fewer than 5"). A super admin switches one on in the SQL Editor (a settings screen comes with the admin dashboard):
 
 ```sql
 update public.impact_metrics set is_public = true where key = 'people_served';
