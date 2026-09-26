@@ -71,6 +71,21 @@ exception when insufficient_privilege then null;
 end $$;
 rollback;
 
+-- ── Anonymous visitors can't call the helper functions over the API ───────
+begin;
+select pg_temp.act_as(null);
+do $$ begin
+  perform public.my_roles();
+  raise exception 'FAILED: anon could call my_roles';
+exception when insufficient_privilege then null;
+end $$;
+do $$ begin
+  perform public.has_role('super_admin');
+  raise exception 'FAILED: anon could call has_role';
+exception when insufficient_privilege then null;
+end $$;
+rollback;
+
 -- ── A member sees only themselves ─────────────────────────────────────────
 begin;
 select pg_temp.act_as('10000000-0000-0000-0000-000000000002');
