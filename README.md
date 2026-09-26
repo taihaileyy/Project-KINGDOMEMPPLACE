@@ -25,7 +25,6 @@ Items for KEP to confirm are listed in `docs/ARCHITECTURE.md` under "Open questi
 
 ```bash
 npm install
-cp .env.example .env.local     # fill in your Supabase URL and publishable key
 npm run dev                    # http://localhost:3000
 ```
 
@@ -50,12 +49,8 @@ To set up a fresh project instead:
 2. Apply the migrations in `supabase/migrations/` in order. Either:
    - run `npx supabase link --project-ref <ref>` then `npx supabase db push`, or
    - paste each file into **SQL Editor → New query → Run**.
-3. **Authentication → URL Configuration:** set Site URL to the live site, and add `http://localhost:3000/**` and `https://*.workers.dev/**` to Redirect URLs.
-4. **Authentication → Email Templates:** in "Confirm signup" and "Reset password", change the link to
-   ```
-   {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type={{ .Type }}
-   ```
-   For "Reset password", add `&next=/portal/password` to the end.
+3. **Authentication → URL Configuration:** set Site URL to the live site (today `https://project-kingdomempplace.kingdomempplace.workers.dev`), and add `http://localhost:3000/**` to Redirect URLs.
+4. Email templates can stay as Supabase's defaults; `/auth/confirm` handles their links.
 5. **Authentication → Providers → Email:** keep "Confirm email" on.
 6. Make the first super admin. Once that person has signed up and confirmed their email, run in the SQL Editor:
    ```sql
@@ -70,7 +65,7 @@ Never put the **service-role** key in a `NEXT_PUBLIC_` variable or in any browse
 
 1. In Cloudflare: **Workers & Pages → Create → Import a repository**, pick this repo.
 2. Build command: `npx opennextjs-cloudflare build` · Deploy command: `npx opennextjs-cloudflare deploy`.
-3. Add the variables from `.env.example` under **Settings → Variables and Secrets**, for both build and runtime.
+3. No variables are needed: the site defaults to KEP's Supabase project. The Worker name must match `name` in `wrangler.jsonc`.
 4. Add the custom domain under **Settings → Domains & Routes**.
 
 From a terminal instead: `npx wrangler login`, then `npm run deploy`.
