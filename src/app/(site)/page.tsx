@@ -16,14 +16,14 @@ const paths = [
 export default function Home() {
   return (
     <>
-      {/* Hero: the KEP logo film plays behind the words */}
-      <div className="mx-auto max-w-7xl px-4 pb-16 pt-4 sm:px-6 sm:pt-6 lg:pb-24">
-        <section
-          aria-labelledby="hero-title"
-          className="relative isolate flex min-h-[640px] flex-col overflow-hidden rounded-[28px] bg-night text-white shadow-[var(--shadow-card)] lg:min-h-[680px]"
-        >
-          <HeroVideoBackground />
-          <div className="mt-auto max-w-3xl px-6 pb-10 pt-24 sm:px-10 sm:pb-12 lg:px-14">
+      {/* Hero: the KEP logo film plays edge to edge behind the words */}
+      <section
+        aria-labelledby="hero-title"
+        className="relative isolate flex min-h-[640px] flex-col overflow-hidden bg-night text-white lg:min-h-[720px]"
+      >
+        <HeroVideoBackground />
+        <div className="mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pb-12">
+          <div className="max-w-3xl">
             <h1
               id="hero-title"
               className="font-display text-5xl font-extrabold leading-[0.98] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] sm:text-7xl xl:text-[84px]"
@@ -39,14 +39,16 @@ export default function Home() {
               <Link href="/signup" className="btn bg-paper text-ink hover:bg-surface">Create an account</Link>
             </div>
           </div>
-          <dl className="grid border-t border-white/15 bg-black/40 backdrop-blur-sm sm:grid-cols-3">
+        </div>
+        <div className="border-t border-white/15 bg-black/40 backdrop-blur-sm">
+          <dl className="mx-auto grid max-w-7xl sm:grid-cols-3">
             {weekly.map((w) => (
-              <div key={w.title} className="border-b border-white/15 px-6 py-5 sm:border-b-0 sm:border-r sm:px-10 lg:px-14">
+              <div key={w.title} className="border-b border-white/15 px-4 py-5 sm:border-b-0 sm:border-r sm:px-6">
                 <dt className="text-sm text-chrome">{w.title}</dt>
                 <dd className="mt-1 font-display text-xl font-extrabold tracking-tight">{w.day}s, {w.time}</dd>
               </div>
             ))}
-            <div className="px-6 py-5 sm:px-10 lg:px-14">
+            <div className="px-4 py-5 sm:px-6">
               <dt className="text-sm text-chrome">Find us</dt>
               <dd className="mt-1 font-display text-xl font-extrabold tracking-tight">
                 <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
@@ -55,8 +57,8 @@ export default function Home() {
               </dd>
             </div>
           </dl>
-        </section>
-      </div>
+        </div>
+      </section>
 
       {/* Find your place */}
       <section aria-labelledby="paths-title" className="border-y border-line bg-surface">
