@@ -40,6 +40,12 @@ npm run test:db     # applies every migration to a throwaway Postgres and tests 
 
 ## Set up Supabase (one time)
 
+**Live project:** `kep-platform` (ref `njnuvgitrryxbdmfuugx`, region us-east-1) in the **KingdomEmpPlace** Supabase organization.
+URL: `https://njnuvgitrryxbdmfuugx.supabase.co`. Every migration in `supabase/migrations/` up to `20260926020000` has been applied.
+The organization is on the **free plan**. Upgrade it to Pro before real member data goes in (daily backups; free projects pause when idle).
+
+To set up a fresh project instead:
+
 1. Create a new Supabase project for KEP, on a **paid plan** (daily backups; free projects pause when idle).
 2. Apply the migrations in `supabase/migrations/` in order. Either:
    - run `npx supabase link --project-ref <ref>` then `npx supabase db push`, or
