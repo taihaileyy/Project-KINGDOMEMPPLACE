@@ -28,6 +28,9 @@ export const siteNav = [
   { href: "/give", label: "Give" },
 ];
 
+// Linked from the footer and pages rather than the main nav, to keep it short.
+export const moreNav = [{ href: "/gallery", label: "Gallery" }, { href: "/privacy", label: "Privacy" }];
+
 export const fullAddress = `${org.address.line1}, ${org.address.city}, ${org.address.state} ${org.address.zip}`;
 
 export const weekly = [
@@ -38,13 +41,19 @@ export const weekly = [
 export type Img = { src: string; width: number; height: number; alt: string };
 
 export const images = {
-  logo: { src: "/images/kep-logo.webp", width: 1400, height: 718, alt: "Kingdom Empowerment Place logo: the letters KEP with a white dove" },
+  logo: { src: "/images/kep-logo.webp", width: 1600, height: 820, alt: "Kingdom Empowerment Place logo: the letters KEP with a white dove" },
+  logoTile: { src: "/images/kep-logo-tile.webp", width: 320, height: 133, alt: "" },
+  heroPoster: { src: "/images/hero-poster.webp", width: 1280, height: 720, alt: "The KEP logo glowing blue, with a white dove" },
+  adultMinistry: { src: "/images/adult-ministry.webp", width: 1280, height: 714, alt: "Members of the KEP adult ministry together after a One Body gathering" },
+  youthGroup2: { src: "/images/youth-group-2.webp", width: 1320, height: 989, alt: "KEP youth ministry group photo" },
+  youthSession: { src: "/images/youth-session.webp", width: 1320, height: 1762, alt: "Young people meeting together at KEP" },
+  youthActivity: { src: "/images/youth-activity.webp", width: 1320, height: 1695, alt: "Youth taking part in an activity at KEP" },
+  pastors2: { src: "/images/pastors-morgan-2.webp", width: 1200, height: 1943, alt: "Dr. Lawrence and Lady Kennetta Morgan" },
   youthGroup: { src: "/images/youth-group.webp", width: 1320, height: 1751, alt: "Young people from the KEP youth program gathered together" },
   youthMentor: { src: "/images/youth-with-mentor.webp", width: 1320, height: 1759, alt: "KEP youth standing with a mentor" },
   computerLab: { src: "/images/computer-lab.webp", width: 1320, height: 1756, alt: "Students working at computers in the KEP computer lab" },
   computerLab2: { src: "/images/computer-lab-2.webp", width: 1320, height: 1791, alt: "A young person using a computer in the KEP lab" },
   workshop: { src: "/images/workshop.webp", width: 1600, height: 2133, alt: "Adults taking part in a KEP workshop" },
-  gathering: { src: "/images/community-gathering.webp", width: 1320, height: 964, alt: "A large group of community members gathered at KEP" },
   facility: { src: "/images/facility.webp", width: 1320, height: 1253, alt: "Rooms inside KEP: the studio, computer lab and meeting spaces" },
   pastors: { src: "/images/pastors-morgan.webp", width: 1400, height: 1867, alt: "Dr. Lawrence Morgan and Lady Kennetta Morgan" },
   drMorgan: { src: "/images/dr-lawrence-morgan.webp", width: 1200, height: 1600, alt: "Dr. Lawrence Morgan" },
@@ -52,6 +61,26 @@ export const images = {
   celebration2: { src: "/images/celebration-2.webp", width: 1320, height: 702, alt: "Families at a KEP celebration" },
   preaching: { src: "/images/preaching.webp", width: 1066, height: 623, alt: "A minister preaching at KEP" },
 } satisfies Record<string, Img>;
+
+// Gallery order: community first, then youth, spaces and leadership.
+export const gallery: Img[] = [
+  images.adultMinistry,
+  images.youthGroup2,
+  images.youthMentor,
+  images.youthSession,
+  images.youthActivity,
+  images.youthGroup,
+  images.computerLab,
+  images.computerLab2,
+  images.workshop,
+  images.facility,
+  images.celebration,
+  images.celebration2,
+  images.pastors,
+  images.pastors2,
+  images.drMorgan,
+  images.preaching,
+];
 
 export type Program = {
   slug: string;

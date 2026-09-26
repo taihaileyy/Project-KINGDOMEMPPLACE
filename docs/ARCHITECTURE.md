@@ -706,7 +706,7 @@ Checks: 375 / 768 / 1024 / 1440 px breakpoints, visible keyboard focus, 44px tou
 
 Answered items are recorded under "Decisions from review" at the top. Still open:
 
-1. **A clean logo file.** The logo KEP sent is a photo of the lit sign (dark background). A transparent PNG or SVG version is needed for white backgrounds, favicons and print.
+1. **A transparent logo file.** The updated logo is artwork on a dark background, so the site shows it on black tiles and uses the blue E as the browser icon. A transparent PNG or SVG version is still needed for white backgrounds and print.
 2. **Existing data.** Are there spreadsheets of members, residents, program participants or giving to import?
 3. **Staff.** Who should be Super Admin, and roughly how many staff users are there?
 4. **Website copy to confirm.** Is Sunday worship at 10 AM every week (it's taken from one flyer)? Which domain is current, `.com` or `.org` (the flyers use both)? What's the exact YouTube channel link for sermons? The Arts and Entrepreneurship descriptions are general; KEP should add specifics.

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/wordmark";
-import { fullAddress, org, siteNav, weekly } from "@/content/site";
+import { fullAddress, moreNav, org, siteNav, weekly } from "@/content/site";
 
 export function SiteFooter() {
   return (
@@ -29,7 +29,7 @@ export function SiteFooter() {
         <div>
           <h2 className="text-sm font-bold text-chrome">Explore</h2>
           <ul className="mt-3 grid grid-cols-2 gap-x-4 leading-8 md:grid-cols-1">
-            {siteNav.map((l) => (
+            {[...siteNav, moreNav[0]].map((l) => (
               <li key={l.href}><Link href={l.href} className="hover:underline">{l.label}</Link></li>
             ))}
             {org.social.map((s) => (

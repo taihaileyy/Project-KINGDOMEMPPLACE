@@ -15,7 +15,7 @@ export default function AboutPage() {
       />
       <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <Image {...images.gathering} alt={images.gathering.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="w-full rounded-[var(--radius-card)]" />
+          <Image {...images.adultMinistry} alt={images.adultMinistry.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="w-full rounded-[var(--radius-card)]" />
           <div className="grid gap-5 text-lg leading-relaxed text-muted">
             <p>
               KEP started as a church and grew into a place where our whole community can find what it needs: a church
@@ -52,7 +52,10 @@ export default function AboutPage() {
             <p className="mt-1 break-all text-muted">{org.email}</p>
           </a>
         </div>
-        <Link href="/church#visit" className="btn-primary mt-10">Plan your visit</Link>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link href="/church#visit" className="btn-primary">Plan your visit</Link>
+          <Link href="/gallery" className="btn-secondary">View the photo gallery</Link>
+        </div>
       </Section>
     </>
   );

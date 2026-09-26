@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HeroVideo } from "@/components/hero-video";
 import { Section } from "@/components/section";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
@@ -16,37 +17,42 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-8 sm:px-6 sm:pt-14 lg:grid-cols-[1.15fr_1fr] lg:pb-24">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-10 pt-8 sm:px-6 sm:pt-14 lg:grid-cols-[1.35fr_1fr] lg:items-end">
+        <h1 className="font-display text-5xl font-extrabold leading-[0.98] tracking-tight sm:text-7xl xl:text-[84px]">
+          Empowering youth. Building futures. Changing communities.
+        </h1>
         <div>
-          <h1 className="font-display text-5xl font-extrabold leading-[0.98] tracking-tight sm:text-7xl xl:text-[84px]">
-            Empowering youth. Building futures. Changing communities.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
+          <p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
             Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, sober living
             housing, programs for every age, events and a media studio.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/church#visit" className="btn-primary">Plan your visit</Link>
             <Link href="/signup" className="btn-secondary">Create an account</Link>
           </div>
         </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24">
         <div className="overflow-hidden rounded-[28px] bg-night text-white shadow-[var(--shadow-card)]">
-          <Image {...images.logo} alt={images.logo.alt} priority sizes="(min-width: 1024px) 45vw, 100vw" className="w-full" />
-          <dl className="grid grid-cols-2 border-t border-white/10">
-            {weekly.map((w, i) => (
-              <div key={w.title} className={`p-5 sm:p-6 ${i > 0 ? "border-l border-white/10" : ""}`}>
+          <HeroVideo />
+          <dl className="grid border-t border-white/10 sm:grid-cols-3">
+            {weekly.map((w) => (
+              <div key={w.title} className="border-b border-white/10 p-5 sm:border-b-0 sm:border-r sm:p-6">
                 <dt className="text-sm text-chrome">{w.title}</dt>
                 <dd className="mt-1 font-display text-xl font-extrabold tracking-tight sm:text-2xl">
                   {w.day}s, {w.time}
                 </dd>
               </div>
             ))}
+            <div className="p-5 sm:p-6">
+              <dt className="text-sm text-chrome">Find us</dt>
+              <dd className="mt-1 font-display text-xl font-extrabold tracking-tight sm:text-2xl">
+                <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  {org.address.line1}
+                </a>
+              </dd>
+            </div>
           </dl>
-          <p className="border-t border-white/10 px-5 py-4 text-sm text-chrome sm:px-6">
-            <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline">
-              {org.address.line1}, {org.address.city}
-            </a>
-          </p>
         </div>
       </div>
 
@@ -210,12 +216,15 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <Link href="/events" className="btn-secondary mt-10">See upcoming events</Link>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link href="/events" className="btn-secondary">See upcoming events</Link>
+          <Link href="/gallery" className="btn-secondary">View the photo gallery</Link>
+        </div>
       </Section>
 
       {/* Closing */}
       <section className="relative isolate overflow-hidden bg-night text-white">
-        <Image {...images.gathering} alt="" sizes="100vw" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />
+        <Image {...images.adultMinistry} alt="" sizes="100vw" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
           <h2 className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
             There&apos;s a place for you here.
