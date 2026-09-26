@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/*
+  KEP design tokens. Components use these names, never raw hex values.
+  --kep-blue is a placeholder until it's matched to the KEP logo file.
+*/
+:root {
+  --kep-blue: #1d4ed8;
+  --kep-blue-hover: #1e40af;
+  --kep-blue-soft: #eaf0fe;
+  --kep-ink: #0b0d12;
+  --kep-ink-muted: #4a5263;
+  --kep-paper: #ffffff;
+  --kep-surface: #f5f7fb;
+  --kep-line: #e3e7ef;
+  --kep-night: #000000;
+  --kep-success: #15803d;
+  --kep-warning: #b45309;
+  --kep-danger: #b91c1c;
+}
+
+@theme inline {
+  --color-blue: var(--kep-blue);
+  --color-blue-hover: var(--kep-blue-hover);
+  --color-blue-soft: var(--kep-blue-soft);
+  --color-ink: var(--kep-ink);
+  --color-muted: var(--kep-ink-muted);
+  --color-paper: var(--kep-paper);
+  --color-surface: var(--kep-surface);
+  --color-line: var(--kep-line);
+  --color-night: var(--kep-night);
+  --color-success: var(--kep-success);
+  --color-warning: var(--kep-warning);
+  --color-danger: var(--kep-danger);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --radius-card: 16px;
+  --radius-control: 12px;
+  --shadow-card: 0 1px 2px rgb(11 13 18 / 0.04), 0 8px 24px rgb(11 13 18 / 0.06);
+}
+
+body {
+  background: var(--kep-paper);
+  color: var(--kep-ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--kep-blue);
+  outline-offset: 2px;
+}
+
+/* Tailwind v4 custom utilities: shared control styles. */
+@utility btn {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-control)] px-5 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-blue text-white hover:bg-blue-hover;
+}
+@utility btn-secondary {
+  @apply btn border border-line bg-paper text-ink hover:bg-surface;
+}
+@utility field-label {
+  @apply mb-1.5 block text-sm font-semibold text-ink;
+}
+@utility field-input {
+  @apply block min-h-11 w-full rounded-[var(--radius-control)] border border-line bg-paper px-3.5 text-base text-ink placeholder:text-muted focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/25;
+}
+@utility card {
+  @apply rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)];
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
