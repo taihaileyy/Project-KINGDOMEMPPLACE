@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { siteUrl } from "@/lib/env";
+import { siteUrl } from "@/lib/site-url";
 import { createClient } from "@/lib/supabase/server";
 
 export type FormState = { error?: string; notice?: string };

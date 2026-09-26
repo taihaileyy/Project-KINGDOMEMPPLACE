@@ -6,11 +6,20 @@ import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/wordmark";
 import { siteNav } from "@/content/site";
 
+// Public pages stay static, so the header doesn't ask the server who is signed
+// in. It only looks for Supabase's session cookie to pick which links to show;
+// /portal still checks the session properly on the server.
+function useSignedIn() {
+  const [signedIn, setSignedIn] = useState(false);
+  useEffect(() => {
+    setSignedIn(/(?:^|;\s*)sb-[^=]+-auth-token(?:\.\d+)?=/.test(document.cookie));
+  }, []);
+  return signedIn;
+}
 
-// Public pages stay static, so the header doesn't check the session. Signed-in
-// people who click "Log in" are sent straight to My KEP.
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const signedIn = useSignedIn();
   const pathname = usePathname();
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -42,8 +51,14 @@ export function SiteHeader() {
           </ul>
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/login" className="btn-secondary hidden sm:inline-flex">Log in</Link>
-          <Link href="/signup" className="btn-primary hidden sm:inline-flex">Create account</Link>
+          {signedIn ? (
+            <Link href="/portal" className="btn-primary hidden sm:inline-flex">My account</Link>
+          ) : (
+            <>
+              <Link href="/login" className="btn-secondary hidden sm:inline-flex">Log in</Link>
+              <Link href="/signup" className="btn-primary hidden sm:inline-flex">Create account</Link>
+            </>
+          )}
           <button
             type="button"
             className="btn-secondary xl:hidden"
@@ -73,8 +88,14 @@ export function SiteHeader() {
               ))}
             </ul>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <Link href="/signup" className="btn-primary">Create account</Link>
-              <Link href="/login" className="btn-secondary">Log in</Link>
+              {signedIn ? (
+                <Link href="/portal" className="btn-primary">My account</Link>
+              ) : (
+                <>
+                  <Link href="/signup" className="btn-primary">Create account</Link>
+                  <Link href="/login" className="btn-secondary">Log in</Link>
+                </>
+              )}
             </div>
           </nav>
         </div>

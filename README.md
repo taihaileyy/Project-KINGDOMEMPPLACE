@@ -21,6 +21,16 @@ Content comes from Mr. Morgan's intake form and KEP's flyers, and lives in `src/
 
 Items for KEP to confirm are listed in `docs/ARCHITECTURE.md` under "Open questions".
 
+## Public impact numbers
+
+The homepage's blue band shows live totals from `public_impact()`, which only returns aggregate numbers, never names or money. Every metric starts hidden, and a total under 5 shows as "Fewer than 5". Until any metric is switched on, the band shows plain facts about KEP instead. A super admin switches one on in the SQL Editor (a settings screen comes with the admin dashboard):
+
+```sql
+update public.impact_metrics set is_public = true where key = 'people_served';
+```
+
+Metrics for modules that aren't built yet (housing, programs, events) are listed in the table but return nothing until those modules add their counts.
+
 ## Run it locally
 
 ```bash
