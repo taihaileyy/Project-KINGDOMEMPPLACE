@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HeroVideo } from "@/components/hero-video";
+import { HeroVideoBackground } from "@/components/hero-video";
 import { Section } from "@/components/section";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
@@ -16,44 +16,46 @@ const paths = [
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-10 pt-8 sm:px-6 sm:pt-14 lg:grid-cols-[1.35fr_1fr] lg:items-end">
-        <h1 className="font-display text-5xl font-extrabold leading-[0.98] tracking-tight sm:text-7xl xl:text-[84px]">
-          Empowering youth. Building futures. Changing communities.
-        </h1>
-        <div>
-          <p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
-            Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, sober living
-            housing, programs for every age, events and a media studio.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/church#visit" className="btn-primary">Plan your visit</Link>
-            <Link href="/signup" className="btn-secondary">Create an account</Link>
+      {/* Hero: the KEP logo film plays behind the words */}
+      <div className="mx-auto max-w-7xl px-4 pb-16 pt-4 sm:px-6 sm:pt-6 lg:pb-24">
+        <section
+          aria-labelledby="hero-title"
+          className="relative isolate flex min-h-[640px] flex-col overflow-hidden rounded-[28px] bg-night text-white shadow-[var(--shadow-card)] lg:min-h-[680px]"
+        >
+          <HeroVideoBackground />
+          <div className="mt-auto max-w-3xl px-6 pb-10 pt-24 sm:px-10 sm:pb-12 lg:px-14">
+            <h1
+              id="hero-title"
+              className="font-display text-5xl font-extrabold leading-[0.98] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] sm:text-7xl xl:text-[84px]"
+            >
+              Empowering youth. Building futures. Changing communities.
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">
+              Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, sober living
+              housing, programs for every age, events and a media studio.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/church#visit" className="btn-primary">Plan your visit</Link>
+              <Link href="/signup" className="btn bg-paper text-ink hover:bg-surface">Create an account</Link>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24">
-        <div className="overflow-hidden rounded-[28px] bg-night text-white shadow-[var(--shadow-card)]">
-          <HeroVideo />
-          <dl className="grid border-t border-white/10 sm:grid-cols-3">
+          <dl className="grid border-t border-white/15 bg-black/40 backdrop-blur-sm sm:grid-cols-3">
             {weekly.map((w) => (
-              <div key={w.title} className="border-b border-white/10 p-5 sm:border-b-0 sm:border-r sm:p-6">
+              <div key={w.title} className="border-b border-white/15 px-6 py-5 sm:border-b-0 sm:border-r sm:px-10 lg:px-14">
                 <dt className="text-sm text-chrome">{w.title}</dt>
-                <dd className="mt-1 font-display text-xl font-extrabold tracking-tight sm:text-2xl">
-                  {w.day}s, {w.time}
-                </dd>
+                <dd className="mt-1 font-display text-xl font-extrabold tracking-tight">{w.day}s, {w.time}</dd>
               </div>
             ))}
-            <div className="p-5 sm:p-6">
+            <div className="px-6 py-5 sm:px-10 lg:px-14">
               <dt className="text-sm text-chrome">Find us</dt>
-              <dd className="mt-1 font-display text-xl font-extrabold tracking-tight sm:text-2xl">
+              <dd className="mt-1 font-display text-xl font-extrabold tracking-tight">
                 <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
                   {org.address.line1}
                 </a>
               </dd>
             </div>
           </dl>
-        </div>
+        </section>
       </div>
 
       {/* Find your place */}

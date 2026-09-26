@@ -17,6 +17,9 @@ These answers override anything below that conflicts with them.
 | Beds / houses | Not known yet | `housing_units` stays optional. Capacity limits can be switched on later. |
 | Studio | **One space**, any hours, **admin approves every booking** | The booking flow skips "choose a space" while there's only one. No opening-hours limits by default; admins block unavailable times. Every request starts as pending. |
 | Youth Mentorship | **All ages** | Anyone under 18 needs a linked parent or guardian with recorded consent. Under-13s are managed from the guardian's account and don't get their own login. |
+| Domains | **kingdomempowermentplace.com** is primary; **.org** will point to the same site | Both domains are added to Cloudflare, with .org redirecting to .com. |
+| Logo | The dark-background logo is final | Shown on black tiles; the blue E is the browser icon. |
+| Photos of minors | Parents and guardians have agreed | Youth program photos can appear on the website. |
 | Database | New Supabase project for KEP | Its schema lives in `supabase/migrations/` in this repo, so it can be applied to whichever Supabase account KEP uses. |
 
 This document covers the public website, the logged-in Community Portal, and the Staff/Admin Dashboard as one product. All three run on one codebase, one database, and one identity per person.
@@ -706,9 +709,7 @@ Checks: 375 / 768 / 1024 / 1440 px breakpoints, visible keyboard focus, 44px tou
 
 Answered items are recorded under "Decisions from review" at the top. Still open:
 
-1. **A transparent logo file.** The updated logo is artwork on a dark background, so the site shows it on black tiles and uses the blue E as the browser icon. A transparent PNG or SVG version is still needed for white backgrounds and print.
-2. **Existing data.** Are there spreadsheets of members, residents, program participants or giving to import?
-3. **Staff.** Who should be Super Admin, and roughly how many staff users are there?
-4. **Website copy to confirm.** Is Sunday worship at 10 AM every week (it's taken from one flyer)? Which domain is current, `.com` or `.org` (the flyers use both)? What's the exact YouTube channel link for sermons? The Arts and Entrepreneurship descriptions are general; KEP should add specifics.
-5. **Photo permission.** Several photos show children from the youth program. Confirm parents or guardians have agreed to their child appearing on the website.
-6. **Fivefold ministry assessment.** The intake asks for an assessment where people can find their place in the fivefold ministry. This isn't in the plan yet and would be a new module.
+1. **Existing data.** Are there spreadsheets of members, residents, program participants or giving to import?
+2. **Staff.** Who should be Super Admin, and roughly how many staff users are there?
+3. **Pending from KEP:** the YouTube channel link for sermons, confirmation that Sunday worship is at 10 AM every week, and specifics for the Arts and Entrepreneurship programs.
+4. **Fivefold ministry assessment.** Requested in the intake; would be a new module after the core phases.
