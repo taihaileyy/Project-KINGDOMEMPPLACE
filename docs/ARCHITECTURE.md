@@ -1,6 +1,26 @@
 # Kingdom Empowerment Place: Platform Architecture
 
-Status: **proposal, awaiting approval.** No application code has been written yet.
+Status: **approved** (merged in #2). Build has started with Phase 0.
+
+## Decisions from review
+
+These answers override anything below that conflicts with them.
+
+| Topic | Decision | Effect on the build |
+|---|---|---|
+| Hosting | **Cloudflare** | Next.js deployed to Cloudflare Workers through the OpenNext adapter. |
+| Online payments | **Stripe** | Used for giving and optional online payments for events and studio. |
+| Tax status | KEP is **not** a registered 501(c)(3) | Giving pages and statements say "giving statement" and never "tax-deductible". Stripe's nonprofit discount isn't available, so standard fees apply. Churches can be tax-exempt without applying to the IRS, so KEP should confirm its status with an accountant before making any tax claims. |
+| Housing payments | Residents pay with **PayPal or cash** | Staff record each payment in the ledger with method `paypal` or `cash`. The resident portal shows KEP's PayPal link and the resident's balance. Syncing PayPal automatically, or accepting cards through Stripe, can be added later. |
+| Rent cycle | Weekly, **counted from the day the resident signs up and pays the $100 deposit** | Each stay has a `billing_anchor_date` (the deposit date). The first $150 is due 7 days after the deposit, then every 7 days after that, not on a fixed weekday. |
+| Housing vs. Sober Living | **The same thing** | "Sober Living" is the name of the housing module, not a separate program. The programs list starts with Youth Mentorship, Arts, Entrepreneurship, Media and Computer Lab. The privacy protections for Sober Living apply to all housing records. |
+| Beds / houses | Not known yet | `housing_units` stays optional. Capacity limits can be switched on later. |
+| Studio | **One space**, any hours, **admin approves every booking** | The booking flow skips "choose a space" while there's only one. No opening-hours limits by default; admins block unavailable times. Every request starts as pending. |
+| Youth Mentorship | **All ages** | Anyone under 18 needs a linked parent or guardian with recorded consent. Under-13s are managed from the guardian's account and don't get their own login. |
+| Domains | **kingdomempowermentplace.com** is primary; **.org** will point to the same site | Both domains are added to Cloudflare, with .org redirecting to .com. |
+| Logo | The dark-background logo is final | Shown on black tiles; the blue E is the browser icon. |
+| Photos of minors | Parents and guardians have agreed | Youth program photos can appear on the website. |
+| Database | New Supabase project for KEP | Its schema lives in `supabase/migrations/` in this repo, so it can be applied to whichever Supabase account KEP uses. |
 
 This document covers the public website, the logged-in Community Portal, and the Staff/Admin Dashboard as one product. All three run on one codebase, one database, and one identity per person.
 
@@ -238,7 +258,8 @@ housing_units                 -- houses/rooms/beds (optional but helps capacity)
 
 housing_rates                 -- so $100/$150 is data, not code
   deposit_cents default 10000, weekly_cents default 15000,
-  effective_from date, charge_weekday int  -- which day weekly charges post
+  effective_from date
+  -- weekly charges post every 7 days from each stay's billing_anchor_date (the deposit date)
 
 housing_applications
   person_id → people
@@ -255,6 +276,7 @@ housing_stays                 -- enrollment / residency (portal access comes fro
   person_id → people, application_id → housing_applications
   unit_id → housing_units null
   status enum(approved_pending_move_in, active, exited)
+  billing_anchor_date date null   -- day the $100 deposit was paid; weekly $150 cycle counts from here
   move_in_date date null, expected_move_out date null, actual_move_out date null
   weekly_rate_cents, deposit_cents   -- copied from rates at approval
   exit_outcome enum(null, completed_program, moved_independent, moved_family,
@@ -267,7 +289,7 @@ housing_ledger_entries        -- one ledger, balance = sum(amount)
   kind enum(deposit_charge, weekly_charge, payment, credit, refund, adjustment)
   amount_cents int            -- charges positive, payments/credits negative
   period_start date null, due_date date null
-  method enum(null, stripe, cash, check, money_order, cash_app, other)
+  method enum(null, paypal, cash, stripe, check, money_order, other)
   stripe_payment_intent_id text null unique
   recorded_by → people null, note text null
   -- rows are never updated or deleted; corrections are new adjustment rows
@@ -685,15 +707,9 @@ Checks: 375 / 768 / 1024 / 1440 px breakpoints, visible keyboard focus, 44px tou
 
 ## 15. Open questions
 
-These change what gets built. Everything else has a sensible default above.
+Answered items are recorded under "Decisions from review" at the top. Still open:
 
-1. **Brand assets:** logo files (SVG preferred), the exact blue (hex), and any brand fonts. Is there a current website I should pull copy and photos from?
-2. **Hosting:** Cloudflare (like BuiltbyTAI) or Vercel? And a new Supabase project for KEP, or an existing one?
-3. **Payments:** OK to use Stripe? Is KEP a registered 501(c)(3)? Does KEP already use a giving platform whose history needs importing?
-4. **Housing payments:** do residents pay online, in person (cash, money order, Cash App), or both? Which weekday is rent due, is there a grace period or late fee, and is the first week prorated? Is the $100 deposit refundable, and under what conditions?
-5. **Housing structure:** how many houses, rooms or beds? Are Sober Living and Housing the same thing, or can someone be in housing without being in Sober Living?
-6. **Studio:** which spaces and services (podcast room, video, recording, editing, engineer time)? Opening hours? Free for now, or priced? Who approves requests?
-7. **Youth Mentorship:** what ages? Will minors have their own logins, or will guardians manage them?
-8. **Church:** service times and locations, and what "becoming a member" involves (a class, a form, a pastor's approval)?
-9. **Existing data:** are there spreadsheets of members, residents, program participants or giving to import?
-10. **Staff:** roughly how many staff users, and who should be Super Admin?
+1. **Existing data.** Are there spreadsheets of members, residents, program participants or giving to import?
+2. **Staff.** Who should be Super Admin, and roughly how many staff users are there?
+3. **Pending from KEP:** the YouTube channel link for sermons, confirmation that Sunday worship is at 10 AM every week, and specifics for the Arts and Entrepreneurship programs.
+4. **Fivefold ministry assessment.** Requested in the intake; would be a new module after the core phases.
