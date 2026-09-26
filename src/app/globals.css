@@ -9,11 +9,14 @@
   --kep-blue: #0a14e0;
   --kep-blue-hover: #0810b0;
   --kep-blue-soft: #eef0ff;
+  /* KEP blue lifted for text, icons and thin rules on black, where the brand
+     blue is too dark to read (5:1 on black vs 2.4:1). Never a background. */
+  --kep-electric: #5c6bff;
   --kep-chrome: #c5cad3;
   --kep-ink: #0b0d12;
   --kep-ink-muted: #4a5263;
   --kep-paper: #ffffff;
-  --kep-surface: #f5f7fb;
+  --kep-surface: #f3f5fb;
   --kep-line: #e3e7ef;
   --kep-night: #000000;
   --kep-success: #15803d;
@@ -25,6 +28,7 @@
   --color-blue: var(--kep-blue);
   --color-blue-hover: var(--kep-blue-hover);
   --color-blue-soft: var(--kep-blue-soft);
+  --color-electric: var(--kep-electric);
   --color-ink: var(--kep-ink);
   --color-muted: var(--kep-ink-muted);
   --color-paper: var(--kep-paper);
