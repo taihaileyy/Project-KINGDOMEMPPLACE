@@ -1,16 +1,24 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth";
 import { signIn } from "../actions";
 import { AuthForm } from "../auth-form";
 
 export const metadata: Metadata = { title: "Log in" };
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
-  const { next } = await searchParams;
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; link?: string }> }) {
+  const { next, link } = await searchParams;
+  if (await getSession()) redirect("/portal");
   return (
     <div className="card p-6 sm:p-8">
       <h1 className="text-3xl font-extrabold tracking-tight">Log in</h1>
       <p className="mt-2 text-muted">One account for everything you do at KEP.</p>
+      {link === "expired" && (
+        <p role="alert" className="mt-4 rounded-[var(--radius-control)] border border-warning/30 bg-warning/5 px-4 py-3 text-sm text-warning">
+          That link has expired or was already used. Log in, or request a new password reset link.
+        </p>
+      )}
       <div className="mt-8">
         <AuthForm
           action={signIn}

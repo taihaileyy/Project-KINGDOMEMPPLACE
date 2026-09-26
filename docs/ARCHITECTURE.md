@@ -12,7 +12,7 @@ These answers override anything below that conflicts with them.
 | Online payments | **Stripe** | Used for giving and optional online payments for events and studio. |
 | Tax status | KEP is **not** a registered 501(c)(3) | Giving pages and statements say "giving statement" and never "tax-deductible". Stripe's nonprofit discount isn't available, so standard fees apply. Churches can be tax-exempt without applying to the IRS, so KEP should confirm its status with an accountant before making any tax claims. |
 | Housing payments | Residents pay with **PayPal or cash** | Staff record each payment in the ledger with method `paypal` or `cash`. The resident portal shows KEP's PayPal link and the resident's balance. Syncing PayPal automatically, or accepting cards through Stripe, can be added later. |
-| Rent cycle | Weekly, **counted from the day the resident signs up and pays the $100 deposit** | Each stay has a `billing_anchor_date` (the deposit date). A $150 charge posts every 7 days from that date, not on a fixed weekday. |
+| Rent cycle | Weekly, **counted from the day the resident signs up and pays the $100 deposit** | Each stay has a `billing_anchor_date` (the deposit date). The first $150 is due 7 days after the deposit, then every 7 days after that, not on a fixed weekday. |
 | Housing vs. Sober Living | **The same thing** | "Sober Living" is the name of the housing module, not a separate program. The programs list starts with Youth Mentorship, Arts, Entrepreneurship, Media and Computer Lab. The privacy protections for Sober Living apply to all housing records. |
 | Beds / houses | Not known yet | `housing_units` stays optional. Capacity limits can be switched on later. |
 | Studio | **One space**, any hours, **admin approves every booking** | The booking flow skips "choose a space" while there's only one. No opening-hours limits by default; admins block unavailable times. Every request starts as pending. |
@@ -706,8 +706,9 @@ Checks: 375 / 768 / 1024 / 1440 px breakpoints, visible keyboard focus, 44px tou
 
 Answered items are recorded under "Decisions from review" at the top. Still open:
 
-1. **Brand assets and intake answers.** The logo, photos, colors and public contact details Mr. Morgan submitted are in the builtbyTAI intake database. They're pulled into this repo once access is available.
-2. **First rent charge.** Is the first $150 due on the deposit day together with the $100, or 7 days after it?
-3. **Supabase account.** Which Supabase account should own the KEP project?
-4. **Existing data.** Are there spreadsheets of members, residents, program participants or giving to import?
-5. **Staff.** Who should be Super Admin, and roughly how many staff users are there?
+1. **A clean logo file.** The logo KEP sent is a photo of the lit sign (dark background). A transparent PNG or SVG version is needed for white backgrounds, favicons and print.
+2. **Existing data.** Are there spreadsheets of members, residents, program participants or giving to import?
+3. **Staff.** Who should be Super Admin, and roughly how many staff users are there?
+4. **Website copy to confirm.** Is Sunday worship at 10 AM every week (it's taken from one flyer)? Which domain is current, `.com` or `.org` (the flyers use both)? What's the exact YouTube channel link for sermons? The Arts and Entrepreneurship descriptions are general; KEP should add specifics.
+5. **Photo permission.** Several photos show children from the youth program. Confirm parents or guardians have agreed to their child appearing on the website.
+6. **Fivefold ministry assessment.** The intake asks for an assessment where people can find their place in the fivefold ministry. This isn't in the plan yet and would be a new module.

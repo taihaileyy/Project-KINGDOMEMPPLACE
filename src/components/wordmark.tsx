@@ -1,13 +1,27 @@
+import Image from "next/image";
 import Link from "next/link";
+import { images, org } from "@/content/site";
 
-// Text wordmark until the KEP logo file is added to /public.
-export function Wordmark({ href = "/" }: { href?: string }) {
+// KEP's logo is a photo of the lit sign, so it sits on a black tile.
+export function Wordmark({
+  href = "/",
+  showName = true,
+  nameClass = "hidden lg:inline",
+}: {
+  href?: string;
+  showName?: boolean;
+  nameClass?: string;
+}) {
   return (
-    <Link href={href} className="inline-flex items-center gap-2.5 font-display text-lg font-extrabold tracking-tight">
-      <span aria-hidden className="grid size-9 place-items-center rounded-xl bg-night text-sm text-white">
-        KEP
+    <Link href={href} className="inline-flex items-center gap-3" aria-label={`${org.name} home`}>
+      <span className="flex h-10 w-[78px] items-center overflow-hidden rounded-xl bg-night">
+        <Image src={images.logo.src} alt="" width={156} height={80} className="h-full w-full object-cover" priority />
       </span>
-      <span className="hidden sm:inline">Kingdom Empowerment Place</span>
+      {showName && (
+        <span className={`${nameClass} whitespace-nowrap font-display text-[17px] font-extrabold leading-tight tracking-tight`}>
+          Kingdom Empowerment Place
+        </span>
+      )}
     </Link>
   );
 }

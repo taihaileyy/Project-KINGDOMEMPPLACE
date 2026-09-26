@@ -13,6 +13,14 @@ The plan and every design decision are in [`docs/ARCHITECTURE.md`](docs/ARCHITEC
 - Log in, create account, email confirmation, forgot/change password, and profile editing.
 - `/portal` (any signed-in person) and `/admin` (staff only), both checked on the server.
 
+## Phase 1: public website
+
+Home, About, Church, Programs (plus a page per program), Housing, Events, Book the Studio, Give and Privacy. Every page works on phone and desktop.
+
+Content comes from Mr. Morgan's intake form and KEP's flyers, and lives in `src/content/site.ts`. Photos are in `public/images/`, converted to WebP with location data stripped. Until the events, programs, studio and giving modules are built, those pages show information plus a call or email action instead of a live form.
+
+Items for KEP to confirm are listed in `docs/ARCHITECTURE.md` under "Open questions".
+
 ## Run it locally
 
 ```bash
