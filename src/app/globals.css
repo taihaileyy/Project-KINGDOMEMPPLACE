@@ -83,6 +83,12 @@ h1, h2, h3 {
   @apply rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)];
 }
 
+/* Slow push-in for the hero photos. */
+@keyframes kenburns {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.12); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

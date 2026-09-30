@@ -31,6 +31,28 @@ update public.impact_metrics set is_public = true where key = 'people_served';
 
 Metrics for modules that aren't built yet (housing, programs, events) are listed in the table but return nothing until those modules add their counts.
 
+## Online giving (Stripe)
+
+`/give` works for guests and signed-in members. Signed-in gifts show in **My Giving** straight away. A guest's gift is linked to their email and moves into their account if they later sign up and verify that same email. Until the four secrets below are set, the Give button stays off and the page points people to in-person giving.
+
+1. Create KEP's Stripe account at stripe.com.
+2. **Stripe → Developers → API keys:** copy the **Secret key**.
+3. **Stripe → Developers → Webhooks → Add endpoint:** URL `https://<site>/api/stripe/webhook`, with the events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `invoice.paid` and `charge.refunded`. Copy the **Signing secret**.
+4. **Supabase → Project Settings → API Keys:** copy the **secret** key (or the legacy `service_role` key).
+5. **Cloudflare → Workers & Pages → project-kingdomempplace → Settings → Variables and Secrets**, add as **Secrets**:
+   `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`. Then redeploy.
+
+Card and bank details stay with Stripe; KEP stores only Stripe's reference IDs. Never put these keys in a `NEXT_PUBLIC_` variable.
+
+## Studio booking requests
+
+`/studio/book` saves requests to `public.studio_requests` (guests or members, all start as pending). Until the admin studio screen is built, a super admin can see them in the Supabase **SQL Editor**:
+
+```sql
+select created_at, name, email, phone, service, preferred_date, start_time, duration_minutes, attendees, details, status
+from public.studio_requests order by created_at desc;
+```
+
 ## Run it locally
 
 ```bash

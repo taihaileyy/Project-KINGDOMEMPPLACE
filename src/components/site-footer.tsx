@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SocialLinks } from "@/components/social-links";
 import { Wordmark } from "@/components/wordmark";
 import { fullAddress, moreNav, org, siteNav, weekly } from "@/content/site";
 
@@ -10,6 +11,7 @@ export function SiteFooter() {
           <Wordmark showName={false} />
           <p className="mt-5 max-w-sm font-display text-2xl font-extrabold leading-tight tracking-tight">{org.tagline}</p>
           <p className="mt-4 text-sm text-chrome">Led by {org.pastors}</p>
+          <SocialLinks className="mt-6" />
         </div>
         <div>
           <h2 className="text-sm font-bold text-chrome">Visit</h2>
@@ -31,9 +33,6 @@ export function SiteFooter() {
           <ul className="mt-3 grid grid-cols-2 gap-x-4 leading-8 md:grid-cols-1">
             {[...siteNav, moreNav[0]].map((l) => (
               <li key={l.href}><Link href={l.href} className="hover:underline">{l.label}</Link></li>
-            ))}
-            {org.social.map((s) => (
-              <li key={s.href}><a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.label}</a></li>
             ))}
           </ul>
         </div>

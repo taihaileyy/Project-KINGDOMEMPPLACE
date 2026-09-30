@@ -12,9 +12,11 @@ export const org = {
   email: "kingdomempowermentplace@gmail.com",
   address: { line1: "2236 N. Foster Dr.", city: "Baton Rouge", state: "LA", zip: "70806" },
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=2236+N+Foster+Dr+Baton+Rouge+LA+70806",
+  // An empty href hides that icon until KEP's link is known.
   social: [
-    { label: "Facebook", href: "https://www.facebook.com/LawrenceRMorganSr" },
-    { label: "Instagram", href: "https://www.instagram.com/lyricalapostle" },
+    { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/LawrenceRMorganSr" },
+    { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/lyricalapostle" },
+    { label: "YouTube", icon: "youtube", href: "" },
   ],
 } as const;
 
@@ -22,9 +24,9 @@ export const siteNav = [
   { href: "/about", label: "About" },
   { href: "/church", label: "Church" },
   { href: "/programs", label: "Programs" },
-  { href: "/housing", label: "Housing" },
+  { href: "/housing", label: "Sober Living" },
   { href: "/events", label: "Events" },
-  { href: "/studio", label: "Book the Studio" },
+  { href: "/studio/book", label: "Book the Studio" },
   { href: "/give", label: "Give" },
 ];
 
@@ -143,12 +145,12 @@ export const programs: Program[] = [
 ];
 
 export const housing = {
-  name: "Sober Living Housing",
+  name: "Sober Living Program",
   deposit: 100,
   weekly: 150,
   steps: [
-    { title: "Reach out", detail: "Call or email us to ask about openings and whether KEP housing is a fit." },
-    { title: "Apply", detail: "Create a KEP account and complete a short housing application." },
+    { title: "Reach out", detail: "Call or email us to ask about openings and whether the Sober Living Program is a fit." },
+    { title: "Apply", detail: "Create a KEP account and complete a short application for the Sober Living Program." },
     { title: "Review", detail: "Our housing team reviews your application and follows up with you." },
     { title: "Move in", detail: `Pay the $100 deposit and move in. Your first $150 weekly payment is due 7 days later.` },
   ],
@@ -162,3 +164,11 @@ export const recentEvents: PastEvent[] = [
   { title: "KEP Summer Program", when: "Summer", image: { src: "/images/flyer-summer-program.webp", width: 1100, height: 1621, alt: "Flyer for the KEP youth summer program, 4:30 to 7:00 PM" } },
   { title: "Sound the Alarm Conference", when: "April 27, 2024", image: { src: "/images/flyer-sound-the-alarm.webp", width: 1100, height: 1375, alt: "Flyer for Sound the Alarm, a conference for men and women" } },
 ];
+
+// Giving funds. The slugs match public.funds in the database.
+export const funds = [
+  { slug: "tithe", name: "Tithe", detail: "Returning a tenth as an act of worship." },
+  { slug: "offering", name: "Offering", detail: "Gifts beyond the tithe for the work of the church." },
+  { slug: "special", name: "Special giving", detail: "Support for a specific need, event or program." },
+  { slug: "other", name: "Other", detail: "Anything else you'd like to give toward." },
+] as const;

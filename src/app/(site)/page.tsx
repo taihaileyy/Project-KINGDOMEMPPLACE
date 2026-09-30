@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpen, CalendarDays, Church, Clapperboard, HandHeart, House, MapPin, Mic, Sparkles, Users } from "lucide-react";
-import { HeroVideoBackground } from "@/components/hero-video";
+import { HeroShow } from "@/components/hero-show";
 import { ImpactSection } from "@/components/home/impact-section";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
 const paths = [
   { href: "/church", title: "Worship with us", line: "Sundays at 10 AM and Bible study Wednesdays at 6:30 PM.", Icon: Church },
-  { href: "/housing", title: "Find housing", line: "Sober living housing with structure, support and a plan.", Icon: House },
+  { href: "/housing", title: "Sober Living Program", line: "A sober home with structure, support and a plan.", Icon: House },
   { href: "/programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", Icon: Users },
-  { href: "/studio", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
+  { href: "/studio/book", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
   { href: "/events", title: "Attend an event", line: "Conferences, workshops and community gatherings.", Icon: CalendarDays },
   { href: "/give", title: "Give", line: "Support the work happening on North Foster Drive.", Icon: HandHeart },
 ];
@@ -35,7 +35,7 @@ export default function Home() {
         aria-labelledby="hero-title"
         className="relative isolate flex min-h-[640px] flex-col overflow-hidden bg-night pb-7 text-white lg:min-h-[720px]"
       >
-        <HeroVideoBackground />
+        <HeroShow />
         <div className="mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pb-12">
           <div className="max-w-3xl">
             <h1
@@ -45,8 +45,8 @@ export default function Home() {
               Empowering youth. Building futures. Changing communities.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">
-              Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, sober living
-              housing, programs for every age, events and a media studio.
+              Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, a sober living
+              program, programs for every age, events and a media studio.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/church#visit" className="btn-primary">Plan your visit</Link>
@@ -164,13 +164,13 @@ export default function Home() {
                 <div aria-hidden="true" className="absolute -bottom-24 -right-24 size-64 rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.3),transparent_65%)]" />
                 <House aria-hidden="true" className="size-9 text-electric" strokeWidth={1.5} />
                 <div className="relative">
-                  <h3 className="font-display text-2xl font-extrabold tracking-tight">Sober living housing</h3>
+                  <h3 className="font-display text-2xl font-extrabold tracking-tight">Sober Living Program</h3>
                   <p className="mt-1.5 text-chrome">
-                    Structured, sober housing with support toward work and your goals. Apply and our housing team
-                    reviews every application.
+                    Structured, sober living with support toward work and your goals. Apply and our team reviews
+                    every application.
                   </p>
                   <span className="mt-4 inline-block font-semibold text-electric underline-offset-4 group-hover:underline">
-                    Housing information
+                    About the program
                   </span>
                 </div>
               </Link>
@@ -211,7 +211,7 @@ export default function Home() {
               ))}
             </ul>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/studio" className="btn-primary">Book the studio</Link>
+              <Link href="/studio/book" className="btn-primary">Book the studio</Link>
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-12 sm:px-6 sm:pb-16 sm:pt-14 lg:grid-cols-2 lg:gap-14">
           <div>
             <h2 id="housing-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
-              Sober living housing
+              Sober Living Program
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
               A stable, sober place to live while you rebuild, with a community around you, clear expectations and
@@ -240,7 +240,7 @@ export default function Home() {
               </div>
             </dl>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/housing" className="btn-primary">Get housing information</Link>
+              <Link href="/housing" className="btn-primary">About the program</Link>
               <a href={org.phoneHref} className="btn-secondary">Call about openings</a>
             </div>
           </div>

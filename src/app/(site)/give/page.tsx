@@ -1,50 +1,55 @@
 import type { Metadata } from "next";
-import { PageIntro, Section } from "@/components/section";
+import { HandHeart, MapPin } from "lucide-react";
 import { fullAddress, org, weekly } from "@/content/site";
+import { displayName, getSession } from "@/lib/auth";
+import { stripeConfigured } from "@/lib/stripe";
+import { GiveForm } from "./give-form";
 
 export const metadata: Metadata = { title: "Give" };
 
-const kinds = [
-  { title: "Tithes", detail: "Returning a tenth as an act of worship." },
-  { title: "Offerings", detail: "Gifts beyond the tithe for the work of the church." },
-  { title: "Special giving", detail: "Support for a specific need, event or program." },
-  { title: "Other giving", detail: "Anything else you'd like to give toward." },
-];
-
-export default function GivePage() {
+export default async function GivePage() {
+  const session = await getSession();
   return (
-    <>
-      <PageIntro
-        title="Give"
-        lead="Your giving keeps worship, youth mentorship, sober living housing and community programs going on North Foster Drive."
-      />
-      <Section>
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {kinds.map((k) => (
-            <li key={k.title} className="card p-6">
-              <p className="font-display text-2xl font-extrabold tracking-tight">{k.title}</p>
-              <p className="mt-2 text-muted">{k.detail}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
-      <Section dark title="Ways to give">
-        <div className="grid gap-5 md:grid-cols-2">
-          <div className="rounded-[var(--radius-card)] border border-white/15 p-8">
-            <p className="font-display text-2xl font-extrabold tracking-tight">In person</p>
-            <p className="mt-2 text-chrome">
-              Give during {weekly.map((w) => `${w.title} (${w.day}s, ${w.time})`).join(" or ")} at {fullAddress}.
-            </p>
+    <div className="bg-surface">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-12">
+        <aside className="lg:sticky lg:top-24 lg:self-start">
+          <h1 className="font-display text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-7xl">Give</h1>
+          <p className="mt-4 text-lg leading-relaxed text-muted">
+            Your giving keeps worship, youth mentorship, the Sober Living Program and community programs going on North
+            Foster Drive. Give once or every month, with or without a KEP account.
+          </p>
+          <div className="relative mt-8 overflow-hidden rounded-3xl bg-night p-6 text-white">
+            <div aria-hidden="true" className="absolute -right-20 -top-24 size-64 rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.35),transparent_65%)]" />
+            <ul className="relative grid gap-5">
+              <li className="flex gap-4">
+                <HandHeart aria-hidden="true" className="size-7 shrink-0 text-electric" strokeWidth={1.5} />
+                <div>
+                  <p className="font-semibold">Give in person</p>
+                  <p className="mt-0.5 text-sm text-chrome">
+                    {weekly.map((w) => `${w.title}, ${w.day}s at ${w.time}`).join(" · ")}
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <MapPin aria-hidden="true" className="size-7 shrink-0 text-electric" strokeWidth={1.5} />
+                <div>
+                  <p className="font-semibold">{fullAddress}</p>
+                  <p className="mt-0.5 text-sm text-chrome">
+                    Questions about giving? Email{" "}
+                    <a href={`mailto:${org.email}`} className="break-all text-white underline">{org.email}</a>.
+                  </p>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div className="rounded-[var(--radius-card)] border border-white/15 p-8">
-            <p className="font-display text-2xl font-extrabold tracking-tight">Online</p>
-            <p className="mt-2 text-chrome">
-              Secure online giving, including recurring gifts and your own giving history, is coming to your KEP account
-              soon. Questions? Email <a href={`mailto:${org.email}`} className="break-all text-white underline">{org.email}</a>.
-            </p>
-          </div>
+          <p className="mt-4 text-sm text-muted">
+            KEP is a church, not a registered 501(c)(3). Account holders can see their giving history and yearly totals in My Giving.
+          </p>
+        </aside>
+        <div className="rounded-3xl border border-line bg-paper p-5 shadow-[var(--shadow-card)] sm:p-8">
+          <GiveForm signedInAs={session ? displayName(session.person) : null} enabled={stripeConfigured()} />
         </div>
-      </Section>
-    </>
+      </div>
+    </div>
   );
 }

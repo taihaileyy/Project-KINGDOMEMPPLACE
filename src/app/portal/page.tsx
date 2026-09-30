@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: "My KEP" };
 const quickActions: { href: string; title: string; line: string; Icon: LucideIcon }[] = [
   { href: "/programs", title: "Explore programs", line: "Youth, arts, business, media and the computer lab.", Icon: Users },
   { href: "/events", title: "Upcoming events", line: "Conferences, workshops and gatherings.", Icon: CalendarDays },
-  { href: "/studio", title: "Book the studio", line: "Record, film and create at KEP.", Icon: Mic },
+  { href: "/studio/book", title: "Book the studio", line: "Record, film and create at KEP.", Icon: Mic },
   { href: "/give", title: "Give", line: "Support the work on North Foster Drive.", Icon: HandHeart },
   { href: "/portal/profile", title: "Update your profile", line: "Your name, contact details and password.", Icon: UserRound },
 ];

@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 import { PageIntro, Section } from "@/components/section";
 import { housing, org } from "@/content/site";
 
-export const metadata: Metadata = { title: "Sober Living Housing" };
+export const metadata: Metadata = { title: "Sober Living Program" };
 
 export default function HousingPage() {
   return (
     <>
       <PageIntro
-        title="Sober living housing"
+        title="Sober Living Program"
         lead="A stable, sober home with structure, community and support while you rebuild. Many of our residents come to us after a treatment program."
       >
         <a href={org.phoneHref} className="btn-primary">Call about openings</a>

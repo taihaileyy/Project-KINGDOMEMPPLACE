@@ -32,8 +32,8 @@ const drawerGroups: DrawerGroup[] = [
   {
     title: "Take your next step",
     items: [
-      { href: "/housing", title: "Housing", line: "Sober living with structure and support.", icon: "housing" },
-      { href: "/studio", title: "Book the Studio", line: "Record, film and create at KEP.", icon: "studio" },
+      { href: "/housing", title: "Sober Living Program", line: "A sober home with structure and support.", icon: "housing" },
+      { href: "/studio/book", title: "Book the Studio", line: "Record, film and create at KEP.", icon: "studio" },
       { href: "/give", title: "Give", line: "Support the work on North Foster Drive.", icon: "give" },
     ],
   },
