@@ -79,7 +79,7 @@ export function SiteHeader() {
         }`}
       />
       <div className="relative mx-auto flex h-[var(--header-h)] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
-        <Wordmark nameClass="max-[359px]:hidden xl:hidden 2xl:inline" logoClass="h-8 w-auto sm:h-11" />
+        <Wordmark nameClass="max-[359px]:hidden xl:hidden 2xl:inline" logoClass="h-8 w-auto sm:h-9" />
         <nav aria-label="Main" className="hidden xl:block">
           <ul className="flex items-center gap-7">
             {siteNav.map((item) => (

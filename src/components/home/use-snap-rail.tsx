@@ -57,19 +57,33 @@ export function useSnapRail<T extends HTMLElement>() {
   return { ref, active, goTo };
 }
 
-// Minimal pagination: a thin bar per slide, the active one longer.
-export function RailDots({ count, active, goTo, label, names, tone = "ink" }: { count: number; active: number; goTo: (i: number) => void; label: string; names: string[]; tone?: "ink" | "white" }) {
+// Minimal pagination: a thin bar per slide, the active one longer. On wide
+// screens `arrows` adds previous/next buttons for mouse users.
+export function RailDots({ count, active, goTo, label, names, tone = "ink", arrows = false }: { count: number; active: number; goTo: (i: number) => void; label: string; names: string[]; tone?: "ink" | "white"; arrows?: boolean }) {
+  const btn = "hidden size-11 place-items-center rounded-full border border-ink/20 text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white disabled:opacity-30 disabled:hover:border-ink/20 disabled:hover:bg-transparent disabled:hover:text-ink lg:grid";
   return (
-    <div className="mt-2 flex items-center" role="group" aria-label={label}>
-      {Array.from({ length: count }, (_, i) => (
-        <button key={i} type="button" onClick={() => goTo(i)} aria-label={`Show ${names[i]}`} aria-current={i === active ? "true" : undefined} className="grid h-9 w-7 place-items-center">
-          <span
-            className={`block h-[3px] rounded-full transition-all duration-300 ${
-              i === active ? (tone === "ink" ? "w-6 bg-ink" : "w-6 bg-white") : tone === "ink" ? "w-2.5 bg-ink/25" : "w-2.5 bg-white/30"
-            }`}
-          />
-        </button>
-      ))}
+    <div className="mt-2 flex items-center justify-between" role="group" aria-label={label}>
+      <div className="flex items-center">
+        {Array.from({ length: count }, (_, i) => (
+          <button key={i} type="button" onClick={() => goTo(i)} aria-label={`Show ${names[i]}`} aria-current={i === active ? "true" : undefined} className="grid h-9 w-7 place-items-center">
+            <span
+              className={`block h-[3px] rounded-full transition-all duration-300 ${
+                i === active ? (tone === "ink" ? "w-6 bg-ink" : "w-6 bg-white") : tone === "ink" ? "w-2.5 bg-ink/25" : "w-2.5 bg-white/30"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+      {arrows && (
+        <div className="flex gap-2">
+          <button type="button" className={btn} disabled={active <= 0} onClick={() => goTo(Math.max(0, active - 1))} aria-label="Previous">
+            <svg aria-hidden="true" viewBox="0 0 24 12" className="h-3 w-6 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M0 6h22M17 1l5 5-5 5" /></svg>
+          </button>
+          <button type="button" className={btn} disabled={active >= count - 1} onClick={() => goTo(Math.min(count - 1, active + 1))} aria-label="Next">
+            <svg aria-hidden="true" viewBox="0 0 24 12" className="h-3 w-6" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M0 6h22M17 1l5 5-5 5" /></svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -29,7 +29,7 @@
   --header-h: 60px; /* slim on phones */
 }
 @media (min-width: 640px) {
-  :root { --header-h: 76px; }
+  :root { --header-h: 68px; }
 }
 
 @theme inline {
