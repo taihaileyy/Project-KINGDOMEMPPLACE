@@ -302,7 +302,7 @@ export default function Home() {
 
       {/* Dr. Morgan's book and trailer: one compact card */}
       <section aria-label="A Good Soldier, by Lawrence Morgan" className="bg-ivory">
-        <div className="mx-auto max-w-3xl px-4 pb-14 sm:px-6 sm:pb-20">
+        <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-16">
           <BookPromo />
         </div>
       </section>
