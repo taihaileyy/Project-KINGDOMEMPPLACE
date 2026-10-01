@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
+import { ParadiseArt } from "@/components/paradise/paradise-art";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
 import { BookPromo } from "@/components/home/book-promo";
@@ -261,6 +262,30 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Paradise: a compact teaser for the interactive Bible experience */}
+      <section aria-labelledby="paradise-teaser-title" className="bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
+          <Link
+            href="/paradise"
+            className="group relative isolate flex min-h-[11.5rem] items-center overflow-hidden rounded-[var(--radius-card)] bg-night p-6 text-white sm:min-h-[13rem] sm:p-10"
+          >
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(90%_120%_at_85%_40%,#1b2a7a_0%,#0a1024_55%,#05070d_100%)]" />
+            <ParadiseArt className="absolute -right-8 top-1/2 -z-10 h-[135%] w-auto -translate-y-1/2 opacity-70 transition-transform duration-700 group-hover:scale-105 sm:right-16 sm:h-[125%] sm:opacity-90" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.92)_0%,rgb(5_7_13/0.6)_55%,transparent_100%)]" />
+            <div className="max-w-sm sm:max-w-md">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-electric">New</p>
+              <h2 id="paradise-teaser-title" className="mt-2 font-display text-[2rem] font-medium leading-[1] sm:text-5xl">
+                Enter Paradise
+              </h2>
+              <p className="mt-2 text-[14.5px] leading-snug text-white/80 sm:mt-3 sm:text-lg">An interactive Bible experience.</p>
+              <span className="btn-primary mt-4 sm:mt-6">
+                Enter Paradise <Arrow />
+              </span>
+            </div>
+          </Link>
         </div>
       </section>
 
