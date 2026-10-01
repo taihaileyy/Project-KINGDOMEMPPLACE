@@ -26,7 +26,7 @@ export const siteNav = [
   { href: "/programs", label: "Programs" },
   { href: "/housing", label: "Sober Living" },
   { href: "/events", label: "Events" },
-  { href: "/paradise", label: "Paradise" },
+  { href: "/create-your-world", label: "Create Your World" },
   { href: "/studio/book", label: "Book the Studio" },
   { href: "/give", label: "Give" },
 ];

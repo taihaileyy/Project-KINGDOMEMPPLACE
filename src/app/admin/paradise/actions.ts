@@ -12,7 +12,7 @@ const optional = (max: number) => text(max).transform((v) => (v === "" ? null : 
 
 function back(path: string, key: "saved" | "error", message = "1"): never {
   revalidatePath("/admin/paradise", "layout");
-  revalidatePath("/paradise");
+  revalidatePath("/create-your-world");
   redirect(`${path}${path.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(message)}`);
 }
 

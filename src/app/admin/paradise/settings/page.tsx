@@ -4,7 +4,7 @@ import { Field, Notice, ParadiseAdminTabs } from "@/components/paradise/admin-ui
 import { SETTING_FIELDS, resolveSettings } from "@/lib/paradise/settings";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Paradise settings" };
+export const metadata: Metadata = { title: "Create Your World settings" };
 
 export default async function SettingsPage({ searchParams }: { searchParams: Promise<{ saved?: string; error?: string }> }) {
   const sp = await searchParams;

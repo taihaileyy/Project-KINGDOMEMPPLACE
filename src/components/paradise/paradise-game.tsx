@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { checkAnswer, getProgress, saveProgress } from "@/app/paradise/actions";
+import { checkAnswer, getProgress, saveProgress } from "@/app/create-your-world/actions";
 import { LessonScreen } from "@/components/paradise/lesson-screen";
 import { QuestionScreen, type AnswerState } from "@/components/paradise/question-screen";
 import { ParadiseScene, type Motion } from "@/components/paradise/scene";
@@ -284,8 +284,9 @@ export function ParadiseGame({ content }: { content: PdContent }) {
       {phase === "intro" && (
         <div className="pd-ui items-center justify-center text-center">
           <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center">
-            <h1 className="pd-title-in font-display text-[clamp(2.6rem,12.5vw,6.5rem)] font-medium uppercase leading-none [--ls:0.2em] [text-shadow:0_4px_40px_rgb(0_0_0/0.6)]" style={{ "--d": "100ms" } as React.CSSProperties}>
-              Paradise
+            <p className="pd-eyebrow pd-card-in" style={{ "--d": "50ms" } as React.CSSProperties}>Begin in Paradise</p>
+            <h1 className="pd-title-in mt-4 font-display text-[clamp(2.3rem,10.5vw,5.6rem)] font-medium uppercase leading-[1.02] text-balance [--ls:0.12em] [text-shadow:0_4px_40px_rgb(0_0_0/0.6)]" style={{ "--d": "150ms" } as React.CSSProperties}>
+              Create Your World
             </h1>
             <p className="pd-card-in mt-6 font-display text-[clamp(1.4rem,5vw,2.2rem)] italic leading-snug text-[var(--pd-gold)]" style={{ "--d": "600ms" } as React.CSSProperties}>
               {settings.intro_headline}

@@ -4,7 +4,7 @@ import { Field, Notice, ParadiseAdminTabs } from "@/components/paradise/admin-ui
 import { MediaField } from "@/components/paradise/media-field";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Paradise levels" };
+export const metadata: Metadata = { title: "Create Your World levels" };
 
 type Level = {
   id: string; level_number: number; name: string; description: string | null; is_active: boolean;

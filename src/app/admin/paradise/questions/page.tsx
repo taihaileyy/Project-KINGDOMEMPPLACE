@@ -4,7 +4,7 @@ import { Notice, ParadiseAdminTabs } from "@/components/paradise/admin-ui";
 import { createClient } from "@/lib/supabase/server";
 import { deleteQuestion, moveQuestion, setQuestionActive } from "@/app/admin/paradise/actions";
 
-export const metadata: Metadata = { title: "Paradise questions" };
+export const metadata: Metadata = { title: "Questions" };
 
 type Row = {
   id: string; question_text: string; question_order: number; is_active: boolean; level_id: string;

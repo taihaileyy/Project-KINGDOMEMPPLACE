@@ -10,7 +10,7 @@ const tabs = [
 
 export function ParadiseAdminTabs({ current }: { current: string }) {
   return (
-    <nav aria-label="Paradise sections" className="mb-6 flex flex-wrap items-center gap-1 border-b border-line">
+    <nav aria-label="Create Your World sections" className="mb-6 flex flex-wrap items-center gap-1 border-b border-line">
       {tabs.map((t) => (
         <Link
           key={t.href}
@@ -21,7 +21,7 @@ export function ParadiseAdminTabs({ current }: { current: string }) {
           {t.label}
         </Link>
       ))}
-      <Link href="/paradise" target="_blank" className="ml-auto px-3 py-3 text-sm font-semibold text-blue hover:underline">
+      <Link href="/create-your-world" target="_blank" className="ml-auto px-3 py-3 text-sm font-semibold text-blue hover:underline">
         Preview the game ↗
       </Link>
     </nav>

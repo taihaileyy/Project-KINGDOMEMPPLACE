@@ -4,7 +4,7 @@ import { Notice, ParadiseAdminTabs } from "@/components/paradise/admin-ui";
 import { QuestionForm } from "@/components/paradise/question-form";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Add Paradise question" };
+export const metadata: Metadata = { title: "Add a question" };
 
 export default async function NewQuestionPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const sp = await searchParams;

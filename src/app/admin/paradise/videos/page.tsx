@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ParadiseAdminTabs } from "@/components/paradise/admin-ui";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Paradise videos" };
+export const metadata: Metadata = { title: "Create Your World videos" };
 
 type Q = {
   id: string; question_text: string; is_active: boolean;

@@ -3,7 +3,7 @@ import type { PdCheck, PdContent } from "@/lib/paradise/types";
 // ── SAMPLE CONTENT, NOT PRODUCTION ─────────────────────────────────────────
 // Shown only while the database has no playable questions, so the game can be
 // tried and tested. It is clearly labeled in the game. Real questions, answers,
-// Scripture references and videos are added in Admin > Paradise.
+// Scripture references and videos are added in Admin > Create Your World.
 export const PLACEHOLDER_CONTENT: PdContent = {
   placeholder: true,
   settings: {},
@@ -37,6 +37,6 @@ export function checkPlaceholder(questionId: string, answerId: string): PdCheck 
     correct_answer_id: right,
     scripture_reference: "[Scripture reference]",
     explanation: "[Optional explanation]",
-    lesson: correct ? null : { title: "[Lesson title]", description: "[Short lesson description. Real lessons and videos are added in Admin > Paradise.]", video_type: null, video_url: null, after_video: null },
+    lesson: correct ? null : { title: "[Lesson title]", description: "[Short lesson description. Real lessons and videos are added in Admin > Create Your World.]", video_type: null, video_url: null, after_video: null },
   };
 }

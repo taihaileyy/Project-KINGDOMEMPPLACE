@@ -4,7 +4,7 @@ import { Notice, ParadiseAdminTabs } from "@/components/paradise/admin-ui";
 import { QuestionForm, type QuestionDraft } from "@/components/paradise/question-form";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Edit Paradise question" };
+export const metadata: Metadata = { title: "Edit question" };
 
 export default async function EditQuestionPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string }> }) {
   const [{ id }, sp] = await Promise.all([params, searchParams]);

@@ -7,7 +7,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // Each module adds its section here, filtered by the viewer's roles.
   const nav: NavItem[] = [{ href: "/admin", label: "Dashboard", line: "Live numbers across KEP.", icon: "dashboard" }];
 
-  if (canManageParadise(session)) nav.push({ href: "/admin/paradise", label: "Paradise", line: "Questions, levels and lessons.", icon: "paradise" });
+  if (canManageParadise(session)) nav.push({ href: "/admin/paradise", label: "Create Your World", line: "Questions, levels and lessons.", icon: "paradise" });
 
   return (
     <AppShell

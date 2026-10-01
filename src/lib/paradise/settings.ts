@@ -1,4 +1,4 @@
-// Game behavior that administrators control (Admin > Paradise > Game Settings).
+// Game behavior that administrators control (Admin > Create Your World > Game Settings).
 // Every setting has a safe default, so the game works before any are saved.
 
 export type PdSettings = {
@@ -43,7 +43,7 @@ export const SETTING_FIELDS: Field[] = [
   { key: "shuffle_answers", label: "Shuffle answer order", help: "Off: answers show in the order you wrote them.", type: "boolean" },
   { key: "show_scripture", label: "Show the Scripture reference after a correct answer", help: "", type: "boolean" },
   { key: "show_explanation", label: "Show the explanation after a correct answer", help: "Only when the question has one.", type: "boolean" },
-  { key: "intro_headline", label: "Opening headline", help: "Shown under PARADISE on the opening screen.", type: "text", max: 120 },
+  { key: "intro_headline", label: "Opening headline", help: "Shown under the game title on the opening screen.", type: "text", max: 120 },
   { key: "intro_body", label: "Opening text", help: "A line or two under the headline.", type: "text", max: 240 },
 ];
 

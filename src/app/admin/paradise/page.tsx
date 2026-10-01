@@ -4,7 +4,7 @@ import { DashboardBand } from "@/components/app-shell";
 import { ParadiseAdminTabs } from "@/components/paradise/admin-ui";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Paradise" };
+export const metadata: Metadata = { title: "Create Your World" };
 
 type Q = { id: string; is_active: boolean; paradise_answers: { is_correct: boolean }[]; paradise_lessons: { video_url: string | null }[] | { video_url: string | null } | null };
 
@@ -41,9 +41,9 @@ export default async function ParadiseDashboard() {
 
   return (
     <div className="grid gap-6">
-      <DashboardBand title="Paradise" lead="Add and edit the questions, levels and teaching videos that the game plays. Changes appear in the game right away; no developer needed.">
+      <DashboardBand title="Create Your World" lead="Add and edit the questions, levels and teaching videos that the game plays. Changes appear in the game right away; no developer needed.">
         <Link href="/admin/paradise/questions/new" className="btn-primary">+ Add question</Link>
-        <Link href="/paradise" target="_blank" className="btn border border-white/25 text-white hover:bg-white/10">Preview the game ↗</Link>
+        <Link href="/create-your-world" target="_blank" className="btn border border-white/25 text-white hover:bg-white/10">Preview the game ↗</Link>
       </DashboardBand>
       <ParadiseAdminTabs current="/admin/paradise" />
 

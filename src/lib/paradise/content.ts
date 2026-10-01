@@ -4,7 +4,7 @@ import { PLACEHOLDER_CONTENT } from "@/lib/paradise/placeholder";
 import type { PdContent } from "@/lib/paradise/types";
 
 // Loads the game's content from Supabase. If the tables aren't set up or have
-// no playable questions yet, the labeled sample is used instead, so /paradise
+// no playable questions yet, the labeled sample is used instead, so /create-your-world
 // never breaks.
 export async function loadParadiseContent(): Promise<PdContent> {
   try {
