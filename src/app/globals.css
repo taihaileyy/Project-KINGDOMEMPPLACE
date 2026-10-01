@@ -6,22 +6,27 @@
   silver letters.
 */
 :root {
-  --kep-blue: #0a14e0;
-  --kep-blue-hover: #0810b0;
-  --kep-blue-soft: #eef0ff;
-  /* KEP blue lifted for text, icons and thin rules on black, where the brand
-     blue is too dark to read (5:1 on black vs 2.4:1). Never a background. */
+  /* Restrained royal blue for primary actions; the brighter KEP blue and the
+     electric tint are reserved for highlights and interaction states. */
+  --kep-blue: #1f33b8;
+  --kep-blue-hover: #0a14e0;
+  --kep-blue-soft: #e9ecf8;
+  /* KEP blue lifted for text, icons and thin rules on dark grounds. */
   --kep-electric: #5c6bff;
   --kep-chrome: #c5cad3;
-  --kep-ink: #0b0d12;
-  --kep-ink-muted: #4a5263;
+  --kep-ink: #0b0d14;
+  --kep-ink-muted: #4d5466;
   --kep-paper: #ffffff;
+  --kep-ivory: #f5f1e8;
   --kep-surface: #f3f5fb;
-  --kep-line: #e3e7ef;
-  --kep-night: #000000;
+  --kep-line: #e2ddd2;
+  --kep-night: #05070d;
+  --kep-blueblack: #0a1024;
+  --kep-navy: #101a3d;
   --kep-success: #15803d;
   --kep-warning: #b45309;
   --kep-danger: #b91c1c;
+  --header-h: 76px;
 }
 
 @theme inline {
@@ -33,6 +38,9 @@
   --color-muted: var(--kep-ink-muted);
   --color-paper: var(--kep-paper);
   --color-surface: var(--kep-surface);
+  --color-ivory: var(--kep-ivory);
+  --color-blueblack: var(--kep-blueblack);
+  --color-navy: var(--kep-navy);
   --color-line: var(--kep-line);
   --color-night: var(--kep-night);
   --color-chrome: var(--kep-chrome);
@@ -41,22 +49,34 @@
   --color-danger: var(--kep-danger);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
-  --radius-card: 16px;
-  --radius-control: 12px;
+  --radius-card: 8px;
+  --radius-control: 4px;
   --shadow-card: 0 1px 2px rgb(11 13 18 / 0.04), 0 8px 24px rgb(11 13 18 / 0.06);
 }
 
+/* Full-bleed images and parallax can round a pixel past the edge on the
+   narrowest phones; clip (unlike hidden) keeps sticky elements working. */
+html, body { overflow-x: clip; }
+
 body {
-  background: var(--kep-paper);
+  background: var(--kep-ivory);
   color: var(--kep-ink);
   font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3 {
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-display), Georgia, serif;
   text-wrap: balance;
 }
+
+/* The member portal and staff dashboard are UI, not editorial: everything
+   there, headings included, uses the sans. */
+/* Cormorant's old-style figures read "1" as "I"; use lining figures. */
+h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
+
+.app-ui { --font-display: var(--font-body); }
+.app-ui :where(h1, h2, h3) { font-family: var(--font-body), system-ui, sans-serif; }
 
 :focus-visible {
   outline: 3px solid var(--kep-blue);
@@ -65,13 +85,17 @@ h1, h2, h3 {
 
 /* Tailwind v4 custom utilities: shared control styles. */
 @utility btn {
-  @apply inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] px-5 text-[15px] font-semibold transition-[background-color,border-color,color,box-shadow,translate] duration-200 ease-out hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 motion-reduce:hover:translate-y-0;
+  @apply inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-[var(--radius-control)] px-6 text-[15px] font-semibold tracking-[0.01em] transition-[background-color,border-color,color,box-shadow,translate] duration-300 ease-out hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 motion-reduce:hover:translate-y-0;
 }
 @utility btn-primary {
-  @apply btn bg-blue text-white hover:bg-blue-hover hover:shadow-[0_10px_28px_-6px_rgb(10_20_224/0.55)];
+  @apply btn bg-blue text-white hover:bg-blue-hover hover:shadow-[0_12px_30px_-10px_rgb(10_20_224/0.6)];
 }
 @utility btn-secondary {
-  @apply btn border border-line bg-paper text-ink hover:bg-surface;
+  @apply btn border border-ink/20 bg-transparent text-ink hover:border-ink/50;
+}
+/* Quiet text action with an arrow that steps forward on hover. */
+@utility btn-quiet {
+  @apply inline-flex min-h-12 items-center gap-2.5 text-[15px] font-semibold underline decoration-current/30 underline-offset-[6px] transition-[text-decoration-color] duration-300 hover:decoration-current;
 }
 @utility field-label {
   @apply mb-1.5 block text-sm font-semibold text-ink;
@@ -107,6 +131,37 @@ h1, h2, h3 {
   transition-delay: var(--d, 0ms);
 }
 .reveal-ready [data-reveal][data-shown] { opacity: 1; transform: none; }
+
+/* ── Editorial motion, echoing the entrance's diagonal ─────────────────── */
+/* Lines of a headline rise through a mask, one after another. */
+.mask-line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.mask-line > span { display: block; animation: mask-up 1.1s cubic-bezier(0.2, 0.7, 0.1, 1) both; animation-delay: var(--d, 0ms); }
+@keyframes mask-up { from { transform: translateY(105%); } to { transform: none; } }
+.intro-play .hero-copy .mask-line > span { animation-delay: calc(var(--d, 0ms) + 700ms); }
+
+/* Scroll-revealed headings rise through a mask. */
+.reveal-ready [data-reveal="mask"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  translate: 0 0.35em;
+  transition: clip-path 1.1s cubic-bezier(0.2, 0.7, 0.1, 1), translate 1.1s cubic-bezier(0.2, 0.7, 0.1, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal-ready [data-reveal="mask"][data-shown] { clip-path: inset(0 0 -0.2em 0); translate: 0 0; }
+
+/* Images open with a diagonal wipe (the same "/" as the entrance) and
+   settle from a slight zoom. */
+.reveal-ready [data-reveal="image"] {
+  opacity: 1;
+  transform: none;
+  clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%);
+  transition: clip-path 1.4s cubic-bezier(0.76, 0, 0.24, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal-ready [data-reveal="image"][data-shown] { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); }
+.reveal-ready [data-reveal="image"] img { transform: scale(1.12); transition: transform 1.8s cubic-bezier(0.2, 0.7, 0.1, 1); transition-delay: var(--d, 0ms); }
+.reveal-ready [data-reveal="image"][data-shown] img { transform: none; }
 
 /* ── Cinematic entrance (homepage, once per visit; see intro-curtain.tsx) ── */
 .kep-intro { display: none; }
@@ -170,6 +225,8 @@ h1, h2, h3 {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .reveal-ready [data-reveal] { opacity: 1; transform: none; }
+  .reveal-ready [data-reveal] { opacity: 1; transform: none; clip-path: none !important; translate: none !important; }
+  .reveal-ready [data-reveal] img { transform: none !important; }
+  .mask-line > span { animation: none !important; }
   .kep-intro { display: none !important; }
 }

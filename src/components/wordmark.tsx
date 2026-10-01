@@ -29,7 +29,7 @@ export function Wordmark({
         className={`shrink-0 ${logoClass}`}
       />
       {showName && (
-        <span className={`font-display text-[15px] font-extrabold leading-[1.1] tracking-tight sm:text-[17px] ${nameClass}`}>
+        <span className={`font-display text-[17px] font-semibold leading-[1.05] sm:text-[19px] ${nameClass}`}>
           Kingdom
           <br />
           Empowerment Place

@@ -23,13 +23,14 @@ export function RevealObserver() {
     );
     document.querySelectorAll("[data-reveal]:not([data-shown])").forEach((el) => io.observe(el));
 
-    // A fast fling can jump clean over an element, so it never "intersects".
-    // Reveal anything that has reached or passed the viewport.
+    // A fast fling can jump clean over an element, and a fully masked heading
+    // never reports as intersecting, so also reveal anything that has reached
+    // the lower part of the viewport, on load and on every scroll.
     let frame = 0;
     const sweep = () => {
       frame = 0;
       document.querySelectorAll("[data-reveal]:not([data-shown])").forEach((el) => {
-        if (el.getBoundingClientRect().top < window.innerHeight) {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
           el.setAttribute("data-shown", "");
           io.unobserve(el);
         }
@@ -53,6 +54,7 @@ export function RevealObserver() {
       }
     };
     drift();
+    sweep();
 
     const onScroll = () => {
       if (!frame)

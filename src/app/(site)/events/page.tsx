@@ -17,10 +17,10 @@ export default function EventsPage() {
           {weekly.map((w) => (
             <li key={w.title} className="card flex items-center gap-6 p-6">
               <div className="grid size-24 shrink-0 place-items-center rounded-2xl bg-blue text-center text-white">
-                <span className="font-display text-lg font-extrabold leading-tight">{w.day}</span>
+                <span className="font-display text-lg font-semibold leading-tight">{w.day}</span>
               </div>
               <div>
-                <p className="font-display text-2xl font-extrabold tracking-tight">{w.title}</p>
+                <p className="font-display text-2xl font-medium">{w.title}</p>
                 <p className="mt-1 text-muted">{w.time} at KEP, {org.address.line1}</p>
               </div>
             </li>

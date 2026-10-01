@@ -20,7 +20,7 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-dvh bg-surface">
+    <div className="app-ui min-h-dvh bg-surface">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-night text-white">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6">
           <Wordmark showName={false} logoClass="h-10 w-auto" />

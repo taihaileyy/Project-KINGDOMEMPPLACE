@@ -56,7 +56,7 @@ export function GiveForm({ signedInAs, enabled }: { signedInAs: string | null; e
         </div>
         <label htmlFor="amount" className="mt-3 block text-sm text-muted">Or enter an amount</label>
         <div className="relative mt-1">
-          <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-4 grid place-items-center font-display text-2xl font-extrabold text-muted">$</span>
+          <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-4 grid place-items-center font-display text-2xl font-semibold text-muted">$</span>
           <input
             id="amount"
             name="amount"
@@ -67,7 +67,7 @@ export function GiveForm({ signedInAs, enabled }: { signedInAs: string | null; e
             required
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="field-input min-h-14 pl-10 font-display text-2xl font-extrabold"
+            className="field-input min-h-14 pl-10 font-display text-2xl font-semibold"
           />
         </div>
       </fieldset>

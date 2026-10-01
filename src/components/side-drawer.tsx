@@ -134,7 +134,7 @@ export function SideDrawer({
         <nav aria-label={label} className="flex-1 overflow-y-auto px-3 pb-4">
           {groups.map((group, gi) => (
             <section key={group.title ?? gi} className="mt-4 first:mt-2">
-              {group.title && <h2 className="px-3 font-display text-2xl font-extrabold tracking-tight">{group.title}</h2>}
+              {group.title && <h2 className="px-3 font-display text-[28px] font-medium leading-tight">{group.title}</h2>}
               <ul className="mt-2 grid gap-0.5">
                 {group.items.map(({ href, title, line, icon }, ii) => {
                   const Icon = drawerIcons[icon];

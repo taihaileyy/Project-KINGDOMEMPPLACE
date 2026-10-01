@@ -52,7 +52,9 @@ export function SiteHeader() {
   const pathname = usePathname();
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Once the page scrolls, the header lifts into a floating black bar.
+  // On the homepage the header sits transparently over the hero; once the
+  // page scrolls (and on every other page) it becomes a translucent
+  // blue-black bar.
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -60,31 +62,32 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  const solid = scrolled || pathname !== "/";
 
   return (
-    <header className={`site-header sticky top-0 z-30 px-2 pt-2 transition-colors duration-300 sm:px-3 ${scrolled ? "" : "bg-paper"}`}>
+    <header className="site-header fixed inset-x-0 top-0 z-30 text-white">
+      {/* Legibility over the hero photo while the bar is transparent. */}
       <div
-        className={`mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl border px-3 py-2 transition-[background-color,border-color,box-shadow,color] duration-300 sm:px-4 ${
-          scrolled ? "border-white/10 bg-night/85 text-white shadow-2xl backdrop-blur-xl" : "border-transparent"
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/70 via-black/30 to-transparent transition-opacity duration-500 ${
+          solid ? "opacity-0" : "opacity-100"
         }`}
-      >
-        <Wordmark nameClass="max-[359px]:hidden xl:hidden 2xl:inline" logoClass="h-10 w-auto sm:h-12" />
+      />
+      <div
+        className={`absolute inset-0 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ${
+          solid ? "border-white/10 bg-blueblack/90 backdrop-blur-xl backdrop-saturate-150" : "border-transparent bg-transparent"
+        }`}
+      />
+      <div className="relative mx-auto flex h-[var(--header-h)] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
+        <Wordmark nameClass="max-[359px]:hidden xl:hidden 2xl:inline" logoClass="h-10 w-auto sm:h-11" />
         <nav aria-label="Main" className="hidden xl:block">
-          <ul
-            className={`flex items-center gap-0.5 rounded-full border px-2 py-1.5 transition-colors duration-300 ${
-              scrolled ? "border-white/10 bg-transparent" : "border-line bg-paper shadow-[var(--shadow-card)]"
-            }`}
-          >
+          <ul className="flex items-center gap-7">
             {siteNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
-                  className={`inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-3 text-[15px] font-semibold ${
-                    scrolled
-                      ? "text-white/80 hover:bg-white/10 hover:text-white aria-[current=page]:bg-electric/20 aria-[current=page]:text-white"
-                      : "text-ink/80 hover:bg-surface hover:text-ink aria-[current=page]:bg-blue-soft aria-[current=page]:text-blue"
-                  }`}
+                  className="relative inline-flex min-h-11 items-center whitespace-nowrap text-[14px] font-medium tracking-[0.02em] text-white/75 transition-colors after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-left after:scale-x-0 after:bg-electric after:transition-transform after:duration-300 hover:text-white hover:after:scale-x-100 aria-[current=page]:text-white aria-[current=page]:after:scale-x-100"
                 >
                   {item.label}
                 </Link>
@@ -92,25 +95,29 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-5">
           {signedIn ? (
-            <Link href="/portal" className="btn-primary hidden sm:inline-flex">My account</Link>
+            <Link href="/portal" className="hidden min-h-11 items-center text-[14px] font-semibold text-white hover:text-chrome sm:inline-flex">
+              My account
+            </Link>
           ) : (
             <>
-              <Link
-                href="/login"
-                className={`hidden sm:inline-flex ${scrolled ? "btn border border-white/20 text-white hover:bg-white/10" : "btn-secondary"}`}
-              >
+              <Link href="/login" className="hidden min-h-11 items-center text-[14px] font-medium text-white/75 hover:text-white sm:inline-flex">
                 Log in
               </Link>
-              <Link href="/signup" className="btn-primary hidden sm:inline-flex">Create account</Link>
+              <Link
+                href="/signup"
+                className="hidden min-h-10 items-center rounded-[var(--radius-control)] border border-white/35 px-4 text-[14px] font-semibold text-white transition-colors hover:border-white hover:bg-white/10 sm:inline-flex"
+              >
+                Create account
+              </Link>
             </>
           )}
           <MenuButton
             buttonRef={triggerRef}
             open={open}
             onOpen={() => setOpen(true)}
-            className={`xl:hidden ${scrolled ? "border-white/20 text-white hover:bg-white/10" : "border-line bg-paper text-ink hover:bg-surface"}`}
+            className="border-white/25 text-white hover:bg-white/10 xl:hidden"
           />
         </div>
       </div>

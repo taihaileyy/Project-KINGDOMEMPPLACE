@@ -103,13 +103,14 @@ export function HeroShow() {
         })}
       </div>
 
-      {/* Darkens the side the words sit on so they stay readable over any slide. */}
+      {/* Layered near-black and navy on the left gives the words room; the
+          artwork comes through on the right. A bottom fade grounds the times. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/60 to-black/30 lg:bg-gradient-to-r lg:from-black/90 lg:via-black/55 lg:to-black/10"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.95)_0%,rgb(8_12_30/0.86)_34%,rgb(16_26_61/0.45)_62%,rgb(16_26_61/0.05)_100%)]"
       />
-
-      <div className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-full bg-black/45 py-1 pl-2 pr-1 backdrop-blur sm:right-6 sm:top-6">
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-gradient-to-t from-night via-night/60 to-transparent" />
+      <div className="absolute right-4 top-[calc(var(--header-h)+12px)] z-10 flex items-center gap-1 py-1 sm:right-6 lg:bottom-10 lg:top-auto">
         {slides.map((s, i) => (
           <button
             key={i}

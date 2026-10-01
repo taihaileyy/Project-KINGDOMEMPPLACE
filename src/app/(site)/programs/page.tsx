@@ -27,7 +27,7 @@ export default function ProgramsPage() {
                   className="aspect-[4/3] h-full w-full object-cover sm:aspect-auto"
                 />
                 <div className="p-6">
-                  <h2 className="font-display text-2xl font-extrabold tracking-tight group-hover:text-blue">{p.name}</h2>
+                  <h2 className="font-display text-2xl font-medium group-hover:text-blue">{p.name}</h2>
                   <p className="mt-2 text-muted">{p.summary}</p>
                   <p className="mt-4 font-semibold text-blue">Learn more</p>
                 </div>
