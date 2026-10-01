@@ -65,7 +65,7 @@ export function ImpactSection({ facts, className = "" }: { facts: Fact[]; classN
         aria-hidden="true"
         className="absolute -right-56 -top-64 -z-10 size-[760px] animate-[drift_18s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(circle,rgb(31_51_184/0.35),transparent_62%)]"
       />
-      <div className="mx-auto max-w-7xl px-4 py-11 sm:px-6 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-end">
           <h2 id="impact-title" data-reveal="mask" className="font-display text-[2.9rem] font-medium leading-[0.95] sm:text-8xl">
             Our impact
@@ -77,7 +77,7 @@ export function ImpactSection({ facts, className = "" }: { facts: Fact[]; classN
           </p>
         </div>
 
-        <dl className="mt-7 grid grid-cols-2 border-t border-white/15 sm:mt-16 lg:grid-cols-4">
+        <dl className="mt-7 grid grid-cols-2 border-t border-white/15 sm:mt-10 lg:grid-cols-4">
           {live
             ? live.map((m, i) => (
                 <Stat key={m.key} i={i} Icon={metricIcons[m.key] ?? Users} label={m.label} wide={m.value === null}>

@@ -9,7 +9,7 @@ import { BookPromo } from "@/components/home/book-promo";
 import { ProgramsRail } from "@/components/home/programs-rail";
 import { VideoFeature } from "@/components/home/video-feature";
 import { ProgramsShowcase } from "@/components/home/programs-showcase";
-import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
+import { housing, houseImages, images, org, programs, recentEvents, weekly } from "@/content/site";
 
 const paths = [
   { href: "/church", title: "Worship with us", line: "Sundays at 10 AM and Bible study Wednesdays at 6:30 PM." },
@@ -51,7 +51,7 @@ export default function Home() {
         className="relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
       >
         <HeroMotion />
-        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-14 pt-40 sm:px-6 lg:pb-20">
+        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-40 sm:px-6 lg:pb-20">
           <h1
             id="hero-title"
             className="max-w-6xl font-display text-[clamp(2.9rem,6.6vw,6.6rem)] font-medium leading-[1] tracking-[-0.01em]"
@@ -123,7 +123,7 @@ export default function Home() {
 
       {/* Opening statement */}
       <section aria-labelledby="welcome-title" className="order-2 bg-ivory sm:order-none">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-12 sm:gap-12 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-12 sm:gap-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
           <div>
             <h2 id="welcome-title" className="sr-only">Welcome to Kingdom Empowerment Place</h2>
             <p data-reveal="mask" className="font-display text-[1.7rem] font-medium leading-[1.2] sm:text-[clamp(2rem,4.2vw,3.6rem)] sm:leading-[1.12]">
@@ -142,11 +142,11 @@ export default function Home() {
 
       {/* Find your place: an index, not cards */}
       <section aria-labelledby="paths-title" className="hidden bg-ivory sm:block">
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-2 sm:px-6 sm:pb-32 sm:pt-0">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-2 sm:px-6 sm:pb-20 sm:pt-0">
           <h2 id="paths-title" data-reveal="mask" className={h2}>
             What brings you to KEP?
           </h2>
-          <ul className="mt-6 grid border-t border-ink/15 sm:mt-14 lg:grid-cols-2 lg:gap-x-16">
+          <ul className="mt-6 grid border-t border-ink/15 sm:mt-10 lg:grid-cols-2 lg:gap-x-16">
             {paths.map(({ href, title, line }, i) => (
               <li key={href} data-reveal style={d((i % 2) * 90 + Math.floor(i / 2) * 70)} className="border-b border-ink/15">
                 <Link href={href} className="group flex items-center justify-between gap-6 py-[1.125rem] sm:py-7">
@@ -176,7 +176,7 @@ export default function Home() {
 
       {/* Programs */}
       <section aria-labelledby="programs-title" className="order-4 bg-ivory sm:order-none">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
           <div className="grid gap-4 sm:gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
             <h2 id="programs-title" data-reveal="mask" className={h2}>
               Programs built to empower our community
@@ -206,7 +206,7 @@ export default function Home() {
               ]}
             />
           </div>
-          <p data-reveal className="mt-6 text-[14px] text-muted max-sm:hidden sm:mt-10 sm:text-[15px]">
+          <p data-reveal className="mt-6 text-[14px] text-muted max-sm:hidden sm:mt-6 sm:text-[15px]">
             Not sure where to start?{" "}
             <a href={org.phoneHref} className="font-semibold text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
               Call {org.phone}
@@ -219,12 +219,12 @@ export default function Home() {
       <section aria-label="Scripture" className="relative isolate order-9 overflow-hidden bg-night text-white sm:order-none">
         <Image {...images.preaching} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-35" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgb(5_7_13/0.92)_0%,rgb(16_26_61/0.7)_60%,rgb(16_26_61/0.4)_100%)]" />
-        <figure className="mx-auto max-w-5xl px-4 py-14 text-center sm:px-6 sm:py-40">
+        <figure className="mx-auto max-w-5xl px-4 py-10 text-center sm:px-6 sm:py-24">
           <blockquote data-reveal="mask" className="font-display text-[1.7rem] font-normal italic leading-[1.2] sm:text-[clamp(2rem,4.6vw,4rem)] sm:leading-[1.15]">
             &ldquo;For I know the plans I have for you,&rdquo; declares the Lord, &ldquo;plans to prosper you and not to
             harm you, plans to give you hope and a future.&rdquo;
           </blockquote>
-          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-10 sm:text-[15px]">
+          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-6 sm:text-[15px]">
             Jeremiah 29:11
           </figcaption>
         </figure>
@@ -236,7 +236,7 @@ export default function Home() {
           <figure data-reveal="image" className="relative min-h-[240px] overflow-hidden sm:min-h-[420px] lg:min-h-[720px]">
             <Image {...images.facility} alt={images.facility.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full object-cover" />
           </figure>
-          <div className="flex items-center px-4 py-12 sm:px-6 sm:py-20 lg:px-16 lg:py-28">
+          <div className="flex items-center px-4 py-12 sm:px-6 sm:py-20 lg:px-16 lg:py-20">
             <div className="max-w-lg">
               <h2 id="studio-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
                 Reserve our studio
@@ -273,7 +273,7 @@ export default function Home() {
           apply live on the dedicated page (/housing). */}
       <section aria-labelledby="sober-title" className="relative isolate order-3 overflow-hidden bg-night text-white sm:hidden">
         <div data-reveal="image" className="relative aspect-[3/4]">
-          <Image {...images.workshop} alt={images.workshop.alt} sizes="100vw" className="h-full w-full object-cover object-top" />
+          <Image {...houseImages.kitchen} alt={houseImages.kitchen.alt} sizes="100vw" className="h-full w-full object-cover" />
         </div>
         <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,#05070d_0%,rgb(5_7_13/0.92)_34%,rgb(10_16_36/0.35)_66%,rgb(10_16_36/0.1)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 px-4 pb-11">
@@ -298,7 +298,7 @@ export default function Home() {
 
       {/* Sober Living Program */}
       <section aria-labelledby="housing-title" className="hidden bg-ivory sm:block">
-        <div className="mx-auto grid max-w-7xl gap-16 px-4 py-24 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-24">
+        <div className="mx-auto grid max-w-7xl gap-16 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
           <div>
             <h2 id="housing-title" data-reveal="mask" className={h2}>
               Sober Living Program
@@ -345,7 +345,7 @@ export default function Home() {
 
       {/* Events */}
       <section aria-labelledby="events-title" className="order-6 border-t border-ink/10 bg-ivory sm:order-none">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 sm:gap-8">
             <div className="max-w-2xl">
               <h2 id="events-title" data-reveal="mask" className={h2}>
@@ -362,7 +362,7 @@ export default function Home() {
           <div className="mt-7 sm:hidden">
             <EventsCarousel events={recentEvents} />
           </div>
-          <ul className="mt-14 hidden grid-cols-2 gap-x-5 gap-y-10 sm:grid lg:grid-cols-4">
+          <ul className="mt-10 hidden grid-cols-2 gap-x-5 gap-y-10 sm:grid lg:grid-cols-4">
             {recentEvents.map((e, i) => (
               <li key={e.title} className={i % 2 === 1 ? "lg:mt-16" : ""}>
                 <figure data-reveal="image" style={d(i * 120)} className="overflow-hidden">
@@ -385,7 +385,7 @@ export default function Home() {
 
       {/* Life at KEP: an asymmetric photo story */}
       <section aria-labelledby="moments-title" className="order-7 bg-night text-white sm:order-none">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
             <h2 id="moments-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
               Life at KEP
@@ -405,7 +405,7 @@ export default function Home() {
               </figure>
             ))}
           </div>
-          <div className="mt-14 hidden grid-cols-1 gap-5 sm:grid lg:grid-cols-12 lg:grid-rows-[auto_auto]">
+          <div className="mt-10 hidden grid-cols-1 gap-5 sm:grid lg:grid-cols-12 lg:grid-rows-[auto_auto]">
             <figure className="col-span-2 sm:col-span-1 lg:col-span-7 lg:row-span-2">
               <div data-reveal="image" className="overflow-hidden">
                 <Image {...images.youthActivity} alt={images.youthActivity.alt} sizes="(min-width: 1024px) 58vw, 100vw" className="aspect-[4/5] w-full object-cover sm:aspect-[4/3] lg:aspect-[5/6]" />
@@ -435,7 +435,7 @@ export default function Home() {
 
       {/* Watch: a film from Dr. Morgan, played only on request */}
       <section aria-labelledby="watch-title" className="border-y border-white/10 bg-blueblack text-white max-sm:hidden">
-        <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-20">
           <p data-reveal className="text-[13px] font-semibold uppercase tracking-[0.18em] text-electric">Watch</p>
           <h2 id="watch-title" data-reveal="mask" className="mt-3 font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
             A Good Soldier
@@ -443,7 +443,7 @@ export default function Home() {
           <p data-reveal style={d(120)} className="mt-4 max-w-xl text-[15px] leading-relaxed text-chrome sm:text-lg">
             The book trailer from Dr. Lawrence Morgan.
           </p>
-          <div data-reveal="image" className="mt-8 sm:mt-12">
+          <div data-reveal="image" className="mt-8 sm:mt-9">
             <VideoFeature id="ea_hIpFOtJM" title="A Good Soldier Book Trailer, Dr. Lawrence Morgan" />
           </div>
           <a
@@ -491,7 +491,7 @@ export default function Home() {
 
       {/* Church: the pastors under a church-window arch */}
       <section aria-labelledby="church-title" className="order-10 bg-ivory sm:order-none">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:gap-16 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:gap-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
           <div data-reveal className="relative mx-auto w-full max-w-[17rem] sm:max-w-md">
             <div aria-hidden="true" className="absolute -inset-4 rounded-t-full border border-ink/15 sm:-inset-6" />
             <div className="relative overflow-hidden rounded-t-full">
@@ -512,7 +512,7 @@ export default function Home() {
               Led by {org.pastors}, KEP Church gathers every week to worship, study the Word and serve our
               neighborhood. Come as you are.
             </p>
-            <dl className="mt-7 border-t border-ink/15 max-sm:hidden sm:mt-12">
+            <dl className="mt-7 border-t border-ink/15 max-sm:hidden sm:mt-9">
               {weekly.map((w, i) => (
                 <div key={w.title} data-reveal style={d(200 + i * 100)} className="flex items-baseline justify-between gap-6 border-b border-ink/15 py-4 sm:py-6">
                   <dt className="font-display text-2xl sm:text-3xl">{w.title}</dt>
@@ -520,7 +520,7 @@ export default function Home() {
                 </div>
               ))}
             </dl>
-            <div data-reveal style={d(400)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-12 sm:gap-y-4">
+            <div data-reveal style={d(400)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-9 sm:gap-y-4">
               <Link href="/church" className="btn-primary group">
                 About the church <Arrow />
               </Link>
@@ -543,7 +543,7 @@ export default function Home() {
       <section className="relative isolate order-12 overflow-hidden bg-night text-white sm:order-none">
         <Image {...images.adultMinistry} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-45" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.9)_0%,rgb(16_26_61/0.55)_55%,rgb(16_26_61/0.2)_100%)]" />
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-44">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-28">
           <h2 data-reveal="mask" className="max-w-3xl font-display text-[2.7rem] font-medium leading-[1] sm:text-[clamp(3rem,7vw,6.5rem)] sm:leading-[0.98]">
             There&apos;s a place for you here.
           </h2>
