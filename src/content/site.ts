@@ -16,7 +16,7 @@ export const org = {
   social: [
     { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/LawrenceRMorganSr" },
     { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/lyricalapostle" },
-    { label: "YouTube", icon: "youtube", href: "" },
+    { label: "YouTube", icon: "youtube", href: "https://www.youtube.com/@drlawrencemorgan" },
   ],
 } as const;
 
