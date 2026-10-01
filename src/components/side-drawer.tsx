@@ -46,7 +46,7 @@ export function isActivePath(pathname: string, href: string) {
 }
 
 // KEP's slide-out menu: a see-through black panel that slides in from the
-// right over half the screen, with grouped rows, each an icon, a title
+// left over half the screen, with grouped rows, each an icon, a title
 // and an optional one-line description. The current page gets a thin electric
 // blue bar, a blue icon and a faint blue tint. It stays mounted so it can
 // slide; `inert` keeps it out of reach while closed.
@@ -114,8 +114,8 @@ export function SideDrawer({
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className={`absolute inset-y-0 right-0 flex w-[82vw] max-w-[560px] flex-col overflow-hidden rounded-l-[28px] border-l border-white/10 bg-black/70 text-white shadow-2xl backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none sm:w-1/2 ${
-          open ? "translate-x-0" : "translate-x-full"
+        className={`absolute inset-y-0 left-0 flex w-[82vw] max-w-[560px] flex-col overflow-hidden rounded-r-[28px] border-r border-white/10 bg-black/70 text-white shadow-2xl backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none sm:w-1/2 ${
+          open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between gap-4 px-6 pb-2 pt-5">
