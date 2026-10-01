@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
+import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
 import { ProgramsShowcase } from "@/components/home/programs-showcase";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
@@ -26,7 +27,7 @@ const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 
 const heroLines = ["Empowering youth.", "Building futures.", "Changing communities."];
 
-const h2 = "font-display text-5xl font-medium leading-[0.98] sm:text-6xl lg:text-7xl";
+const h2 = "font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl";
 
 export default function Home() {
   return (
@@ -80,40 +81,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Everything below the hero. On phones the sections flow in a story order
+          (opening, quote, pathways, programs, Sober Living, photos, impact,
+          events, studio, church, closing) with light and dark sections
+          alternating; from 640px up this is plain source order. */}
+      <div className="flex flex-col sm:block">
       {/* Opening statement */}
-      <section aria-labelledby="welcome-title" className="bg-ivory">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
+      <section aria-labelledby="welcome-title" className="order-1 bg-ivory sm:order-none">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-14 sm:gap-12 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
           <div>
             <h2 id="welcome-title" className="sr-only">Welcome to Kingdom Empowerment Place</h2>
-            <p data-reveal="mask" className="font-display text-[clamp(2rem,4.2vw,3.6rem)] font-medium leading-[1.12]">
+            <p data-reveal="mask" className="font-display text-[1.7rem] font-medium leading-[1.2] sm:text-[clamp(2rem,4.2vw,3.6rem)] sm:leading-[1.12]">
               A church that worships together, and a home on North Foster Drive where young people, families and
               neighbors in recovery find structure, skills and a place to belong.
             </p>
-            <p data-reveal style={d(200)} className="mt-8 text-[15px] text-muted">
+            <p data-reveal style={d(200)} className="mt-5 text-[14px] text-muted sm:mt-8 sm:text-[15px]">
               Led by {org.pastors}
             </p>
           </div>
-          <figure data-reveal="image" style={d(150)} className="relative aspect-[4/5] overflow-hidden lg:mb-2">
+          <figure data-reveal="image" style={d(150)} className="relative aspect-[5/4] overflow-hidden sm:aspect-[4/5] lg:mb-2">
             <Image {...images.adultMinistry} alt={images.adultMinistry.alt} sizes="(min-width: 1024px) 35vw, 100vw" className="h-full w-full object-cover" />
           </figure>
         </div>
       </section>
 
       {/* Find your place: an index, not cards */}
-      <section aria-labelledby="paths-title" className="bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 sm:pb-32">
+      <section aria-labelledby="paths-title" className="order-3 bg-ivory sm:order-none">
+        <div className="mx-auto max-w-7xl px-4 pb-14 pt-2 sm:px-6 sm:pb-32 sm:pt-0">
           <h2 id="paths-title" data-reveal="mask" className={h2}>
             What brings you to KEP?
           </h2>
-          <ul className="mt-14 grid border-t border-ink/15 lg:grid-cols-2 lg:gap-x-16">
+          <ul className="mt-6 grid border-t border-ink/15 sm:mt-14 lg:grid-cols-2 lg:gap-x-16">
             {paths.map(({ href, title, line }, i) => (
               <li key={href} data-reveal style={d((i % 2) * 90 + Math.floor(i / 2) * 70)} className="border-b border-ink/15">
-                <Link href={href} className="group flex items-center justify-between gap-6 py-7">
+                <Link href={href} className="group flex items-center justify-between gap-6 py-[1.125rem] sm:py-7">
                   <span>
-                    <span className="block font-display text-3xl leading-tight transition-colors duration-300 group-hover:text-blue sm:text-4xl">
+                    <span className="block font-display text-[1.6rem] leading-tight transition-colors duration-300 group-hover:text-blue sm:text-4xl">
                       {title}
                     </span>
-                    <span className="mt-1.5 block text-[15px] leading-relaxed text-muted">{line}</span>
+                    <span className="mt-1 block text-[14px] leading-snug text-muted sm:mt-1.5 sm:text-[15px] sm:leading-relaxed">{line}</span>
                   </span>
                   <Arrow className="text-blue" />
                 </Link>
@@ -124,6 +130,7 @@ export default function Home() {
       </section>
 
       <ImpactSection
+        className="order-7 sm:order-none"
         facts={[
           { value: String(programs.length), label: "Community programs", icon: "programs" },
           { value: String(weekly.length), label: "Church gatherings every week", icon: "church" },
@@ -133,18 +140,18 @@ export default function Home() {
       />
 
       {/* Programs */}
-      <section aria-labelledby="programs-title" className="bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+      <section aria-labelledby="programs-title" className="order-4 bg-ivory sm:order-none">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+          <div className="grid gap-4 sm:gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
             <h2 id="programs-title" data-reveal="mask" className={h2}>
               Programs built to empower our community
             </h2>
-            <p data-reveal style={d(150)} className="max-w-md text-lg leading-relaxed text-muted lg:justify-self-end">
+            <p data-reveal style={d(150)} className="max-w-md text-[15px] leading-relaxed text-muted sm:text-lg lg:justify-self-end">
               Create one KEP account to explore and register for programs across our community. Some programs have
               eligibility requirements or need approval from our staff.
             </p>
           </div>
-          <div className="mt-16">
+          <div className="mt-7 sm:mt-16">
             <ProgramsShowcase
               items={[
                 ...programs.map((p) => ({ href: `/programs/${p.slug}`, name: p.name, summary: p.summary, image: p.image })),
@@ -153,11 +160,12 @@ export default function Home() {
                   name: "Sober Living Program",
                   summary: "Structured, sober living with support toward work and your goals. Our team reviews every application.",
                   image: images.youthGroup2,
+                  mobileHidden: true, // featured in its own preview right after
                 },
               ]}
             />
           </div>
-          <p data-reveal className="mt-10 text-[15px] text-muted">
+          <p data-reveal className="mt-6 text-[14px] text-muted sm:mt-10 sm:text-[15px]">
             Not sure where to start?{" "}
             <a href={org.phoneHref} className="font-semibold text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
               Call {org.phone}
@@ -167,44 +175,44 @@ export default function Home() {
       </section>
 
       {/* Scripture, full bleed */}
-      <section aria-label="Scripture" className="relative isolate overflow-hidden bg-night text-white">
+      <section aria-label="Scripture" className="relative isolate order-2 overflow-hidden bg-night text-white sm:order-none">
         <Image {...images.preaching} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-35" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgb(5_7_13/0.92)_0%,rgb(16_26_61/0.7)_60%,rgb(16_26_61/0.4)_100%)]" />
-        <figure className="mx-auto max-w-5xl px-4 py-28 text-center sm:px-6 sm:py-40">
-          <blockquote data-reveal="mask" className="font-display text-[clamp(2rem,4.6vw,4rem)] font-normal italic leading-[1.15]">
+        <figure className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 sm:py-40">
+          <blockquote data-reveal="mask" className="font-display text-[1.7rem] font-normal italic leading-[1.2] sm:text-[clamp(2rem,4.6vw,4rem)] sm:leading-[1.15]">
             &ldquo;For I know the plans I have for you,&rdquo; declares the Lord, &ldquo;plans to prosper you and not to
             harm you, plans to give you hope and a future.&rdquo;
           </blockquote>
-          <figcaption data-reveal style={d(250)} className="mt-10 text-[15px] tracking-[0.04em] text-chrome">
+          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-10 sm:text-[15px]">
             Jeremiah 29:11
           </figcaption>
         </figure>
       </section>
 
       {/* Studio: image bleeds to the edge */}
-      <section aria-labelledby="studio-title" className="bg-night text-white">
+      <section aria-labelledby="studio-title" className="order-9 bg-night text-white sm:order-none">
         <div className="grid lg:grid-cols-2">
-          <figure data-reveal="image" className="relative min-h-[420px] overflow-hidden lg:min-h-[720px]">
+          <figure data-reveal="image" className="relative min-h-[300px] overflow-hidden sm:min-h-[420px] lg:min-h-[720px]">
             <Image {...images.facility} alt={images.facility.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full object-cover" />
           </figure>
-          <div className="flex items-center px-4 py-20 sm:px-6 lg:px-16 lg:py-28">
+          <div className="flex items-center px-4 py-12 sm:px-6 sm:py-20 lg:px-16 lg:py-28">
             <div className="max-w-lg">
-              <h2 id="studio-title" data-reveal="mask" className="font-display text-5xl font-medium leading-[0.98] sm:text-6xl lg:text-7xl">
+              <h2 id="studio-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
                 Reserve our studio
               </h2>
-              <p data-reveal style={d(150)} className="mt-8 text-lg leading-relaxed text-chrome">
+              <p data-reveal style={d(150)} className="mt-5 text-[15px] leading-relaxed text-chrome sm:mt-8 sm:text-lg">
                 KEP&apos;s media studio is open to the community for recording, filming and creative projects. Pick a
                 time and send a request, and our team will confirm your booking.
               </p>
-              <ul className="mt-10 border-t border-white/15">
+              <ul className="mt-7 border-t border-white/15 sm:mt-10">
                 {studioUses.map(({ title, line }, i) => (
-                  <li key={title} data-reveal style={d(200 + i * 90)} className="border-b border-white/15 py-5">
-                    <p className="font-display text-2xl">{title}</p>
+                  <li key={title} data-reveal style={d(200 + i * 90)} className="border-b border-white/15 py-4 sm:py-5">
+                    <p className="font-display text-[1.4rem] sm:text-2xl">{title}</p>
                     <p className="mt-1 text-[15px] text-white/65">{line}</p>
                   </li>
                 ))}
               </ul>
-              <div data-reveal style={d(450)} className="mt-10">
+              <div data-reveal style={d(450)} className="mt-7 sm:mt-10">
                 <Link href="/studio/book" className="btn-primary group">
                   Book the studio <Arrow />
                 </Link>
@@ -214,8 +222,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Sober Living: an image-led preview on phones. Prices, eligibility and how to
+          apply live on the dedicated page (/housing). */}
+      <section aria-labelledby="sober-title" className="relative isolate order-5 overflow-hidden bg-night text-white sm:hidden">
+        <div data-reveal="image" className="relative aspect-[3/4]">
+          <Image {...images.workshop} alt={images.workshop.alt} sizes="100vw" className="h-full w-full object-cover object-top" />
+        </div>
+        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,#05070d_0%,rgb(5_7_13/0.92)_34%,rgb(10_16_36/0.35)_66%,rgb(10_16_36/0.1)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 px-4 pb-11">
+          <h2 id="sober-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1]">
+            Sober Living Program
+          </h2>
+          <p data-reveal style={d(150)} className="mt-4 text-[15.5px] leading-relaxed text-white/80">
+            A stable, sober home with structure, community and support toward work and your goals. Many of our
+            residents come to us after a treatment program.
+          </p>
+          <div data-reveal style={d(250)} className="mt-6">
+            <Link href="/housing" className="btn-primary group">
+              Explore Sober Living <Arrow />
+            </Link>
+          </div>
+          <p data-reveal style={d(300)} className="mt-4 text-[13px] text-chrome">
+            Costs, eligibility and how to apply are on the program page.
+          </p>
+        </div>
+      </section>
+
       {/* Sober Living Program */}
-      <section aria-labelledby="housing-title" className="bg-ivory">
+      <section aria-labelledby="housing-title" className="hidden bg-ivory sm:block">
         <div className="mx-auto grid max-w-7xl gap-16 px-4 py-24 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-24">
           <div>
             <h2 id="housing-title" data-reveal="mask" className={h2}>
@@ -262,14 +296,14 @@ export default function Home() {
       </section>
 
       {/* Events */}
-      <section aria-labelledby="events-title" className="border-t border-ink/10 bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
-          <div className="flex flex-wrap items-end justify-between gap-8">
+      <section aria-labelledby="events-title" className="order-8 border-t border-ink/10 bg-ivory sm:order-none">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 sm:gap-8">
             <div className="max-w-2xl">
               <h2 id="events-title" data-reveal="mask" className={h2}>
                 Events and gatherings
               </h2>
-              <p data-reveal style={d(150)} className="mt-6 text-lg leading-relaxed text-muted">
+              <p data-reveal style={d(150)} className="mt-3 text-[15px] leading-relaxed text-muted sm:mt-6 sm:text-lg">
                 Conferences, workshops, church services, community events and program events.
               </p>
             </div>
@@ -277,7 +311,10 @@ export default function Home() {
               View all events <Arrow />
             </Link>
           </div>
-          <ul className="mt-14 grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4">
+          <div className="mt-7 sm:hidden">
+            <EventsCarousel events={recentEvents} />
+          </div>
+          <ul className="mt-14 hidden grid-cols-2 gap-x-5 gap-y-10 sm:grid lg:grid-cols-4">
             {recentEvents.map((e, i) => (
               <li key={e.title} className={i % 2 === 1 ? "lg:mt-16" : ""}>
                 <figure data-reveal="image" style={d(i * 120)} className="overflow-hidden">
@@ -299,37 +336,37 @@ export default function Home() {
       </section>
 
       {/* Life at KEP: an asymmetric photo story */}
-      <section aria-labelledby="moments-title" className="bg-night text-white">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
-          <div className="flex flex-wrap items-end justify-between gap-8">
-            <h2 id="moments-title" data-reveal="mask" className="font-display text-5xl font-medium leading-[0.98] sm:text-6xl lg:text-7xl">
+      <section aria-labelledby="moments-title" className="order-6 bg-ivory text-ink sm:order-none sm:bg-night sm:text-white">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
+            <h2 id="moments-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
               Life at KEP
             </h2>
-            <Link data-reveal href="/gallery" className="btn-quiet group text-white">
+            <Link data-reveal href="/gallery" className="btn-quiet group text-ink sm:text-white">
               See the gallery <Arrow />
             </Link>
           </div>
-          <div className="mt-14 grid gap-5 lg:grid-cols-12 lg:grid-rows-[auto_auto]">
-            <figure className="lg:col-span-7 lg:row-span-2">
+          <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-6 sm:mt-14 sm:grid-cols-1 sm:gap-5 lg:grid-cols-12 lg:grid-rows-[auto_auto]">
+            <figure className="col-span-2 sm:col-span-1 lg:col-span-7 lg:row-span-2">
               <div data-reveal="image" className="overflow-hidden">
-                <Image {...images.youthActivity} alt={images.youthActivity.alt} sizes="(min-width: 1024px) 58vw, 100vw" className="aspect-[4/3] w-full object-cover lg:aspect-[5/6]" />
+                <Image {...images.youthActivity} alt={images.youthActivity.alt} sizes="(min-width: 1024px) 58vw, 100vw" className="aspect-[4/5] w-full object-cover sm:aspect-[4/3] lg:aspect-[5/6]" />
               </div>
-              <figcaption className="mt-4 flex justify-between gap-4 text-[14px] text-chrome">
-                <span className="font-display text-2xl text-white">Youth in motion</span>
-                <span className="self-end">Learning, playing and growing together</span>
+              <figcaption className="mt-3 flex flex-col gap-0.5 text-[13px] text-muted sm:mt-4 sm:flex-row sm:justify-between sm:gap-4 sm:text-[14px] sm:text-chrome">
+                <span className="font-display text-xl leading-tight text-ink sm:text-2xl sm:text-white">Youth in motion</span>
+                <span className="sm:self-end">Learning, playing and growing together</span>
               </figcaption>
             </figure>
             {[
               { img: images.computerLab, title: "The computer lab", line: "Homework help and job searches" },
               { img: images.celebration, title: "Celebrations", line: "Marking what God is doing" },
             ].map((m, i) => (
-              <figure key={m.title} className="lg:col-span-5">
+              <figure key={m.title} className={`lg:col-span-5 ${i === 1 ? "max-sm:mt-8" : ""}`}>
                 <div data-reveal="image" style={d(150 + i * 150)} className="overflow-hidden">
-                  <Image {...m.img} alt={m.img.alt} sizes="(min-width: 1024px) 40vw, 100vw" className="aspect-[16/10] w-full object-cover" />
+                  <Image {...m.img} alt={m.img.alt} sizes="(min-width: 1024px) 40vw, 100vw" className="aspect-[3/4] w-full object-cover sm:aspect-[16/10]" />
                 </div>
-                <figcaption className="mt-4 flex justify-between gap-4 text-[14px] text-chrome">
-                  <span className="font-display text-2xl text-white">{m.title}</span>
-                  <span className="self-end">{m.line}</span>
+                <figcaption className="mt-3 flex flex-col gap-0.5 text-[13px] text-muted sm:mt-4 sm:flex-row sm:justify-between sm:gap-4 sm:text-[14px] sm:text-chrome">
+                  <span className="font-display text-xl leading-tight text-ink sm:text-2xl sm:text-white">{m.title}</span>
+                  <span className="sm:self-end">{m.line}</span>
                 </figcaption>
               </figure>
             ))}
@@ -338,9 +375,9 @@ export default function Home() {
       </section>
 
       {/* Church: the pastors under a church-window arch */}
-      <section aria-labelledby="church-title" className="bg-ivory">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-4 py-24 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-24">
-          <div data-reveal className="relative mx-auto w-full max-w-md">
+      <section aria-labelledby="church-title" className="order-10 bg-ivory sm:order-none">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:gap-16 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-24">
+          <div data-reveal className="relative mx-auto w-full max-w-[17rem] sm:max-w-md">
             <div aria-hidden="true" className="absolute -inset-4 rounded-t-full border border-ink/15 sm:-inset-6" />
             <div className="relative overflow-hidden rounded-t-full">
               <Image
@@ -356,19 +393,19 @@ export default function Home() {
             <h2 id="church-title" data-reveal="mask" className={h2}>
               A church family that shows up
             </h2>
-            <p data-reveal style={d(150)} className="mt-8 max-w-lg text-lg leading-relaxed text-muted">
+            <p data-reveal style={d(150)} className="mt-5 max-w-lg text-[16px] leading-relaxed text-muted sm:mt-8 sm:text-lg">
               Led by {org.pastors}, KEP Church gathers every week to worship, study the Word and serve our
               neighborhood. Come as you are.
             </p>
-            <dl className="mt-12 border-t border-ink/15">
+            <dl className="mt-7 border-t border-ink/15 sm:mt-12">
               {weekly.map((w, i) => (
-                <div key={w.title} data-reveal style={d(200 + i * 100)} className="flex items-baseline justify-between gap-6 border-b border-ink/15 py-6">
-                  <dt className="font-display text-3xl">{w.title}</dt>
+                <div key={w.title} data-reveal style={d(200 + i * 100)} className="flex items-baseline justify-between gap-6 border-b border-ink/15 py-4 sm:py-6">
+                  <dt className="font-display text-2xl sm:text-3xl">{w.title}</dt>
                   <dd className="text-[15px] text-muted">{w.day}s at {w.time}</dd>
                 </div>
               ))}
             </dl>
-            <div data-reveal style={d(400)} className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <div data-reveal style={d(400)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-12 sm:gap-y-4">
               <Link href="/church" className="btn-primary group">
                 About the church <Arrow />
               </Link>
@@ -381,18 +418,18 @@ export default function Home() {
       </section>
 
       {/* Closing */}
-      <section className="relative isolate overflow-hidden bg-night text-white">
+      <section className="relative isolate order-11 overflow-hidden bg-night text-white sm:order-none">
         <Image {...images.adultMinistry} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-45" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.9)_0%,rgb(16_26_61/0.55)_55%,rgb(16_26_61/0.2)_100%)]" />
-        <div className="mx-auto max-w-7xl px-4 py-32 sm:px-6 sm:py-44">
-          <h2 data-reveal="mask" className="max-w-3xl font-display text-[clamp(3rem,7vw,6.5rem)] font-medium leading-[0.98]">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-44">
+          <h2 data-reveal="mask" className="max-w-3xl font-display text-[2.7rem] font-medium leading-[1] sm:text-[clamp(3rem,7vw,6.5rem)] sm:leading-[0.98]">
             There&apos;s a place for you here.
           </h2>
-          <p data-reveal style={d(150)} className="mt-8 max-w-lg text-lg leading-relaxed text-white/80">
+          <p data-reveal style={d(150)} className="mt-5 max-w-lg text-[15.5px] leading-relaxed text-white/80 sm:mt-8 sm:text-lg">
             Create a free KEP account to register for events, join programs and keep up with everything happening at
             Kingdom Empowerment Place.
           </p>
-          <div data-reveal style={d(250)} className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <div data-reveal style={d(250)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-10 sm:gap-y-4">
             <Link href="/signup" className="btn-primary group">
               Create an account <Arrow />
             </Link>
@@ -402,6 +439,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }

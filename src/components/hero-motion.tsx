@@ -5,15 +5,12 @@ import { useEffect, useRef } from "react";
 // The homepage hero background. At rest it is a dark navy/black gradient with
 // the KEP artwork faintly embedded on the right (the film's own last frame, so
 // the two line up exactly). Once per page load, after the diagonal entrance
-// has opened and the hero has sat still for a moment, a blue light rises
-// around that artwork, the film materializes from the same place, plays once,
-// and settles back into the faint artwork, which stays. No loop, no controls
+// has opened and the hero has sat still for a moment, the film opens at full
+// brightness, plays once, and settles back into the whole artwork, which stays. No loop, no controls
 // (it moves for under 5 seconds), and reduced-motion visitors see only the
 // calm resting hero.
 
 const ENTRANCE_MS = 1420; // the diagonal panels finish opening (see globals.css)
-const REST_MS = 400; // the finished hero holds still before the light rises
-const GLOW_LEAD_MS = 450; // the light rises this long before the film appears
 const FADE_OUT_S = 1.3; // seconds before the film's end that it starts to recede
 
 // Module state survives client-side navigation but not a full reload, so the
@@ -30,6 +27,7 @@ export function HeroMotion() {
     if (!layer || !video || playedThisLoad) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     playedThisLoad = true;
+    layer.dataset.phase = "wait"; // the still steps aside; the film opens bright
 
     let cancelled = false;
     let frame = 0;
@@ -42,7 +40,7 @@ export function HeroMotion() {
     video.load();
 
     const intro = document.documentElement.classList.contains("intro-play");
-    const startAt = intro ? ENTRANCE_MS + REST_MS : 500;
+    const startAt = intro ? ENTRANCE_MS : 0;
     const ready = new Promise<void>((resolve) => {
       if (video.readyState >= 3) resolve();
       else video.addEventListener("canplaythrough", () => resolve(), { once: true });
@@ -53,17 +51,13 @@ export function HeroMotion() {
 
     Promise.all([ready, rest]).then(async () => {
       if (cancelled) return;
-      // First the blue light rises around the faint artwork...
-      layer.dataset.phase = "glow";
-      await new Promise((r) => setTimeout(r, GLOW_LEAD_MS));
-      if (cancelled) return;
       try {
         await video.play();
       } catch {
         layer.dataset.phase = "rest"; // autoplay refused: the calm hero stays
         return;
       }
-      // ...then the film materializes from the same place.
+      // The film is at full brightness from the first frame.
       layer.dataset.phase = "in";
       const watch = () => {
         if (cancelled) return;
@@ -117,7 +111,7 @@ export function HeroMotion() {
       </div>
 
       {/* Keeps the words readable whatever the film is doing. */}
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(5_7_13/0.94)_0%,rgb(5_7_13/0.8)_38%,rgb(5_7_13/0.5)_58%,rgb(10_16_36/0.1)_76%,transparent_100%)] max-lg:bg-[linear-gradient(0deg,rgb(5_7_13/0.96)_0%,rgb(5_7_13/0.84)_40%,rgb(5_7_13/0.55)_75%,rgb(5_7_13/0.4)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(5_7_13/0.94)_0%,rgb(5_7_13/0.7)_30%,rgb(5_7_13/0.15)_50%,transparent_66%)] max-lg:bg-[linear-gradient(0deg,rgb(5_7_13/0.96)_0%,rgb(5_7_13/0.85)_36%,rgb(5_7_13/0.12)_54%,transparent_66%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-night to-transparent" />
     </div>
   );
