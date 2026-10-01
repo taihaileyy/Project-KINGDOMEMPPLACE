@@ -63,10 +63,10 @@ export function ImpactSection({ facts }: { facts: Fact[] }) {
       {/* One soft glow, the light in the KEP logo. */}
       <div
         aria-hidden="true"
-        className="absolute -left-48 -top-56 -z-10 size-[640px] rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.28),transparent_62%)]"
+        className="absolute -left-48 -top-56 -z-10 size-[640px] animate-[drift_16s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.28),transparent_62%)]"
       />
       <div className="mx-auto max-w-7xl px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-16">
-        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
+        <div data-reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
           <h2 id="impact-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
             Our impact
           </h2>
@@ -86,7 +86,7 @@ export function ImpactSection({ facts }: { facts: Fact[] }) {
               ))
             : facts.map((f) => (
                 <Stat key={f.label} Icon={factIcons[f.icon]} label={f.label}>
-                  {f.value}
+                  {/^\d+$/.test(f.value) ? <CountUp to={Number(f.value)} /> : f.value}
                 </Stat>
               ))}
         </dl>

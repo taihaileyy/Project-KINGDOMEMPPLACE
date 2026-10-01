@@ -83,6 +83,31 @@ h1, h2, h3 {
   @apply rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)];
 }
 
+/* Motion. One quiet vocabulary: things rise gently into place once. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(12%, 10%, 0) scale(1.15); }
+}
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+.rise { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0ms); }
+
+/* Scroll reveal: only armed once JavaScript has loaded (RevealObserver adds
+   .reveal-ready), so content is never hidden if scripts fail. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal-ready [data-reveal][data-shown] { opacity: 1; transform: none; }
+
 /* Slow push-in for the hero photos. */
 @keyframes kenburns {
   from { transform: scale(1.02); }
@@ -90,5 +115,6 @@ h1, h2, h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .reveal-ready [data-reveal] { opacity: 1; transform: none; }
 }

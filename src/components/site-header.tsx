@@ -52,18 +52,39 @@ export function SiteHeader() {
   const pathname = usePathname();
   const triggerRef = useRef<HTMLButtonElement>(null);
 
+  // Once the page scrolls, the header lifts into a floating black bar.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-30 bg-paper">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <header className={`sticky top-0 z-30 px-2 pt-2 transition-colors duration-300 sm:px-3 ${scrolled ? "" : "bg-paper"}`}>
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl border px-3 py-2 transition-[background-color,border-color,box-shadow,color] duration-300 sm:px-4 ${
+          scrolled ? "border-white/10 bg-night/85 text-white shadow-2xl backdrop-blur-xl" : "border-transparent"
+        }`}
+      >
         <Wordmark nameClass="hidden sm:inline xl:hidden 2xl:inline" />
         <nav aria-label="Main" className="hidden xl:block">
-          <ul className="flex items-center gap-0.5 rounded-full border border-line bg-paper px-2 py-1.5 shadow-[var(--shadow-card)]">
+          <ul
+            className={`flex items-center gap-0.5 rounded-full border px-2 py-1.5 transition-colors duration-300 ${
+              scrolled ? "border-white/10 bg-transparent" : "border-line bg-paper shadow-[var(--shadow-card)]"
+            }`}
+          >
             {siteNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
-                  className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-3 text-[15px] font-semibold text-ink/80 hover:bg-surface hover:text-ink aria-[current=page]:bg-blue-soft aria-[current=page]:text-blue"
+                  className={`inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-3 text-[15px] font-semibold ${
+                    scrolled
+                      ? "text-white/80 hover:bg-white/10 hover:text-white aria-[current=page]:bg-electric/20 aria-[current=page]:text-white"
+                      : "text-ink/80 hover:bg-surface hover:text-ink aria-[current=page]:bg-blue-soft aria-[current=page]:text-blue"
+                  }`}
                 >
                   {item.label}
                 </Link>
@@ -76,7 +97,12 @@ export function SiteHeader() {
             <Link href="/portal" className="btn-primary hidden sm:inline-flex">My account</Link>
           ) : (
             <>
-              <Link href="/login" className="btn-secondary hidden sm:inline-flex">Log in</Link>
+              <Link
+                href="/login"
+                className={`hidden sm:inline-flex ${scrolled ? "btn border border-white/20 text-white hover:bg-white/10" : "btn-secondary"}`}
+              >
+                Log in
+              </Link>
               <Link href="/signup" className="btn-primary hidden sm:inline-flex">Create account</Link>
             </>
           )}
@@ -84,7 +110,7 @@ export function SiteHeader() {
             buttonRef={triggerRef}
             open={open}
             onOpen={() => setOpen(true)}
-            className="border-line bg-paper text-ink hover:bg-surface xl:hidden"
+            className={`xl:hidden ${scrolled ? "border-white/20 text-white hover:bg-white/10" : "border-line bg-paper text-ink hover:bg-surface"}`}
           />
         </div>
       </div>
