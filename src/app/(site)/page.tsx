@@ -397,6 +397,37 @@ export default function Home() {
           >
             Watch on YouTube <Arrow />
           </a>
+
+          {/* The book itself */}
+          <div className="mt-12 grid items-center gap-8 border-t border-white/15 pt-10 sm:mt-20 sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-14 sm:pt-16">
+            <div data-reveal="image" className="mx-auto w-full max-w-[13rem] overflow-hidden bg-black sm:mx-0 sm:max-w-none">
+              <Image
+                src="/images/a-good-soldier-book.jpg"
+                width={428}
+                height={570}
+                alt="Book cover: A Good Soldier, Ready 4 War, by Lawrence Morgan, a soldier saluting at sunset"
+                sizes="(min-width: 640px) 240px, 208px"
+                className="h-auto w-full"
+              />
+            </div>
+            <div className="text-center sm:text-left">
+              <p data-reveal className="text-[13px] font-semibold uppercase tracking-[0.18em] text-electric">The book</p>
+              <h3 data-reveal style={d(100)} className="mt-3 font-display text-[2rem] font-medium leading-[1.05] sm:text-5xl">
+                A Good Soldier: Ready 4 War
+              </h3>
+              <p data-reveal style={d(180)} className="mt-3 text-[15px] text-chrome sm:text-lg">by Lawrence Morgan</p>
+              <a
+                data-reveal
+                style={d(260)}
+                href="https://payhip.com/b/hM6T"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary group mt-7"
+              >
+                Get the book <Arrow />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
