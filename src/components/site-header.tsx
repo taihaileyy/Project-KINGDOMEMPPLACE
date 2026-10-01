@@ -62,7 +62,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-30 px-2 pt-2 transition-colors duration-300 sm:px-3 ${scrolled ? "" : "bg-paper"}`}>
+    <header className={`site-header sticky top-0 z-30 px-2 pt-2 transition-colors duration-300 sm:px-3 ${scrolled ? "" : "bg-paper"}`}>
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl border px-3 py-2 transition-[background-color,border-color,box-shadow,color] duration-300 sm:px-4 ${
           scrolled ? "border-white/10 bg-night/85 text-white shadow-2xl backdrop-blur-xl" : "border-transparent"

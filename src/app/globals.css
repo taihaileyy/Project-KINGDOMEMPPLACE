@@ -65,10 +65,10 @@ h1, h2, h3 {
 
 /* Tailwind v4 custom utilities: shared control styles. */
 @utility btn {
-  @apply inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] px-5 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  @apply inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] px-5 text-[15px] font-semibold transition-[background-color,border-color,color,box-shadow,translate] duration-200 ease-out hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 motion-reduce:hover:translate-y-0;
 }
 @utility btn-primary {
-  @apply btn bg-blue text-white hover:bg-blue-hover;
+  @apply btn bg-blue text-white hover:bg-blue-hover hover:shadow-[0_10px_28px_-6px_rgb(10_20_224/0.55)];
 }
 @utility btn-secondary {
   @apply btn border border-line bg-paper text-ink hover:bg-surface;
@@ -108,6 +108,60 @@ h1, h2, h3 {
 }
 .reveal-ready [data-reveal][data-shown] { opacity: 1; transform: none; }
 
+/* ── Cinematic entrance (homepage, once per visit; see intro-curtain.tsx) ── */
+.kep-intro { display: none; }
+.intro-play .kep-intro {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  animation: intro-gone 0s linear 1.5s forwards;
+}
+@keyframes intro-gone { to { visibility: hidden; } }
+
+.kep-intro-panel {
+  position: absolute;
+  /* Taller than the screen so the slight vertical drift never shows an edge. */
+  inset: -10% -2px;
+  background: #000;
+  will-change: transform;
+}
+/* The seam runs like "/": from 40% along the bottom to 60% along the top. */
+.kep-intro-a {
+  clip-path: polygon(0 0, 60% 0, 40% 100%, 0 100%);
+  background: radial-gradient(60% 80% at 52% 50%, rgb(10 20 224 / 0.16), transparent 70%), #000;
+  animation: intro-a 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.32s both;
+}
+.kep-intro-b {
+  clip-path: polygon(60% 0, 100% 0, 100% 100%, 40% 100%);
+  background: radial-gradient(60% 80% at 48% 50%, rgb(10 20 224 / 0.16), transparent 70%), #000;
+  animation: intro-b 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.32s both;
+}
+@keyframes intro-a { to { transform: translate3d(-64%, -5%, 0); } }
+@keyframes intro-b { to { transform: translate3d(64%, 5%, 0); } }
+
+.kep-intro-seam {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 6px var(--kep-electric)) drop-shadow(0 0 18px var(--kep-blue));
+  /* Draws itself bottom to top, then fades as the panels part. */
+  animation: intro-seam-draw 0.38s cubic-bezier(0.65, 0, 0.35, 1) 0.02s both, intro-seam-out 0.45s ease-out 0.4s forwards;
+}
+.kep-intro-seam line { stroke: #fff; stroke-width: 2px; }
+@keyframes intro-seam-draw { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes intro-seam-out { to { opacity: 0; } }
+
+/* The page settles in behind the opening panels. */
+.intro-play .hero-bg { animation: hero-settle 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both; }
+@keyframes hero-settle { from { transform: scale(1.05); } to { transform: none; } }
+.intro-play .hero-copy .rise { animation-delay: calc(var(--d, 0ms) + 650ms); }
+.intro-play .site-header { animation: nav-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s both; }
+@keyframes nav-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+
 /* Slow push-in for the hero photos. */
 @keyframes kenburns {
   from { transform: scale(1.02); }
@@ -117,4 +171,5 @@ h1, h2, h3 {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal-ready [data-reveal] { opacity: 1; transform: none; }
+  .kep-intro { display: none !important; }
 }

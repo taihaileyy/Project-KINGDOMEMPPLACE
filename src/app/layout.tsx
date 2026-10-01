@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Public_Sans } from "next/font/google";
+import { IntroCurtain, introScript } from "@/components/intro-curtain";
 import "./globals.css";
 
 // Placeholder pairing until KEP's brand fonts are confirmed from the intake.
@@ -14,8 +15,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    // The intro script adds a class to <html> before React hydrates.
+    <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+      </head>
       <body>
+        <IntroCurtain />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-paper focus:px-4 focus:py-2"

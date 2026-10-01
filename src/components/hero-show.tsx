@@ -68,7 +68,7 @@ export function HeroShow() {
 
   return (
     <>
-      <div aria-hidden="true" className="absolute inset-0 -z-20 overflow-hidden bg-night">
+      <div aria-hidden="true" className="hero-bg absolute inset-0 -z-20 overflow-hidden bg-night">
         {slides.map((s, i) => {
           const shown = i === index;
           const zoom = !reduced && (shown || i === prev);

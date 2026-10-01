@@ -46,7 +46,7 @@ export default function Home() {
         className="relative isolate flex min-h-[640px] flex-col overflow-hidden bg-night pb-7 text-white lg:min-h-[720px]"
       >
         <HeroShow />
-        <div className="mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pb-12">
+        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pb-12">
           <div className="max-w-3xl">
             <h1
               id="hero-title"
@@ -153,7 +153,7 @@ export default function Home() {
               <li key={p.slug} data-reveal style={d(i * 80)}>
                 <Link
                   href={`/programs/${p.slug}`}
-                  className="group relative flex h-full overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)] transition-colors before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1 before:bg-blue before:opacity-0 before:transition-opacity hover:border-blue hover:before:opacity-100 sm:flex-col"
+                  className="group relative flex h-full overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgb(11_13_18/0.12)] motion-reduce:hover:translate-y-0 before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1 before:bg-blue before:opacity-0 before:transition-opacity hover:border-blue hover:before:opacity-100 sm:flex-col"
                 >
                   {/* A thumbnail beside the text on phones, a full-width photo from tablet up. */}
                   <Image
@@ -174,7 +174,7 @@ export default function Home() {
             <li data-reveal style={d(programs.length * 80)}>
               <Link
                 href="/housing"
-                className="group relative flex h-full flex-col justify-between gap-8 overflow-hidden rounded-[var(--radius-card)] bg-night p-6 text-white"
+                className="group relative flex h-full flex-col justify-between gap-8 overflow-hidden rounded-[var(--radius-card)] bg-night p-6 text-white transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgb(10_20_224/0.25)] motion-reduce:hover:translate-y-0"
               >
                 <div aria-hidden="true" className="absolute -bottom-24 -right-24 size-64 rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.3),transparent_65%)]" />
                 <House aria-hidden="true" className="size-9 text-electric" strokeWidth={1.5} />
@@ -199,12 +199,15 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-14">
           <div data-reveal className="relative">
             <div aria-hidden="true" className="absolute -inset-10 -z-10 animate-[drift_14s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,rgb(92_107_255/0.35),transparent)]" />
-            <Image
-              {...images.facility}
-              alt={images.facility.alt}
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover ring-1 ring-white/15 lg:aspect-[5/4]"
-            />
+            <div className="overflow-hidden rounded-[var(--radius-card)] ring-1 ring-white/15">
+              <Image
+                {...images.facility}
+                alt={images.facility.alt}
+                sizes="(min-width: 1024px) 55vw, 100vw"
+                data-parallax="0.06"
+                className="aspect-[4/3] w-full scale-110 object-cover lg:aspect-[5/4]"
+              />
+            </div>
           </div>
           <div data-reveal style={d(150)}>
             <h2 id="studio-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
@@ -301,7 +304,7 @@ export default function Home() {
           </div>
           <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {recentEvents.map((e, i) => (
-              <li key={e.title} data-reveal style={d(i * 90)} className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper">
+              <li key={e.title} data-reveal style={d(i * 90)} className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgb(11_13_18/0.12)] motion-reduce:hover:translate-y-0">
                 <Image
                   src={e.image.src}
                   alt={e.image.alt}
@@ -334,7 +337,7 @@ export default function Home() {
           </div>
           <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {moments.map((m, i) => (
-              <li key={m.title} data-reveal style={d(i * 90)} className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)]">
+              <li key={m.title} data-reveal style={d(i * 90)} className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgb(11_13_18/0.12)] motion-reduce:hover:translate-y-0">
                 <div className="overflow-hidden">
                   <Image
                     {...m.img}
@@ -359,12 +362,15 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1fr_1.1fr]">
           <div data-reveal className="relative mx-auto w-full max-w-md">
             <div aria-hidden="true" className="absolute -inset-3 -z-0 rounded-t-full rounded-b-[34px] border border-blue/15 sm:-inset-6 sm:rounded-b-[36px]" />
-            <Image
-              {...images.pastors}
-              alt={images.pastors.alt}
-              sizes="(min-width: 1024px) 30vw, 90vw"
-              className="relative aspect-[4/5] w-full rounded-t-full rounded-b-[28px] object-cover object-top shadow-[0_24px_60px_rgb(11_13_18/0.18)]"
-            />
+            <div className="relative overflow-hidden rounded-t-full rounded-b-[28px] shadow-[0_24px_60px_rgb(11_13_18/0.18)]">
+              <Image
+                {...images.pastors}
+                alt={images.pastors.alt}
+                sizes="(min-width: 1024px) 30vw, 90vw"
+                data-parallax="0.05"
+                className="aspect-[4/5] w-full scale-110 object-cover object-top"
+              />
+            </div>
             <div className="absolute -bottom-5 right-3 rounded-2xl bg-night px-5 py-4 text-white shadow-xl sm:-right-8">
               <p className="font-display text-3xl font-extrabold leading-none tracking-tight">10 AM</p>
               <p className="mt-1 text-sm text-electric">Sunday worship</p>
@@ -402,7 +408,7 @@ export default function Home() {
 
       {/* Closing */}
       <section className="relative isolate overflow-hidden border-b border-electric/60 bg-night text-white">
-        <Image {...images.adultMinistry} alt="" sizes="100vw" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />
+        <Image {...images.adultMinistry} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-40" />
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
           <h2 data-reveal className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
             There&apos;s a place for you here.
