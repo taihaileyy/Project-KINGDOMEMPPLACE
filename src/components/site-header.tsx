@@ -68,7 +68,7 @@ export function SiteHeader() {
           scrolled ? "border-white/10 bg-night/85 text-white shadow-2xl backdrop-blur-xl" : "border-transparent"
         }`}
       >
-        <Wordmark nameClass="hidden sm:inline xl:hidden 2xl:inline" />
+        <Wordmark nameClass="max-[359px]:hidden xl:hidden 2xl:inline" logoClass="h-10 w-auto sm:h-12" />
         <nav aria-label="Main" className="hidden xl:block">
           <ul
             className={`flex items-center gap-0.5 rounded-full border px-2 py-1.5 transition-colors duration-300 ${

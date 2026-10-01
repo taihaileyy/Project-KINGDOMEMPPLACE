@@ -51,7 +51,7 @@ export default function Home() {
             <h1
               id="hero-title"
               style={d(100)}
-              className="rise font-display text-5xl font-extrabold leading-[0.98] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] sm:text-7xl xl:text-[84px]"
+              className="rise font-display text-5xl font-extrabold leading-[0.98] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] max-[359px]:text-[40px] sm:text-7xl xl:text-[84px]"
             >
               Empowering youth. Building futures. Changing communities.
             </h1>

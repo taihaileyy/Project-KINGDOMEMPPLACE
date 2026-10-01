@@ -45,7 +45,8 @@ export function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
-// KEP's slide-out menu: a black panel with grouped rows, each an icon, a title
+// KEP's slide-out menu: a see-through black panel that slides in from the
+// right over half the screen, with grouped rows, each an icon, a title
 // and an optional one-line description. The current page gets a thin electric
 // blue bar, a blue icon and a faint blue tint. It stays mounted so it can
 // slide; `inert` keeps it out of reach while closed.
@@ -102,23 +103,23 @@ export function SideDrawer({
   }, [open, triggerRef]);
 
   return (
-    <div className={`fixed inset-0 z-40 ${open ? "" : "pointer-events-none"}`} inert={!open}>
+    <div className={`fixed inset-0 z-40 overflow-hidden ${open ? "" : "pointer-events-none"}`} inert={!open}>
       <div
         aria-hidden="true"
         onClick={onClose}
-        className={`absolute inset-0 bg-black/45 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-black/25 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
       />
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className={`absolute inset-y-3 left-3 flex w-[min(420px,calc(100vw-24px))] flex-col overflow-hidden rounded-3xl border border-white/10 bg-night/85 text-white shadow-2xl backdrop-blur-xl transition-transform duration-300 ease-out motion-reduce:transition-none ${
-          open ? "translate-x-0" : "-translate-x-[calc(100%+24px)]"
+        className={`absolute inset-y-0 right-0 flex w-[82vw] max-w-[560px] flex-col overflow-hidden rounded-l-[28px] border-l border-white/10 bg-black/70 text-white shadow-2xl backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none sm:w-1/2 ${
+          open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between gap-4 px-6 pb-2 pt-5">
-          <Wordmark showName={false} />
+          <Wordmark showName={false} logoClass="h-12 w-auto" priority={false} />
           <button
             ref={closeRef}
             type="button"
@@ -135,10 +136,14 @@ export function SideDrawer({
             <section key={group.title ?? gi} className="mt-4 first:mt-2">
               {group.title && <h2 className="px-3 font-display text-2xl font-extrabold tracking-tight">{group.title}</h2>}
               <ul className="mt-2 grid gap-0.5">
-                {group.items.map(({ href, title, line, icon }) => {
+                {group.items.map(({ href, title, line, icon }, ii) => {
                   const Icon = drawerIcons[icon];
                   return (
-                    <li key={href}>
+                    <li
+                      key={href}
+                      className={open ? "rise" : ""}
+                      style={{ "--d": `${120 + (gi * 3 + ii) * 40}ms` } as React.CSSProperties}
+                    >
                       <Link
                         href={href}
                         aria-current={isActivePath(pathname, href) ? "page" : undefined}

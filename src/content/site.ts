@@ -45,6 +45,8 @@ export type Img = { src: string; width: number; height: number; alt: string };
 export const images = {
   logo: { src: "/images/kep-logo.webp", width: 1600, height: 820, alt: "Kingdom Empowerment Place logo: the letters KEP with a white dove" },
   logoTile: { src: "/images/kep-logo-tile.webp", width: 320, height: 133, alt: "" },
+  // The full logo (crown, dove and KEP) on a transparent background.
+  logoFull: { src: "/images/kep-logo-full.webp", width: 1600, height: 567, alt: "Kingdom Empowerment Place" },
   heroPoster: { src: "/images/hero-poster.webp", width: 1280, height: 720, alt: "The KEP logo glowing blue, with a white dove" },
   adultMinistry: { src: "/images/adult-ministry.webp", width: 1280, height: 714, alt: "Members of the KEP adult ministry together after a One Body gathering" },
   youthGroup2: { src: "/images/youth-group-2.webp", width: 1320, height: 989, alt: "KEP youth ministry group photo" },
