@@ -174,3 +174,13 @@ export const funds = [
   { slug: "special", name: "Special giving", detail: "Support for a specific need, event or program." },
   { slug: "other", name: "Other", detail: "Anything else you'd like to give toward." },
 ] as const;
+
+// KEP's sober living home (photos from the original KEP site).
+export const houseImages = {
+  kitchen: { src: "/images/house/kitchen.webp", width: 635, height: 848, alt: "The KEP house kitchen and dining table" },
+  bedroom: { src: "/images/house/bedroom.webp", width: 635, height: 848, alt: "A bedroom with a window and closet" },
+  hallway: { src: "/images/house/hallway.webp", width: 635, height: 848, alt: "The hallway of the KEP house" },
+  bathroom: { src: "/images/house/bathroom.webp", width: 635, height: 846, alt: "A clean bathroom with a tub and vanity" },
+  bedroom2: { src: "/images/house/bedroom-2.webp", width: 635, height: 846, alt: "A second bedroom with a ceiling fan" },
+  dining: { src: "/images/house/dining.webp", width: 635, height: 846, alt: "The dining area and kitchen counter" },
+} satisfies Record<string, Img>;
