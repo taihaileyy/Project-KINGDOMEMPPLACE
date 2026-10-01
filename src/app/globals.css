@@ -218,43 +218,98 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
 @keyframes nav-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
 
 /* ── Hero motion (see hero-motion.tsx) ─────────────────────────────────────
-   The film sits on the right and is seen only through a soft radial mask,
-   so it never shows an edge. --glow widens that mask: the light emerges out
-   of the gradient, then contracts back into it. */
+   The faint still and the film share one box on the right and one soft mask:
+   an ellipse centered on the artwork, cut by a long fade on its left so
+   nothing reaches the headline. The film adds a second, animated radial
+   (--glow) so its light widens out of the artwork, then contracts back. */
 @property --glow {
   syntax: "<length-percentage>"; /* accepts the minifier's bare 0 */
   inherits: false;
   initial-value: 0%;
 }
-.hero-motion {
+.hero-art {
   position: absolute;
-  inset: 0 0 0 28%;
+  inset: 0 -14% 0 34%;
+  -webkit-mask-image:
+    radial-gradient(ellipse 62% 72% at 52% 50%, #000 35%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.3) 26%, #000 50%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 62% 72% at 52% 50%, #000 35%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.3) 26%, #000 50%);
+  mask-composite: intersect;
+}
+.hero-art > img, .hero-art > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* At rest: ~12% intensity, cooled toward the navy so it reads as atmosphere. */
+.hero-still { opacity: 0.12; filter: saturate(0.8) brightness(0.9); }
+
+.hero-haze,
+.hero-haze-lit { position: absolute; inset: 0; }
+.hero-haze { background: radial-gradient(36% 48% at 74% 48%, rgb(31 51 184 / 0.14), transparent 70%); }
+/* A brighter light that rises just before the film, and settles with it. */
+.hero-haze-lit {
+  background: radial-gradient(38% 52% at 74% 48%, rgb(31 51 184 / 0.3), rgb(10 20 224 / 0.08) 45%, transparent 72%);
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+.hero-motion {
   opacity: 0;
   --glow: 0%;
   transform: scale(1.04);
-  -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow));
-  mask-image: radial-gradient(closest-side at 50% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow));
   will-change: opacity, transform;
+  -webkit-mask-image:
+    radial-gradient(closest-side at 52% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow)),
+    linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.3) 26%, #000 50%);
+  mask-image:
+    radial-gradient(closest-side at 52% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow)),
+    linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.3) 26%, #000 50%);
 }
-.hero-motion video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-.hero-motion[data-phase="in"] {
+
+/* The light rises around the faint artwork. */
+.hero-stage[data-phase="glow"] .hero-haze-lit,
+.hero-stage[data-phase="in"] .hero-haze-lit { opacity: 1; }
+
+/* The film materializes from the same place. */
+.hero-stage[data-phase="in"] .hero-motion {
   opacity: 1;
-  --glow: 118%;
+  --glow: 150%;
   transform: none;
-  transition: opacity 1.3s cubic-bezier(0.33, 0, 0.2, 1), --glow 1.8s cubic-bezier(0.22, 0.7, 0.18, 1), transform 3s cubic-bezier(0.2, 0.7, 0.1, 1);
+  transition: opacity 1.4s cubic-bezier(0.33, 0, 0.2, 1), --glow 2s cubic-bezier(0.22, 0.7, 0.18, 1), transform 3.6s cubic-bezier(0.2, 0.7, 0.1, 1);
 }
-.hero-motion[data-phase="out"] {
+/* Settling: back to the faint artwork; the haze returns to rest. */
+.hero-stage[data-phase="out"] .hero-motion {
   opacity: 0;
-  --glow: 40%;
-  transform: scale(1.02);
-  transition: opacity 1.4s cubic-bezier(0.45, 0, 0.55, 1), --glow 1.4s cubic-bezier(0.45, 0, 0.55, 1), transform 1.4s ease-in;
+  --glow: 150%;
+  transform: none;
+  transition: opacity 1.5s cubic-bezier(0.45, 0, 0.55, 1);
 }
-/* Phones: the text sits low, so the film rises in the upper part of the hero,
+.hero-stage[data-phase="out"] .hero-haze-lit { transition-duration: 1.8s; }
+
+/* Phones: the text sits low, so the artwork lives in the upper hero,
    cropped to its center rather than shrunk. */
 @media (max-width: 1023px) {
-  .hero-motion { inset: 0 -20% 38% -20%; }
-  .hero-motion[data-phase="in"] { opacity: 0.75; }
-  .hero-motion video { object-position: 52% 45%; }
+  .hero-art { inset: 0 -30% 40% -30%; }
+  .hero-art {
+    -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 100%);
+    mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 100%);
+  }
+  .hero-motion {
+    -webkit-mask-image:
+      radial-gradient(closest-side at 50% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow)),
+      radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 100%);
+    mask-image:
+      radial-gradient(closest-side at 50% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow)),
+      radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 100%);
+  }
+  .hero-still { opacity: 0.1; }
+  .hero-stage[data-phase="in"] .hero-motion { opacity: 0.75; }
 }
 
 @media (prefers-reduced-motion: reduce) {
