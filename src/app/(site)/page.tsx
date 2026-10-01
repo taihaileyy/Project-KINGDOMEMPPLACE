@@ -281,7 +281,7 @@ export default function Home() {
               <p className="mt-2 font-display text-lg italic text-[#ecd08a] sm:text-2xl">An Interactive Bible Journey</p>
               <p className="mt-3 text-[14.5px] leading-snug text-white/80 sm:text-base">Test your knowledge. Learn the Word. Continue the journey.</p>
               <span className="btn-primary mt-4 sm:mt-6">
-                Enter Paradise <Arrow />
+                Play the game <Arrow />
               </span>
             </div>
           </Link>
