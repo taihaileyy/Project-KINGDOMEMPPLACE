@@ -8,10 +8,10 @@ import { VideoFeature } from "@/components/home/video-feature";
 import { ProgramsShowcase } from "@/components/home/programs-showcase";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
-const paths = [
+const paths: { href: string; title: string; line: string; mobileHidden?: boolean }[] = [
   { href: "/church", title: "Worship with us", line: "Sundays at 10 AM and Bible study Wednesdays at 6:30 PM." },
   { href: "/housing", title: "The Sober Living Program", line: "A sober home with structure, support and a plan." },
-  { href: "/programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab." },
+  { href: "/programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", mobileHidden: true },
   { href: "/studio/book", title: "Book the studio", line: "Record, film and create in KEP's media studio." },
   { href: "/events", title: "Attend an event", line: "Conferences, workshops and community gatherings." },
   { href: "/give", title: "Give", line: "Support the work happening on North Foster Drive." },
@@ -25,6 +25,16 @@ const studioUses = [
 
 // Delay for staggered entrances (read by .mask-line and [data-reveal]).
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
+
+// On phones every section opens with the same small label, so the long page
+// reads as chapters. Hidden from 640px up, where the layout is unchanged.
+function Eyebrow({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
+  return (
+    <p data-reveal className={`mb-3 text-[12px] font-semibold uppercase tracking-[0.2em] sm:hidden ${dark ? "text-electric" : "text-blue"}`}>
+      {children}
+    </p>
+  );
+}
 
 const heroLines = ["Empowering youth.", "Building futures.", "Changing communities."];
 
@@ -83,8 +93,8 @@ export default function Home() {
       </section>
 
       {/* Everything below the hero. On phones the sections flow in a story order
-          (opening, quote, pathways, programs, Sober Living, photos, impact,
-          events, studio, church, closing) with light and dark sections
+          (opening, quote, pathways + programs, Sober Living, photos, impact,
+          events, studio, church, Dr. Morgan's film and book, closing) with light and dark sections
           alternating; from 640px up this is plain source order. */}
       <div className="flex flex-col sm:block">
       {/* Opening statement */}
@@ -92,6 +102,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-14 sm:gap-12 sm:px-6 sm:py-32 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
           <div>
             <h2 id="welcome-title" className="sr-only">Welcome to Kingdom Empowerment Place</h2>
+            <Eyebrow>Welcome</Eyebrow>
             <p data-reveal="mask" className="font-display text-[1.7rem] font-medium leading-[1.2] sm:text-[clamp(2rem,4.2vw,3.6rem)] sm:leading-[1.12]">
               A church that worships together, and a home on North Foster Drive where young people, families and
               neighbors in recovery find structure, skills and a place to belong.
@@ -108,13 +119,14 @@ export default function Home() {
 
       {/* Find your place: an index, not cards */}
       <section aria-labelledby="paths-title" className="order-3 bg-ivory sm:order-none">
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-2 sm:px-6 sm:pb-32 sm:pt-0">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-2 sm:px-6 sm:pb-32 sm:pt-0">
+          <Eyebrow>Start here</Eyebrow>
           <h2 id="paths-title" data-reveal="mask" className={h2}>
             What brings you to KEP?
           </h2>
           <ul className="mt-6 grid border-t border-ink/15 sm:mt-14 lg:grid-cols-2 lg:gap-x-16">
-            {paths.map(({ href, title, line }, i) => (
-              <li key={href} data-reveal style={d((i % 2) * 90 + Math.floor(i / 2) * 70)} className="border-b border-ink/15">
+            {paths.map(({ href, title, line, mobileHidden }, i) => (
+              <li key={href} data-reveal style={d((i % 2) * 90 + Math.floor(i / 2) * 70)} className={`border-b border-ink/15 ${mobileHidden ? "max-sm:hidden" : ""}`}>
                 <Link href={href} className="group flex items-center justify-between gap-6 py-[1.125rem] sm:py-7">
                   <span>
                     <span className="block font-display text-[1.6rem] leading-tight transition-colors duration-300 group-hover:text-blue sm:text-4xl">
@@ -142,14 +154,20 @@ export default function Home() {
 
       {/* Programs */}
       <section aria-labelledby="programs-title" className="order-4 bg-ivory sm:order-none">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
-          <div className="grid gap-4 sm:gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+        <div className="mx-auto max-w-7xl px-4 pb-14 pt-0 sm:px-6 sm:py-32">
+          <div className="grid gap-4 border-t border-ink/15 pt-10 sm:gap-8 sm:border-t-0 sm:pt-0 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+            <div>
+            <Eyebrow>For every age</Eyebrow>
             <h2 id="programs-title" data-reveal="mask" className={h2}>
               Programs built to empower our community
             </h2>
+            </div>
             <p data-reveal style={d(150)} className="max-w-md text-[15px] leading-relaxed text-muted sm:text-lg lg:justify-self-end">
-              Create one KEP account to explore and register for programs across our community. Some programs have
-              eligibility requirements or need approval from our staff.
+              <span className="sm:hidden">One KEP account lets you explore and register. Some programs need staff approval.</span>
+              <span className="max-sm:hidden">
+                Create one KEP account to explore and register for programs across our community. Some programs have
+                eligibility requirements or need approval from our staff.
+              </span>
             </p>
           </div>
           <div className="mt-7 sm:mt-16">
@@ -166,6 +184,9 @@ export default function Home() {
               ]}
             />
           </div>
+          <Link data-reveal href="/programs" className="btn-quiet group mt-6 text-ink sm:hidden">
+            All programs <Arrow />
+          </Link>
           <p data-reveal className="mt-6 text-[14px] text-muted sm:mt-10 sm:text-[15px]">
             Not sure where to start?{" "}
             <a href={org.phoneHref} className="font-semibold text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
@@ -198,6 +219,7 @@ export default function Home() {
           </figure>
           <div className="flex items-center px-4 py-12 sm:px-6 sm:py-20 lg:px-16 lg:py-28">
             <div className="max-w-lg">
+              <Eyebrow dark>Create</Eyebrow>
               <h2 id="studio-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
                 Reserve our studio
               </h2>
@@ -231,6 +253,7 @@ export default function Home() {
         </div>
         <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,#05070d_0%,rgb(5_7_13/0.92)_34%,rgb(10_16_36/0.35)_66%,rgb(10_16_36/0.1)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 px-4 pb-11">
+          <Eyebrow dark>Recovery</Eyebrow>
           <h2 id="sober-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1]">
             Sober Living Program
           </h2>
@@ -301,6 +324,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 sm:gap-8">
             <div className="max-w-2xl">
+              <Eyebrow>Gather</Eyebrow>
               <h2 id="events-title" data-reveal="mask" className={h2}>
                 Events and gatherings
               </h2>
@@ -339,6 +363,7 @@ export default function Home() {
       {/* Life at KEP: an asymmetric photo story */}
       <section aria-labelledby="moments-title" className="order-6 bg-ivory text-ink sm:order-none sm:bg-night sm:text-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+          <Eyebrow>Community</Eyebrow>
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
             <h2 id="moments-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
               Life at KEP
@@ -376,9 +401,9 @@ export default function Home() {
       </section>
 
       {/* Watch: a film from Dr. Morgan, played only on request */}
-      <section aria-labelledby="watch-title" className="order-[65] border-y border-white/10 bg-blueblack text-white sm:order-none">
+      <section aria-labelledby="watch-title" className="order-11 border-y border-white/10 bg-blueblack text-white sm:order-none">
         <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-28">
-          <p data-reveal className="text-[13px] font-semibold uppercase tracking-[0.18em] text-electric">Watch</p>
+          <p data-reveal className="text-[12px] font-semibold uppercase tracking-[0.2em] text-electric sm:text-[13px]">From Dr. Morgan</p>
           <h2 id="watch-title" data-reveal="mask" className="mt-3 font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
             A Good Soldier
           </h2>
@@ -447,6 +472,7 @@ export default function Home() {
             </div>
           </div>
           <div>
+            <Eyebrow>Worship</Eyebrow>
             <h2 id="church-title" data-reveal="mask" className={h2}>
               A church family that shows up
             </h2>
@@ -475,7 +501,7 @@ export default function Home() {
       </section>
 
       {/* Closing */}
-      <section className="relative isolate order-11 overflow-hidden bg-night text-white sm:order-none">
+      <section className="relative isolate order-12 overflow-hidden bg-night text-white sm:order-none">
         <Image {...images.adultMinistry} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-45" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.9)_0%,rgb(16_26_61/0.55)_55%,rgb(16_26_61/0.2)_100%)]" />
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-44">

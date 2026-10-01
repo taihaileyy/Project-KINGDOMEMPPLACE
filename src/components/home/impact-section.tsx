@@ -66,8 +66,9 @@ export function ImpactSection({ facts, className = "" }: { facts: Fact[]; classN
         className="absolute -right-56 -top-64 -z-10 size-[760px] animate-[drift_18s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(circle,rgb(31_51_184/0.35),transparent_62%)]"
       />
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+        <p data-reveal className="mb-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-electric sm:hidden">By the numbers</p>
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-end">
-          <h2 id="impact-title" data-reveal="mask" className="font-display text-[2.9rem] font-medium leading-[0.95] sm:text-8xl">
+          <h2 id="impact-title" data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-8xl sm:leading-[0.95]">
             Our impact
           </h2>
           <p data-reveal style={{ "--d": "150ms" } as React.CSSProperties} className="max-w-md text-[15px] leading-relaxed text-chrome sm:text-lg lg:justify-self-end">
