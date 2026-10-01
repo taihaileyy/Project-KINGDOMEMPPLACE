@@ -10,12 +10,12 @@ import { ProgramsRail } from "@/components/home/programs-rail";
 import { houseImages, images, org, programs, recentEvents, weekly } from "@/content/site";
 
 const quickNav = [
-  { href: "/church", label: "Worship", Icon: Church },
-  { href: "/housing", label: "Sober Living", Icon: House },
-  { href: "/programs", label: "Programs", Icon: Users },
-  { href: "/studio/book", label: "Studio", Icon: Mic },
-  { href: "/events", label: "Events", Icon: CalendarDays },
-  { href: "/give", label: "Give", Icon: HandHeart },
+  { href: "/church", label: "Worship", title: "Worship with us", line: "Sundays at 10 AM and Bible study Wednesdays at 6:30 PM.", Icon: Church },
+  { href: "/housing", label: "Sober Living", title: "The Sober Living Program", line: "A sober home with structure, support and a plan.", Icon: House },
+  { href: "/programs", label: "Programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", Icon: Users },
+  { href: "/studio/book", label: "Studio", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
+  { href: "/events", label: "Events", title: "Attend an event", line: "Conferences, workshops and community gatherings.", Icon: CalendarDays },
+  { href: "/give", label: "Give", title: "Give", line: "Support the work happening on North Foster Drive.", Icon: HandHeart },
 ];
 
 // Delay for staggered entrances (read by .mask-line and [data-reveal]).
@@ -79,21 +79,35 @@ export default function Home() {
           church, a book, and a closing invitation, with light and dark sections
           alternating. */}
 
-      {/* Quick navigation */}
+      {/* Quick navigation: icon tiles on phones, an index with icons from 640px up */}
       <section aria-labelledby="quick-title" className="bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 pb-2 pt-12 sm:px-6 sm:pt-16">
-          <h2 id="quick-title" data-reveal="mask" className="font-display text-[2.1rem] font-medium leading-[1] sm:text-5xl">
+        <div className="mx-auto max-w-7xl px-4 pb-2 pt-12 sm:px-6 sm:pb-6 sm:pt-16">
+          <h2 id="quick-title" data-reveal="mask" className="font-display text-[2.1rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
             What brings you to KEP?
           </h2>
-          <ul className="mt-6 grid grid-cols-2 gap-2.5 sm:mt-8 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+          <ul className="mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
             {quickNav.map(({ href, label, Icon }, i) => (
               <li key={href} data-reveal style={d(i * 60)}>
                 <Link
                   href={href}
-                  className="group flex min-h-[5.75rem] flex-col items-center justify-center gap-2.5 rounded-[var(--radius-control)] border border-ink/15 bg-white/55 px-3 py-4 text-[15px] font-medium transition-[background-color,border-color,translate] duration-300 hover:-translate-y-0.5 hover:border-blue/40 hover:bg-white active:bg-white sm:min-h-[7rem] sm:text-base"
+                  className="flex min-h-[5.75rem] flex-col items-center justify-center gap-2.5 rounded-[var(--radius-control)] border border-ink/15 bg-white/55 px-3 py-4 text-[15px] font-medium transition-colors active:bg-white"
                 >
                   <Icon aria-hidden="true" className="size-7 text-blue" strokeWidth={1.5} />
                   {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-9 hidden border-t border-ink/15 sm:grid lg:grid-cols-2 lg:gap-x-16">
+            {quickNav.map(({ href, title, line, Icon }, i) => (
+              <li key={href} data-reveal style={d((i % 2) * 90 + Math.floor(i / 2) * 70)} className="border-b border-ink/15">
+                <Link href={href} className="group flex items-center gap-5 py-6">
+                  <Icon aria-hidden="true" className="size-9 shrink-0 text-blue" strokeWidth={1.4} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-display text-3xl leading-tight transition-colors duration-300 group-hover:text-blue sm:text-4xl">{title}</span>
+                    <span className="mt-1 block text-[15px] leading-relaxed text-muted">{line}</span>
+                  </span>
+                  <Arrow className="text-blue" />
                 </Link>
               </li>
             ))}
