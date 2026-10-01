@@ -4,6 +4,7 @@ import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
+import { VideoFeature } from "@/components/home/video-feature";
 import { ProgramsShowcase } from "@/components/home/programs-showcase";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
@@ -371,6 +372,31 @@ export default function Home() {
               </figure>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Watch: a film from Dr. Morgan, played only on request */}
+      <section aria-labelledby="watch-title" className="order-[65] border-y border-white/10 bg-blueblack text-white sm:order-none">
+        <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-28">
+          <p data-reveal className="text-[13px] font-semibold uppercase tracking-[0.18em] text-electric">Watch</p>
+          <h2 id="watch-title" data-reveal="mask" className="mt-3 font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
+            A Good Soldier
+          </h2>
+          <p data-reveal style={d(120)} className="mt-4 max-w-xl text-[15px] leading-relaxed text-chrome sm:text-lg">
+            The book trailer from Dr. Lawrence Morgan.
+          </p>
+          <div data-reveal="image" className="mt-8 sm:mt-12">
+            <VideoFeature id="ea_hIpFOtJM" title="A Good Soldier Book Trailer, Dr. Lawrence Morgan" />
+          </div>
+          <a
+            data-reveal
+            href="https://youtu.be/ea_hIpFOtJM"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-quiet group mt-6 text-white"
+          >
+            Watch on YouTube <Arrow />
+          </a>
         </div>
       </section>
 
