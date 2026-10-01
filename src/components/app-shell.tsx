@@ -23,7 +23,7 @@ export function AppShell({
     <div className="min-h-dvh bg-surface">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-night text-white">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6">
-          <Wordmark showName={false} />
+          <Wordmark showName={false} logoClass="h-10 w-auto" />
           <span className="rounded-full border border-electric/40 bg-electric/15 px-2.5 py-1 text-xs font-semibold text-white">{area}</span>
           <div className="ml-auto flex items-center gap-3">
             {switchLink && (

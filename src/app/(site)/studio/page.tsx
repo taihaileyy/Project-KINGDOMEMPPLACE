@@ -1,13 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { PageIntro, Section } from "@/components/section";
 import { images, org } from "@/content/site";
 
 export const metadata: Metadata = { title: "Book the Studio" };
-
-const requestHref = `mailto:${org.email}?subject=${encodeURIComponent("Studio booking request")}&body=${encodeURIComponent(
-  "Name:\nPhone:\nPreferred date:\nStart time:\nHow long (hours):\nWhat you'd like to do in the studio:\nAnything you'll need:\n",
-)}`;
 
 export default function StudioPage() {
   return (
@@ -16,7 +13,7 @@ export default function StudioPage() {
         title="Reserve our studio"
         lead="KEP's media studio is open to the community for recording, filming, podcasts and creative projects. Every booking is confirmed by our team."
       >
-        <a href={requestHref} className="btn-primary">Request a booking</a>
+        <Link href="/studio/book" className="btn-primary">Book the studio</Link>
         <a href={org.phoneHref} className="btn-secondary">Call {org.phone}</a>
       </PageIntro>
       <Section>
@@ -27,7 +24,10 @@ export default function StudioPage() {
               Tell us when you&apos;d like to come in, how long you need and what you&apos;re working on. We&apos;ll
               confirm your time or suggest another one.
             </p>
-            <p>Online booking with live availability is on its way.</p>
+            <p>
+              <Link href="/studio/book" className="font-semibold text-blue hover:underline">Send a booking request</Link>. It takes
+              about a minute, and you don&apos;t need an account.
+            </p>
           </div>
         </div>
       </Section>

@@ -34,8 +34,8 @@ export default function ChurchPage() {
         <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
           <Image {...images.preaching} alt={images.preaching.alt} sizes="(min-width: 1024px) 55vw, 100vw" className="w-full rounded-[var(--radius-card)]" />
           <div className="flex flex-wrap gap-3">
-            {org.social.map((s) => (
-              <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" className="btn bg-paper text-ink hover:bg-surface">
+            {org.social.filter((s) => s.href).map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="btn bg-paper text-ink hover:bg-surface">
                 {s.label}
               </a>
             ))}

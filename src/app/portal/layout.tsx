@@ -8,6 +8,7 @@ export default async function PortalLayout({ children }: { children: React.React
   // the person has a matching record (membership, enrollment, housing stay...).
   const nav: NavItem[] = [
     { href: "/portal", label: "Home", line: "Your KEP at a glance.", icon: "dashboard" },
+    { href: "/portal/giving", label: "My Giving", line: "Your gifts and yearly totals.", icon: "give" },
     { href: "/portal/profile", label: "My Profile", line: "Your name, contact details and password.", icon: "profile" },
   ];
 

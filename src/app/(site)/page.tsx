@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpen, CalendarDays, Church, Clapperboard, HandHeart, House, MapPin, Mic, Sparkles, Users } from "lucide-react";
-import { HeroVideoBackground } from "@/components/hero-video";
+import { HeroShow } from "@/components/hero-show";
 import { ImpactSection } from "@/components/home/impact-section";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
 const paths = [
   { href: "/church", title: "Worship with us", line: "Sundays at 10 AM and Bible study Wednesdays at 6:30 PM.", Icon: Church },
-  { href: "/housing", title: "Find housing", line: "Sober living housing with structure, support and a plan.", Icon: House },
+  { href: "/housing", title: "Sober Living Program", line: "A sober home with structure, support and a plan.", Icon: House },
   { href: "/programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", Icon: Users },
-  { href: "/studio", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
+  { href: "/studio/book", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
   { href: "/events", title: "Attend an event", line: "Conferences, workshops and community gatherings.", Icon: CalendarDays },
   { href: "/give", title: "Give", line: "Support the work happening on North Foster Drive.", Icon: HandHeart },
 ];
@@ -21,6 +21,16 @@ const studioUses = [
 ];
 
 const weeklyIcons = [Church, BookOpen];
+
+// Delay for staggered entrances (read by the .rise and [data-reveal] styles).
+const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
+
+const moments = [
+  { img: images.youthActivity, title: "Youth in motion", line: "Young people learning, playing and growing together." },
+  { img: images.computerLab, title: "The computer lab", line: "Homework help, job searches and new skills." },
+  { img: images.workshop, title: "Workshops", line: "Adults learning together and building something new." },
+  { img: images.celebration, title: "Celebrations", line: "Dressing up and celebrating what God is doing." },
+];
 
 // Light sections slide up over the dark section before them with rounded top
 // corners, the same panel shape as the menu drawer. The dark section adds the
@@ -35,23 +45,28 @@ export default function Home() {
         aria-labelledby="hero-title"
         className="relative isolate flex min-h-[640px] flex-col overflow-hidden bg-night pb-7 text-white lg:min-h-[720px]"
       >
-        <HeroVideoBackground />
+        <HeroShow />
         <div className="mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pb-12">
           <div className="max-w-3xl">
             <h1
               id="hero-title"
-              className="font-display text-5xl font-extrabold leading-[0.98] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] sm:text-7xl xl:text-[84px]"
+              style={d(100)}
+              className="rise font-display text-5xl font-extrabold leading-[0.98] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.45)] max-[359px]:text-[40px] sm:text-7xl xl:text-[84px]"
             >
               Empowering youth. Building futures. Changing communities.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">
-              Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, sober living
-              housing, programs for every age, events and a media studio.
+            <p style={d(280)} className="rise mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">
+              Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, a sober living
+              program, programs for every age, events and a media studio.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div style={d(440)} className="rise mt-8 flex flex-wrap gap-3">
               <Link href="/church#visit" className="btn-primary">Plan your visit</Link>
               <Link href="/signup" className="btn bg-paper text-ink hover:bg-surface">Create an account</Link>
             </div>
+          </div>
+          <div aria-hidden="true" style={d(900)} className="rise mt-10 hidden items-center gap-3 text-xs font-semibold text-white/60 lg:flex">
+            <span className="block h-8 w-px animate-[nudge_1.8s_ease-in-out_infinite] bg-white/70" />
+            Scroll
           </div>
         </div>
         <div className="border-t border-white/15 bg-black/40 backdrop-blur-sm">
@@ -86,15 +101,15 @@ export default function Home() {
       {/* Find your place: the menu drawer's rows, on white */}
       <section aria-labelledby="paths-title" className={`${sheet} bg-paper`}>
         <div className="mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-6 sm:pb-16 sm:pt-14">
-          <div className="flex flex-wrap items-end justify-between gap-4">
+          <div data-reveal className="flex flex-wrap items-end justify-between gap-4">
             <h2 id="paths-title" className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
               What brings you to KEP?
             </h2>
             <p className="max-w-sm text-muted">Pick a starting point. One KEP account connects all of it.</p>
           </div>
           <ul className="mt-8 grid border-t border-line sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3">
-            {paths.map(({ href, title, line, Icon }) => (
-              <li key={href} className="border-b border-line">
+            {paths.map(({ href, title, line, Icon }, i) => (
+              <li key={href} data-reveal style={d(i * 70)} className="border-b border-line">
                 <Link
                   href={href}
                   className="group relative flex h-full items-start gap-4 py-5 pl-4 pr-2 transition-colors before:absolute before:inset-y-5 before:left-0 before:w-[3px] before:rounded-full before:bg-blue before:opacity-0 before:transition-opacity hover:bg-surface hover:before:opacity-100 focus-visible:before:opacity-100"
@@ -123,7 +138,7 @@ export default function Home() {
       {/* Programs */}
       <section aria-labelledby="programs-title" className={`${sheet} bg-surface`}>
         <div className="mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-6 sm:pb-16 sm:pt-14">
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end">
+          <div data-reveal className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end">
             <h2 id="programs-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
               Programs built to empower our community
             </h2>
@@ -134,8 +149,8 @@ export default function Home() {
             </p>
           </div>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {programs.map((p) => (
-              <li key={p.slug}>
+            {programs.map((p, i) => (
+              <li key={p.slug} data-reveal style={d(i * 80)}>
                 <Link
                   href={`/programs/${p.slug}`}
                   className="group relative flex h-full overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)] transition-colors before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1 before:bg-blue before:opacity-0 before:transition-opacity hover:border-blue hover:before:opacity-100 sm:flex-col"
@@ -147,7 +162,7 @@ export default function Home() {
                     width={p.image.width}
                     height={p.image.height}
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 112px"
-                    className="w-28 shrink-0 object-cover sm:aspect-[16/10] sm:w-full"
+                    className="w-28 shrink-0 object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] sm:aspect-[16/10] sm:w-full"
                   />
                   <div className="min-w-0 p-4 [overflow-wrap:anywhere] sm:p-5">
                     <h3 className="font-display text-xl font-extrabold tracking-tight group-hover:text-blue sm:text-2xl">{p.name}</h3>
@@ -156,7 +171,7 @@ export default function Home() {
                 </Link>
               </li>
             ))}
-            <li>
+            <li data-reveal style={d(programs.length * 80)}>
               <Link
                 href="/housing"
                 className="group relative flex h-full flex-col justify-between gap-8 overflow-hidden rounded-[var(--radius-card)] bg-night p-6 text-white"
@@ -164,13 +179,13 @@ export default function Home() {
                 <div aria-hidden="true" className="absolute -bottom-24 -right-24 size-64 rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.3),transparent_65%)]" />
                 <House aria-hidden="true" className="size-9 text-electric" strokeWidth={1.5} />
                 <div className="relative">
-                  <h3 className="font-display text-2xl font-extrabold tracking-tight">Sober living housing</h3>
+                  <h3 className="font-display text-2xl font-extrabold tracking-tight">Sober Living Program</h3>
                   <p className="mt-1.5 text-chrome">
-                    Structured, sober housing with support toward work and your goals. Apply and our housing team
-                    reviews every application.
+                    Structured, sober living with support toward work and your goals. Apply and our team reviews
+                    every application.
                   </p>
                   <span className="mt-4 inline-block font-semibold text-electric underline-offset-4 group-hover:underline">
-                    Housing information
+                    About the program
                   </span>
                 </div>
               </Link>
@@ -182,8 +197,8 @@ export default function Home() {
       {/* Studio */}
       <section aria-labelledby="studio-title" className="relative isolate overflow-hidden bg-night text-white">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-14">
-          <div className="relative">
-            <div aria-hidden="true" className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(92_107_255/0.35),transparent)]" />
+          <div data-reveal className="relative">
+            <div aria-hidden="true" className="absolute -inset-10 -z-10 animate-[drift_14s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,rgb(92_107_255/0.35),transparent)]" />
             <Image
               {...images.facility}
               alt={images.facility.alt}
@@ -191,7 +206,7 @@ export default function Home() {
               className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover ring-1 ring-white/15 lg:aspect-[5/4]"
             />
           </div>
-          <div>
+          <div data-reveal style={d(150)}>
             <h2 id="studio-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
               Reserve our studio
             </h2>
@@ -211,7 +226,7 @@ export default function Home() {
               ))}
             </ul>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/studio" className="btn-primary">Book the studio</Link>
+              <Link href="/studio/book" className="btn-primary">Book the studio</Link>
             </div>
           </div>
         </div>
@@ -220,9 +235,9 @@ export default function Home() {
       {/* Housing */}
       <section aria-labelledby="housing-title" className={`${sheet} bg-paper`}>
         <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-12 sm:px-6 sm:pb-16 sm:pt-14 lg:grid-cols-2 lg:gap-14">
-          <div>
+          <div data-reveal>
             <h2 id="housing-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
-              Sober living housing
+              Sober Living Program
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
               A stable, sober place to live while you rebuild, with a community around you, clear expectations and
@@ -240,11 +255,11 @@ export default function Home() {
               </div>
             </dl>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/housing" className="btn-primary">Get housing information</Link>
+              <Link href="/housing" className="btn-primary">About the program</Link>
               <a href={org.phoneHref} className="btn-secondary">Call about openings</a>
             </div>
           </div>
-          <div className="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-8">
+          <div data-reveal style={d(150)} className="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-8">
             <h3 className="font-display text-2xl font-extrabold tracking-tight">How moving in works</h3>
             <ol className="mt-6 grid">
               {housing.steps.map((step, i) => (
@@ -269,7 +284,7 @@ export default function Home() {
       {/* Events */}
       <section aria-labelledby="events-title" className="bg-surface">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
-          <div className="flex flex-wrap items-end justify-between gap-6">
+          <div data-reveal className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
               <h2 id="events-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
                 Events and gatherings
@@ -285,17 +300,17 @@ export default function Home() {
             </div>
           </div>
           <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {recentEvents.map((e) => (
-              <li key={e.title} className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper">
+            {recentEvents.map((e, i) => (
+              <li key={e.title} data-reveal style={d(i * 90)} className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper">
                 <Image
                   src={e.image.src}
                   alt={e.image.alt}
                   width={e.image.width}
                   height={e.image.height}
                   sizes="(min-width: 1024px) 25vw, 50vw"
-                  className="aspect-[4/5] w-full object-cover object-top"
+                  className="aspect-[4/5] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
-                <div className="p-4">
+                <div className="relative bg-paper p-4">
                   <p className="font-bold leading-snug">{e.title}</p>
                   <p className="mt-0.5 text-sm text-muted">{e.when}</p>
                 </div>
@@ -305,16 +320,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Church */}
-      <section aria-labelledby="church-title" className="bg-paper">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1fr_1.1fr]">
-          <Image
-            {...images.pastors}
-            alt={images.pastors.alt}
-            sizes="(min-width: 1024px) 45vw, 100vw"
-            className="aspect-[4/5] w-full rounded-[var(--radius-card)] object-cover object-top"
-          />
-          <div>
+      {/* Life at KEP */}
+      <section aria-labelledby="moments-title" className="bg-paper">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
+          <div data-reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-2xl">
+              <h2 id="moments-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
+                Life at KEP
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-muted">Real moments from the people who make this place home.</p>
+            </div>
+            <Link href="/gallery" className="btn-secondary">See the gallery</Link>
+          </div>
+          <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {moments.map((m, i) => (
+              <li key={m.title} data-reveal style={d(i * 90)} className="group overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)]">
+                <div className="overflow-hidden">
+                  <Image
+                    {...m.img}
+                    alt={m.img.alt}
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                  />
+                </div>
+                <div className="p-4 sm:p-5">
+                  <span aria-hidden="true" className="block h-0.5 w-8 bg-blue" />
+                  <p className="mt-3 font-display text-lg font-extrabold leading-tight tracking-tight sm:text-xl">{m.title}</p>
+                  <p className="mt-1 text-sm leading-snug text-muted sm:text-[15px]">{m.line}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Church: the pastors under a church-window arch */}
+      <section aria-labelledby="church-title" className="bg-surface">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1fr_1.1fr]">
+          <div data-reveal className="relative mx-auto w-full max-w-md">
+            <div aria-hidden="true" className="absolute -inset-3 -z-0 rounded-t-full rounded-b-[34px] border border-blue/15 sm:-inset-6 sm:rounded-b-[36px]" />
+            <Image
+              {...images.pastors}
+              alt={images.pastors.alt}
+              sizes="(min-width: 1024px) 30vw, 90vw"
+              className="relative aspect-[4/5] w-full rounded-t-full rounded-b-[28px] object-cover object-top shadow-[0_24px_60px_rgb(11_13_18/0.18)]"
+            />
+            <div className="absolute -bottom-5 right-3 rounded-2xl bg-night px-5 py-4 text-white shadow-xl sm:-right-8">
+              <p className="font-display text-3xl font-extrabold leading-none tracking-tight">10 AM</p>
+              <p className="mt-1 text-sm text-electric">Sunday worship</p>
+            </div>
+          </div>
+          <div data-reveal style={d(150)}>
             <h2 id="church-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
               A church family that shows up
             </h2>
@@ -348,7 +404,7 @@ export default function Home() {
       <section className="relative isolate overflow-hidden border-b border-electric/60 bg-night text-white">
         <Image {...images.adultMinistry} alt="" sizes="100vw" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
-          <h2 className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+          <h2 data-reveal className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
             There&apos;s a place for you here.
           </h2>
           <p className="mt-5 max-w-xl text-lg text-white/85">
