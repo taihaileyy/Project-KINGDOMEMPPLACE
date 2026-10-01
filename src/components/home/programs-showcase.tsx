@@ -6,7 +6,8 @@ import { useState } from "react";
 import { Arrow } from "@/components/arrow";
 import type { Img } from "@/content/site";
 
-type Item = { href: string; name: string; summary: string; image: Img };
+// `mobileHidden` drops a row on phones when the next section already features it.
+type Item = { href: string; name: string; summary: string; image: Img; mobileHidden?: boolean };
 
 // An editorial index of programs. On large screens, pointing at (or tabbing
 // to) a program brings its photograph forward in the frame beside the list.
@@ -33,12 +34,12 @@ export function ProgramsShowcase({ items }: { items: Item[] }) {
 
       <ul className="border-t border-ink/15">
         {items.map((it, i) => (
-          <li key={it.href} data-reveal style={{ "--d": `${i * 70}ms` } as React.CSSProperties} className="border-b border-ink/15">
+          <li key={it.href} data-reveal style={{ "--d": `${i * 70}ms` } as React.CSSProperties} className={`border-b border-ink/15 ${it.mobileHidden ? "max-sm:hidden" : ""}`}>
             <Link
               href={it.href}
               onMouseEnter={() => setActive(i)}
               onFocus={() => setActive(i)}
-              className="group grid grid-cols-[auto_1fr] items-center gap-5 py-6 sm:py-7 lg:grid-cols-[1fr_auto]"
+              className="group grid grid-cols-[auto_1fr] items-center gap-4 py-4 sm:gap-5 sm:py-7 lg:grid-cols-[1fr_auto]"
             >
               <Image
                 src={it.image.src}
@@ -46,17 +47,17 @@ export function ProgramsShowcase({ items }: { items: Item[] }) {
                 width={it.image.width}
                 height={it.image.height}
                 sizes="96px"
-                className="size-20 object-cover sm:size-24 lg:hidden"
+                className="size-[4.5rem] object-cover sm:size-24 lg:hidden"
               />
               <span className="min-w-0">
                 <span
-                  className={`block font-display text-3xl leading-[1.05] transition-colors duration-300 sm:text-4xl lg:text-[44px] ${
+                  className={`block font-display text-[1.65rem] leading-[1.05] transition-colors duration-300 sm:text-4xl lg:text-[44px] ${
                     i === active ? "lg:text-blue" : ""
                   } group-hover:text-blue`}
                 >
                   {it.name}
                 </span>
-                <span className="mt-2 block max-w-md text-[15px] leading-relaxed text-muted">{it.summary}</span>
+                <span className="mt-1.5 block max-w-md text-[14px] leading-snug text-muted max-sm:line-clamp-2 sm:mt-2 sm:text-[15px] sm:leading-relaxed">{it.summary}</span>
               </span>
               <Arrow className="hidden text-blue lg:block" />
             </Link>

@@ -39,7 +39,7 @@ export type Fact = { value: string; label: string; icon: keyof typeof factIcons 
 // Live totals come from public_impact(), which only returns aggregate numbers
 // an admin has switched on (totals under 5 come back as null). Until any are
 // switched on, the section shows plain facts about KEP, never made-up numbers.
-export function ImpactSection({ facts }: { facts: Fact[] }) {
+export function ImpactSection({ facts, className = "" }: { facts: Fact[]; className?: string }) {
   const [metrics, setMetrics] = useState<Metric[] | null>(null);
 
   useEffect(() => {
@@ -59,33 +59,33 @@ export function ImpactSection({ facts }: { facts: Fact[] }) {
   const live = metrics && metrics.length > 0 ? metrics.slice(0, 8) : null;
 
   return (
-    <section aria-labelledby="impact-title" className="relative isolate overflow-hidden bg-night text-white">
+    <section aria-labelledby="impact-title" className={`relative isolate overflow-hidden bg-night text-white ${className}`}>
       {/* One slow glow from the navy of the KEP artwork. */}
       <div
         aria-hidden="true"
         className="absolute -right-56 -top-64 -z-10 size-[760px] animate-[drift_18s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(circle,rgb(31_51_184/0.35),transparent_62%)]"
       />
-      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-end">
-          <h2 id="impact-title" data-reveal="mask" className="font-display text-6xl font-medium leading-[0.95] sm:text-8xl">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-32">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-end">
+          <h2 id="impact-title" data-reveal="mask" className="font-display text-[2.9rem] font-medium leading-[0.95] sm:text-8xl">
             Our impact
           </h2>
-          <p data-reveal style={{ "--d": "150ms" } as React.CSSProperties} className="max-w-md text-lg leading-relaxed text-chrome lg:justify-self-end">
+          <p data-reveal style={{ "--d": "150ms" } as React.CSSProperties} className="max-w-md text-[15px] leading-relaxed text-chrome sm:text-lg lg:justify-self-end">
             {live
               ? "Live totals from KEP's own records. Totals under 5 aren't shown, to protect people's privacy."
               : "Live totals from KEP's records will appear here as our new platform grows. For now, KEP at a glance."}
           </p>
         </div>
 
-        <dl className="mt-16 grid grid-cols-2 border-t border-white/15 lg:grid-cols-4">
+        <dl className="mt-9 grid grid-cols-2 border-t border-white/15 sm:mt-16 lg:grid-cols-4">
           {live
             ? live.map((m, i) => (
-                <Stat key={m.key} i={i} Icon={metricIcons[m.key] ?? Users} label={m.label}>
+                <Stat key={m.key} i={i} Icon={metricIcons[m.key] ?? Users} label={m.label} wide={m.value === null}>
                   {m.value === null ? <span className="whitespace-normal text-3xl sm:text-4xl">Fewer than 5</span> : <CountUp to={m.value} />}
                 </Stat>
               ))
             : facts.map((f, i) => (
-                <Stat key={f.label} i={i} Icon={factIcons[f.icon]} label={f.label}>
+                <Stat key={f.label} i={i} Icon={factIcons[f.icon]} label={f.label} wide={!/^\d+\+?$/.test(f.value)}>
                   {/^\d+$/.test(f.value) ? <CountUp to={Number(f.value)} /> : f.value}
                 </Stat>
               ))}
@@ -95,16 +95,26 @@ export function ImpactSection({ facts }: { facts: Fact[] }) {
   );
 }
 
-function Stat({ Icon, label, i, children }: { Icon: LucideIcon; label: string; i: number; children: React.ReactNode }) {
+// On phones a long figure ("All ages", "Fewer than 5") takes a full row so it
+// stays on one line at the same size as its neighbours, instead of wrapping.
+function Stat({ Icon, label, i, wide = false, children }: { Icon: LucideIcon; label: string; i: number; wide?: boolean; children: React.ReactNode }) {
   return (
     <div
       data-reveal
       style={{ "--d": `${i * 120}ms` } as React.CSSProperties}
-      className="flex flex-col border-b border-white/15 py-8 pr-4 even:border-l even:pl-5 lg:border-b-0 lg:border-l lg:px-8 lg:py-10 lg:first:border-l-0 lg:first:pl-0"
+      className={`flex flex-col border-b border-white/15 py-6 pr-4 even:border-l even:pl-5 sm:py-8 lg:border-b-0 lg:border-l lg:px-8 lg:py-10 lg:first:border-l-0 lg:first:pl-0 ${
+        ""
+      }`}
     >
       <dt className="order-3 mt-3 text-[15px] leading-snug text-chrome">{label}</dt>
       <Icon aria-hidden="true" className="order-1 size-5 text-electric" strokeWidth={1.5} />
-      <dd className="order-2 mt-6 font-display text-6xl font-normal leading-none sm:text-7xl lg:whitespace-nowrap lg:text-[clamp(4.5rem,6.4vw,6rem)]">{children}</dd>
+      <dd
+        className={`order-2 mt-4 flex items-end font-display font-normal leading-none max-sm:h-[3.4rem] sm:mt-6 sm:text-7xl lg:whitespace-nowrap lg:text-[clamp(4.5rem,6.4vw,6rem)] ${
+          wide ? "text-[2.4rem] max-sm:whitespace-nowrap sm:text-7xl" : "text-[3.4rem] sm:text-7xl"
+        }`}
+      >
+        {children}
+      </dd>
     </div>
   );
 }
