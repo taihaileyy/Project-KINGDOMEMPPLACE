@@ -4,6 +4,7 @@ import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
+import { VideoFeature } from "@/components/home/video-feature";
 import { ProgramsShowcase } from "@/components/home/programs-showcase";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
 
@@ -370,6 +371,62 @@ export default function Home() {
                 </figcaption>
               </figure>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Watch: a film from Dr. Morgan, played only on request */}
+      <section aria-labelledby="watch-title" className="order-[65] border-y border-white/10 bg-blueblack text-white sm:order-none">
+        <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-28">
+          <p data-reveal className="text-[13px] font-semibold uppercase tracking-[0.18em] text-electric">Watch</p>
+          <h2 id="watch-title" data-reveal="mask" className="mt-3 font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
+            A Good Soldier
+          </h2>
+          <p data-reveal style={d(120)} className="mt-4 max-w-xl text-[15px] leading-relaxed text-chrome sm:text-lg">
+            The book trailer from Dr. Lawrence Morgan.
+          </p>
+          <div data-reveal="image" className="mt-8 sm:mt-12">
+            <VideoFeature id="ea_hIpFOtJM" title="A Good Soldier Book Trailer, Dr. Lawrence Morgan" />
+          </div>
+          <a
+            data-reveal
+            href="https://youtu.be/ea_hIpFOtJM"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-quiet group mt-6 text-white"
+          >
+            Watch on YouTube <Arrow />
+          </a>
+
+          {/* The book itself */}
+          <div className="mt-12 grid items-center gap-8 border-t border-white/15 pt-10 sm:mt-20 sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-14 sm:pt-16">
+            <div data-reveal="image" className="mx-auto w-full max-w-[13rem] overflow-hidden bg-black sm:mx-0 sm:max-w-none">
+              <Image
+                src="/images/a-good-soldier-book.jpg"
+                width={428}
+                height={570}
+                alt="Book cover: A Good Soldier, Ready 4 War, by Lawrence Morgan, a soldier saluting at sunset"
+                sizes="(min-width: 640px) 240px, 208px"
+                className="h-auto w-full"
+              />
+            </div>
+            <div className="text-center sm:text-left">
+              <p data-reveal className="text-[13px] font-semibold uppercase tracking-[0.18em] text-electric">The book</p>
+              <h3 data-reveal style={d(100)} className="mt-3 font-display text-[2rem] font-medium leading-[1.05] sm:text-5xl">
+                A Good Soldier: Ready 4 War
+              </h3>
+              <p data-reveal style={d(180)} className="mt-3 text-[15px] text-chrome sm:text-lg">by Lawrence Morgan</p>
+              <a
+                data-reveal
+                style={d(260)}
+                href="https://payhip.com/b/hM6T"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary group mt-7"
+              >
+                Get the book <Arrow />
+              </a>
+            </div>
           </div>
         </div>
       </section>

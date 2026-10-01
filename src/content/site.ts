@@ -14,7 +14,7 @@ export const org = {
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=2236+N+Foster+Dr+Baton+Rouge+LA+70806",
   // An empty href hides that icon until KEP's link is known.
   social: [
-    { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/LawrenceRMorganSr" },
+    { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/lyrical.apostle.9" },
     { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/lyricalapostle" },
     { label: "YouTube", icon: "youtube", href: "https://www.youtube.com/@drlawrencemorgan" },
   ],
