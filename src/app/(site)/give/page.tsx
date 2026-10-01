@@ -10,10 +10,10 @@ export const metadata: Metadata = { title: "Give" };
 export default async function GivePage() {
   const session = await getSession();
   return (
-    <div className="bg-surface">
+    <div className="bg-ivory">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-12">
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <h1 className="font-display text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-7xl">Give</h1>
+          <h1 className="font-display text-5xl font-medium leading-[0.98] sm:text-7xl">Give</h1>
           <p className="mt-4 text-lg leading-relaxed text-muted">
             Your giving keeps worship, youth mentorship, the Sober Living Program and community programs going on North
             Foster Drive. Give once or every month, with or without a KEP account.
@@ -43,7 +43,7 @@ export default async function GivePage() {
             </ul>
           </div>
           <p className="mt-4 text-sm text-muted">
-            KEP is a church, not a registered 501(c)(3). Account holders can see their giving history and yearly totals in My Giving.
+            KEP is a church, not a registered 501({'\u200C'}c)(3). Account holders can see their giving history and yearly totals in My Giving.
           </p>
         </aside>
         <div className="rounded-3xl border border-line bg-paper p-5 shadow-[var(--shadow-card)] sm:p-8">

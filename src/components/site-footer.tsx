@@ -5,11 +5,11 @@ import { fullAddress, moreNav, org, siteNav, weekly } from "@/content/site";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-night text-white">
+    <footer className="border-t border-white/10 bg-night text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <Wordmark showName={false} logoClass="h-20 w-auto sm:h-24" priority={false} />
-          <p className="mt-5 max-w-sm font-display text-2xl font-extrabold leading-tight tracking-tight">{org.tagline}</p>
+          <p className="mt-6 max-w-sm font-display text-3xl font-medium leading-[1.1]">{org.tagline}</p>
           <p className="mt-4 text-sm text-chrome">Led by {org.pastors}</p>
           <SocialLinks className="mt-6" />
         </div>

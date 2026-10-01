@@ -22,8 +22,8 @@ export default function ChurchPage() {
           {weekly.map((w) => (
             <li key={w.title} className="card p-8">
               <p className="text-muted">{w.day}s</p>
-              <p className="mt-1 font-display text-5xl font-extrabold tracking-tight">{w.time}</p>
-              <p className="mt-4 font-display text-2xl font-extrabold tracking-tight">{w.title}</p>
+              <p className="mt-1 font-display text-5xl font-medium">{w.time}</p>
+              <p className="mt-4 font-display text-2xl font-medium">{w.title}</p>
               <p className="mt-2 text-muted">{w.detail}</p>
             </li>
           ))}

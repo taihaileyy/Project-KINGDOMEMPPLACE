@@ -12,7 +12,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   if (await getSession()) redirect("/portal");
   return (
     <div className="card p-6 sm:p-8">
-      <h1 className="text-3xl font-extrabold tracking-tight">Log in</h1>
+      <h1 className="text-3xl font-medium">Log in</h1>
       <p className="mt-2 text-muted">One account for everything you do at KEP.</p>
       {link === "expired" && (
         <p role="alert" className="mt-4 rounded-[var(--radius-control)] border border-warning/30 bg-warning/5 px-4 py-3 text-sm text-warning">

@@ -60,32 +60,32 @@ export function ImpactSection({ facts }: { facts: Fact[] }) {
 
   return (
     <section aria-labelledby="impact-title" className="relative isolate overflow-hidden bg-night text-white">
-      {/* One soft glow, the light in the KEP logo. */}
+      {/* One slow glow from the navy of the KEP artwork. */}
       <div
         aria-hidden="true"
-        className="absolute -left-48 -top-56 -z-10 size-[640px] animate-[drift_16s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(circle,rgb(92_107_255/0.28),transparent_62%)]"
+        className="absolute -right-56 -top-64 -z-10 size-[760px] animate-[drift_18s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(circle,rgb(31_51_184/0.35),transparent_62%)]"
       />
-      <div className="mx-auto max-w-7xl px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-16">
-        <div data-reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
-          <h2 id="impact-title" className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-end">
+          <h2 id="impact-title" data-reveal="mask" className="font-display text-6xl font-medium leading-[0.95] sm:text-8xl">
             Our impact
           </h2>
-          <p className="max-w-md text-lg leading-relaxed text-chrome">
+          <p data-reveal style={{ "--d": "150ms" } as React.CSSProperties} className="max-w-md text-lg leading-relaxed text-chrome lg:justify-self-end">
             {live
               ? "Live totals from KEP's own records. Totals under 5 aren't shown, to protect people's privacy."
               : "Live totals from KEP's records will appear here as our new platform grows. For now, KEP at a glance."}
           </p>
         </div>
 
-        <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-x-10">
+        <dl className="mt-16 grid grid-cols-2 border-t border-white/15 lg:grid-cols-4">
           {live
-            ? live.map((m) => (
-                <Stat key={m.key} Icon={metricIcons[m.key] ?? Users} label={m.label}>
+            ? live.map((m, i) => (
+                <Stat key={m.key} i={i} Icon={metricIcons[m.key] ?? Users} label={m.label}>
                   {m.value === null ? <span className="whitespace-normal text-3xl sm:text-4xl">Fewer than 5</span> : <CountUp to={m.value} />}
                 </Stat>
               ))
-            : facts.map((f) => (
-                <Stat key={f.label} Icon={factIcons[f.icon]} label={f.label}>
+            : facts.map((f, i) => (
+                <Stat key={f.label} i={i} Icon={factIcons[f.icon]} label={f.label}>
                   {/^\d+$/.test(f.value) ? <CountUp to={Number(f.value)} /> : f.value}
                 </Stat>
               ))}
@@ -95,16 +95,16 @@ export function ImpactSection({ facts }: { facts: Fact[] }) {
   );
 }
 
-function Stat({ Icon, label, children }: { Icon: LucideIcon; label: string; children: React.ReactNode }) {
+function Stat({ Icon, label, i, children }: { Icon: LucideIcon; label: string; i: number; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col border-t border-white/15">
-      {/* Thin blue rule over the start of each figure. */}
-      <span aria-hidden="true" className="-mt-px block h-0.5 w-12 bg-electric" />
-      <dt className="order-3 mt-2 text-[15px] leading-snug text-chrome">{label}</dt>
-      <Icon aria-hidden="true" className="order-1 mt-5 size-6 text-electric" strokeWidth={1.75} />
-      <dd className="order-2 mt-3 font-display text-4xl font-extrabold leading-none tracking-tight sm:text-6xl lg:text-7xl">
-        {children}
-      </dd>
+    <div
+      data-reveal
+      style={{ "--d": `${i * 120}ms` } as React.CSSProperties}
+      className="flex flex-col border-b border-white/15 py-8 pr-4 even:border-l even:pl-5 lg:border-b-0 lg:border-l lg:px-8 lg:py-10 lg:first:border-l-0 lg:first:pl-0"
+    >
+      <dt className="order-3 mt-3 text-[15px] leading-snug text-chrome">{label}</dt>
+      <Icon aria-hidden="true" className="order-1 size-5 text-electric" strokeWidth={1.5} />
+      <dd className="order-2 mt-6 font-display text-6xl font-normal leading-none sm:text-7xl lg:whitespace-nowrap lg:text-[clamp(4.5rem,6.4vw,6rem)]">{children}</dd>
     </div>
   );
 }

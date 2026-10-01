@@ -44,7 +44,7 @@ export function BookingForm({ defaults }: { defaults: { name: string; email: str
     return (
       <div role="status" className="rounded-3xl bg-night p-8 text-white sm:p-10">
         <CalendarCheck aria-hidden="true" className="size-10 text-electric" strokeWidth={1.5} />
-        <h2 className="mt-5 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">Request sent, {state.done.name}.</h2>
+        <h2 className="mt-5 font-display text-3xl font-medium sm:text-4xl">Request sent, {state.done.name}.</h2>
         <p className="mt-3 max-w-lg text-lg text-chrome">
           We&apos;ve got your request for {formatWhen(state.done.date, state.done.time)}. Our team will confirm your time
           or suggest another one by email or phone.

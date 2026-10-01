@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Create your account" };
 export default function SignupPage() {
   return (
     <div className="card p-6 sm:p-8">
-      <h1 className="text-3xl font-extrabold tracking-tight">Create your KEP account</h1>
+      <h1 className="text-3xl font-medium">Create your KEP account</h1>
       <p className="mt-2 text-muted">
         Register for events, join programs, give and book the studio, all from one account. We only ask for the
         basics now.
