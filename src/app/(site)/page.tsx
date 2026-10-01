@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
-import { HeroShow } from "@/components/hero-show";
+import { HeroMotion } from "@/components/hero-motion";
 import { ImpactSection } from "@/components/home/impact-section";
 import { ProgramsShowcase } from "@/components/home/programs-showcase";
 import { housing, images, org, programs, recentEvents, weekly } from "@/content/site";
@@ -36,7 +36,7 @@ export default function Home() {
         aria-labelledby="hero-title"
         className="relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
       >
-        <HeroShow />
+        <HeroMotion />
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-14 pt-40 sm:px-6 lg:pb-20">
           <h1
             id="hero-title"

@@ -217,10 +217,44 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
 .intro-play .site-header { animation: nav-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s both; }
 @keyframes nav-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
 
-/* Slow push-in for the hero photos. */
-@keyframes kenburns {
-  from { transform: scale(1.02); }
-  to { transform: scale(1.12); }
+/* ── Hero motion (see hero-motion.tsx) ─────────────────────────────────────
+   The film sits on the right and is seen only through a soft radial mask,
+   so it never shows an edge. --glow widens that mask: the light emerges out
+   of the gradient, then contracts back into it. */
+@property --glow {
+  syntax: "<length-percentage>"; /* accepts the minifier's bare 0 */
+  inherits: false;
+  initial-value: 0%;
+}
+.hero-motion {
+  position: absolute;
+  inset: 0 0 0 28%;
+  opacity: 0;
+  --glow: 0%;
+  transform: scale(1.04);
+  -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow));
+  mask-image: radial-gradient(closest-side at 50% 50%, #000 calc(var(--glow) * 0.45), transparent var(--glow));
+  will-change: opacity, transform;
+}
+.hero-motion video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.hero-motion[data-phase="in"] {
+  opacity: 1;
+  --glow: 118%;
+  transform: none;
+  transition: opacity 1.3s cubic-bezier(0.33, 0, 0.2, 1), --glow 1.8s cubic-bezier(0.22, 0.7, 0.18, 1), transform 3s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.hero-motion[data-phase="out"] {
+  opacity: 0;
+  --glow: 40%;
+  transform: scale(1.02);
+  transition: opacity 1.4s cubic-bezier(0.45, 0, 0.55, 1), --glow 1.4s cubic-bezier(0.45, 0, 0.55, 1), transform 1.4s ease-in;
+}
+/* Phones: the text sits low, so the film rises in the upper part of the hero,
+   cropped to its center rather than shrunk. */
+@media (max-width: 1023px) {
+  .hero-motion { inset: 0 -20% 38% -20%; }
+  .hero-motion[data-phase="in"] { opacity: 0.75; }
+  .hero-motion video { object-position: 52% 45%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
