@@ -2,15 +2,18 @@
 
 import { useEffect, useRef } from "react";
 
-// The homepage hero background. It rests as a dark navy/black gradient. Once
-// per page load, after the diagonal entrance has opened and the hero has sat
-// still for a moment, the KEP motion film materializes out of that gradient on
-// the right (a soft radial mask that widens), plays through once, and recedes
-// back into it before its last frame. No loop, no controls (it moves for under
-// 5 seconds), and nothing at all for people who ask for reduced motion.
+// The homepage hero background. At rest it is a dark navy/black gradient with
+// the KEP artwork faintly embedded on the right (the film's own last frame, so
+// the two line up exactly). Once per page load, after the diagonal entrance
+// has opened and the hero has sat still for a moment, a blue light rises
+// around that artwork, the film materializes from the same place, plays once,
+// and settles back into the faint artwork, which stays. No loop, no controls
+// (it moves for under 5 seconds), and reduced-motion visitors see only the
+// calm resting hero.
 
 const ENTRANCE_MS = 1420; // the diagonal panels finish opening (see globals.css)
-const REST_MS = 400; // the finished hero holds still before the motion begins
+const REST_MS = 400; // the finished hero holds still before the light rises
+const GLOW_LEAD_MS = 450; // the light rises this long before the film appears
 const FADE_OUT_S = 1.3; // seconds before the film's end that it starts to recede
 
 // Module state survives client-side navigation but not a full reload, so the
@@ -50,17 +53,23 @@ export function HeroMotion() {
 
     Promise.all([ready, rest]).then(async () => {
       if (cancelled) return;
+      // First the blue light rises around the faint artwork...
+      layer.dataset.phase = "glow";
+      await new Promise((r) => setTimeout(r, GLOW_LEAD_MS));
+      if (cancelled) return;
       try {
         await video.play();
       } catch {
-        return; // autoplay refused: the calm hero simply stays
+        layer.dataset.phase = "rest"; // autoplay refused: the calm hero stays
+        return;
       }
-      // The first frame is decoded while the layer is still invisible, then
-      // the light widens out of the gradient.
+      // ...then the film materializes from the same place.
       layer.dataset.phase = "in";
       const watch = () => {
         if (cancelled) return;
         if (video.duration && video.currentTime >= video.duration - FADE_OUT_S) {
+          // Settling: the film fades back into the faint artwork, which is
+          // its own final frame, so the hand-off is invisible.
           layer.dataset.phase = "out";
           return;
         }
@@ -88,17 +97,27 @@ export function HeroMotion() {
   }, []);
 
   return (
-    <div aria-hidden="true" className="hero-bg absolute inset-0 -z-20 overflow-hidden">
+    <div ref={layerRef} data-phase="rest" aria-hidden="true" className="hero-bg hero-stage absolute inset-0 -z-20 overflow-hidden">
       {/* The resting hero: near-black to navy, with a faint light on the right. */}
       <div className="absolute inset-0 bg-[radial-gradient(70%_80%_at_78%_45%,#101a3d_0%,#0a1024_45%,#05070d_100%)]" />
 
-      {/* The film, masked so it has no edges and blends into the gradient. */}
-      <div ref={layerRef} data-phase="rest" className="hero-motion">
+      {/* Deep-blue haze around the artwork; it brightens just before the film. */}
+      <div className="hero-haze" />
+      <div className="hero-haze-lit" />
+
+      {/* The KEP artwork, faintly embedded in the atmosphere. Always present. */}
+      <div className="hero-art hero-still">
+        {/* eslint-disable-next-line @next/next/no-img-element -- must match the film's box exactly */}
+        <img src="/images/hero-kep-still.webp" alt="" width={1280} height={720} decoding="async" />
+      </div>
+
+      {/* The film, in the same box and mask, so it grows out of the artwork. */}
+      <div className="hero-art hero-motion">
         <video ref={videoRef} muted playsInline disablePictureInPicture preload="none" tabIndex={-1} />
       </div>
 
       {/* Keeps the words readable whatever the film is doing. */}
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(5_7_13/0.92)_0%,rgb(5_7_13/0.7)_30%,rgb(10_16_36/0.15)_60%,transparent_100%)] max-lg:bg-[linear-gradient(0deg,rgb(5_7_13/0.96)_0%,rgb(5_7_13/0.84)_40%,rgb(5_7_13/0.55)_75%,rgb(5_7_13/0.4)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(5_7_13/0.94)_0%,rgb(5_7_13/0.8)_38%,rgb(5_7_13/0.5)_58%,rgb(10_16_36/0.1)_76%,transparent_100%)] max-lg:bg-[linear-gradient(0deg,rgb(5_7_13/0.96)_0%,rgb(5_7_13/0.84)_40%,rgb(5_7_13/0.55)_75%,rgb(5_7_13/0.4)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-night to-transparent" />
     </div>
   );
