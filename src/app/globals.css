@@ -26,7 +26,10 @@
   --kep-success: #15803d;
   --kep-warning: #b45309;
   --kep-danger: #b91c1c;
-  --header-h: 76px;
+  --header-h: 60px; /* slim on phones */
+}
+@media (min-width: 640px) {
+  :root { --header-h: 76px; }
 }
 
 @theme inline {

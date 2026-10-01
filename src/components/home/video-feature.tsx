@@ -4,8 +4,8 @@ import { useState } from "react";
 
 // A YouTube film that loads only when someone presses play, so the homepage
 // stays fast and YouTube sets nothing until then (privacy-enhanced domain).
-export function VideoFeature({ id, title }: { id: string; title: string }) {
-  const [playing, setPlaying] = useState(false);
+export function VideoFeature({ id, title, autoPlay = false }: { id: string; title: string; autoPlay?: boolean }) {
+  const [playing, setPlaying] = useState(autoPlay);
 
   return (
     <div className="relative aspect-video w-full overflow-hidden bg-black shadow-[0_30px_80px_-30px_rgb(0_0_0/0.8)] ring-1 ring-white/10">
