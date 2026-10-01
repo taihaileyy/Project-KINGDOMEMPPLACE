@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
+import { GardenBackdrop } from "@/components/paradise/garden";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
 import { BookPromo } from "@/components/home/book-promo";
@@ -261,6 +262,29 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Create Your World: a compact teaser for the interactive Bible journey */}
+      <section aria-labelledby="paradise-teaser-title" className="bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
+          <Link
+            href="/create-your-world"
+            className="group relative isolate flex min-h-[15rem] items-end overflow-hidden rounded-[var(--radius-card)] bg-[#04130f] p-6 text-white sm:min-h-[17rem] sm:items-center sm:p-10"
+          >
+            <GardenBackdrop focus="middle" className="-z-10 transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(3_14_10/0.88)_0%,rgb(3_14_10/0.5)_55%,rgb(3_14_10/0.15)_100%)] sm:bg-[linear-gradient(90deg,rgb(3_14_10/0.85)_0%,rgb(3_14_10/0.45)_55%,transparent_100%)]" />
+            <div className="max-w-sm sm:max-w-md">
+              <h2 id="paradise-teaser-title" className="font-display text-[1.9rem] font-medium uppercase leading-[1.05] tracking-[0.12em] sm:text-5xl sm:tracking-[0.16em]">
+                Create Your World
+              </h2>
+              <p className="mt-2 font-display text-lg italic text-[#ecd08a] sm:text-2xl">An Interactive Bible Journey</p>
+              <p className="mt-3 text-[14.5px] leading-snug text-white/80 sm:text-base">Test your knowledge. Learn the Word. Continue the journey.</p>
+              <span className="btn-primary mt-4 sm:mt-6">
+                Play the game <Arrow />
+              </span>
+            </div>
+          </Link>
         </div>
       </section>
 

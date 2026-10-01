@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import {
   CalendarDays,
   Church,
@@ -13,6 +14,7 @@ import {
   KeyRound,
   LayoutDashboard,
   Mic,
+  TreeDeciduous,
   UserRound,
   Users,
   X,
@@ -30,6 +32,7 @@ export const drawerIcons = {
   studio: Mic,
   give: HandHeart,
   about: Info,
+  paradise: TreeDeciduous,
   gallery: Images,
   dashboard: LayoutDashboard,
   profile: UserRound,
@@ -45,8 +48,8 @@ export function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
-// KEP's slide-out menu: a see-through black panel that slides in from the
-// left over half the screen, with grouped rows, each an icon, a title
+// KEP's slide-out menu: a black panel that slides in from the left (it fills
+// the screen on phones, and a see-through half of it on larger screens), with grouped rows, each an icon, a title
 // and an optional one-line description. The current page gets a thin electric
 // blue bar, a blue icon and a faint blue tint. It stays mounted so it can
 // slide; `inert` keeps it out of reach while closed.
@@ -66,6 +69,15 @@ export function SideDrawer({
   footer?: React.ReactNode;
 }) {
   const pathname = usePathname();
+  // Rendered into <body> once the page has loaded: inside the header, the
+  // entrance animation's transform would otherwise pin it to the header's
+  // height, so the first open showed a clipped panel.
+  const [mounted, setMounted] = useState(false);
+  const [appUi, setAppUi] = useState(false);
+  useEffect(() => {
+    setAppUi(!!triggerRef.current?.closest(".app-ui")); // portal/admin menus stay sans-serif
+    setMounted(true);
+  }, [triggerRef]);
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
@@ -102,8 +114,10 @@ export function SideDrawer({
     };
   }, [open, triggerRef]);
 
-  return (
-    <div className={`fixed inset-0 z-40 overflow-hidden ${open ? "" : "pointer-events-none"}`} inert={!open}>
+  if (!mounted) return null;
+
+  return createPortal(
+    <div className={`fixed inset-0 z-50 overflow-hidden ${appUi ? "app-ui" : ""} ${open ? "" : "pointer-events-none"}`} inert={!open}>
       <div
         aria-hidden="true"
         onClick={onClose}
@@ -114,7 +128,7 @@ export function SideDrawer({
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className={`absolute inset-y-0 left-0 flex w-[82vw] max-w-[560px] flex-col overflow-hidden rounded-r-[28px] border-r border-white/10 bg-black/70 text-white shadow-2xl backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none sm:w-1/2 ${
+        className={`absolute inset-y-0 left-0 flex w-full flex-col overflow-hidden bg-[#05070d] pt-[env(safe-area-inset-top)] text-white will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none sm:w-1/2 sm:max-w-[560px] sm:rounded-r-[28px] sm:border-r sm:border-white/10 sm:bg-black/70 sm:shadow-2xl sm:backdrop-blur-2xl sm:backdrop-saturate-150 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -167,9 +181,10 @@ export function SideDrawer({
           ))}
         </nav>
 
-        {footer && <div className="border-t border-white/10 p-4">{footer}</div>}
+        {footer && <div className="border-t border-white/10 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
