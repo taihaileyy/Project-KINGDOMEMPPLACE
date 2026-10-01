@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
-import { ParadiseArt } from "@/components/paradise/paradise-art";
+import { GardenBackdrop } from "@/components/paradise/garden";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
 import { BookPromo } from "@/components/home/book-promo";
@@ -265,22 +265,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Paradise: a compact teaser for the interactive Bible experience */}
+      {/* Paradise: a compact teaser for the interactive Bible journey */}
       <section aria-labelledby="paradise-teaser-title" className="bg-ivory">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
           <Link
             href="/paradise"
-            className="group relative isolate flex min-h-[11.5rem] items-center overflow-hidden rounded-[var(--radius-card)] bg-night p-6 text-white sm:min-h-[13rem] sm:p-10"
+            className="group relative isolate flex min-h-[15rem] items-end overflow-hidden rounded-[var(--radius-card)] bg-[#04130f] p-6 text-white sm:min-h-[17rem] sm:items-center sm:p-10"
           >
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(90%_120%_at_85%_40%,#1b2a7a_0%,#0a1024_55%,#05070d_100%)]" />
-            <ParadiseArt className="absolute -right-8 top-1/2 -z-10 h-[135%] w-auto -translate-y-1/2 opacity-70 transition-transform duration-700 group-hover:scale-105 sm:right-16 sm:h-[125%] sm:opacity-90" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.92)_0%,rgb(5_7_13/0.6)_55%,transparent_100%)]" />
+            <GardenBackdrop focus="middle" className="-z-10 transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(3_14_10/0.88)_0%,rgb(3_14_10/0.5)_55%,rgb(3_14_10/0.15)_100%)] sm:bg-[linear-gradient(90deg,rgb(3_14_10/0.85)_0%,rgb(3_14_10/0.45)_55%,transparent_100%)]" />
             <div className="max-w-sm sm:max-w-md">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-electric">New</p>
-              <h2 id="paradise-teaser-title" className="mt-2 font-display text-[2rem] font-medium leading-[1] sm:text-5xl">
-                Enter Paradise
+              <h2 id="paradise-teaser-title" className="font-display text-[2.1rem] font-medium uppercase leading-none tracking-[0.18em] sm:text-5xl">
+                Paradise
               </h2>
-              <p className="mt-2 text-[14.5px] leading-snug text-white/80 sm:mt-3 sm:text-lg">An interactive Bible experience.</p>
+              <p className="mt-2 font-display text-lg italic text-[#ecd08a] sm:text-2xl">An Interactive Bible Journey</p>
+              <p className="mt-3 text-[14.5px] leading-snug text-white/80 sm:text-base">Test your knowledge. Learn the Word. Continue the journey.</p>
               <span className="btn-primary mt-4 sm:mt-6">
                 Enter Paradise <Arrow />
               </span>

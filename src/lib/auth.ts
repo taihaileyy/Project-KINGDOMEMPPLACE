@@ -56,6 +56,18 @@ export function hasRole(session: Session, role: StaffRole) {
   return session.roles.some((r) => r.role === role || r.role === "super_admin");
 }
 
+// Paradise content is managed by super admins and by program staff given the
+// "paradise" scope (the database enforces the same rule).
+export function canManageParadise(session: Session) {
+  return session.roles.some((r) => r.role === "super_admin" || (r.role === "program_staff" && r.scope === "paradise"));
+}
+
+export async function requireParadiseStaff(): Promise<Session> {
+  const session = await requireUser("/admin/paradise");
+  if (!canManageParadise(session)) redirect("/admin?denied=1");
+  return session;
+}
+
 // Server-side gate for staff pages. The database enforces the same rules,
 // so this is for clear errors, not the only protection.
 export async function requireStaff(allowed?: StaffRole[]): Promise<Session> {
