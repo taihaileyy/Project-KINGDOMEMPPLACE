@@ -18,14 +18,16 @@ begin;
 -- A guest can request a time but can't read any requests back.
 select pg_temp.act_as(null);
 select public.request_studio_booking('Gina Guest', 'gina@example.com', '555-0199', 'recording',
-  current_date + 7, '14:00', 120, 2, 'Recording a demo.');
+  (now() at time zone 'America/Chicago')::date + 7, '14:00', 120, 2, 'Recording a demo.');
 do $$ begin
   perform 1 from public.studio_requests;
   raise exception 'FAILED: anon could read studio requests';
 exception when insufficient_privilege then null;
 end $$;
 do $$ begin
-  perform public.request_studio_booking('Gina', 'gina@example.com', null, 'recording', current_date - 1, '14:00', 60, 1, null);
+  -- Bookings are judged by Baton Rouge's date, not the server's UTC date.
+  perform public.request_studio_booking('Gina', 'gina@example.com', null, 'recording',
+    (now() at time zone 'America/Chicago')::date - 1, '14:00', 60, 1, null);
   raise exception 'FAILED: a past date was accepted';
 exception when invalid_parameter_value then null;
 end $$;
@@ -33,7 +35,7 @@ end $$;
 -- A signed-in member's request is linked to them, and they see only their own.
 select pg_temp.act_as('10000000-0000-0000-0000-000000000002');
 select public.request_studio_booking('Mo Member', 'member@example.com', null, 'podcast',
-  current_date + 3, '10:00', 60, 1, null);
+  (now() at time zone 'America/Chicago')::date + 3, '10:00', 60, 1, null);
 select pg_temp.assert((select count(*) from public.studio_requests) = 1, 'a member sees only their own request');
 select pg_temp.assert((select person_id from public.studio_requests) = public.auth_person_id(), 'member request is linked to them');
 update public.studio_requests set status = 'approved';
