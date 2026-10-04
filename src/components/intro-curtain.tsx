@@ -1,15 +1,14 @@
 // The homepage's cinematic entrance: two black panels meeting on a glowing
 // "/" seam split open to reveal the page. It's pure CSS, so it always opens
 // even if scripts fail. introScript (in <head>) decides before first paint
-// whether it plays: only on the homepage, once per visit, and never for
+// whether it plays: only on the homepage, on every fresh load of it, and never for
 // people who ask their device for reduced motion.
 
 export const introScript = `(function(){try{
 var d=document.documentElement;
 if(location.pathname!=="/")return;
 if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-if(sessionStorage.getItem("kep-intro"))return;
-sessionStorage.setItem("kep-intro","1");
+if(sessionStorage.getItem("kep-intro"))return; /* tests and previews can skip it */
 d.classList.add("intro-play");
 }catch(e){}})();`;
 
