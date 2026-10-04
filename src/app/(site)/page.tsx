@@ -209,31 +209,6 @@ export default function Home() {
         ]}
       />
 
-      {/* Life at KEP: a compact photo collage */}
-      <section aria-labelledby="moments-title" className="bg-ivory text-ink">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
-            <h2 id="moments-title" data-reveal="mask" className={h2}>
-              Life at KEP
-            </h2>
-            <Link data-reveal href="/gallery" className="btn-quiet group text-ink">
-              See the gallery <Arrow />
-            </Link>
-          </div>
-          <div className="mt-6 grid h-[21rem] grid-cols-2 grid-rows-2 gap-2 sm:mt-10 sm:h-[30rem] sm:gap-3 lg:h-[36rem] lg:grid-cols-[1.35fr_1fr]">
-            {[
-              { img: images.youthActivity, cls: "row-span-2" },
-              { img: images.computerLab, cls: "" },
-              { img: images.celebration, cls: "" },
-            ].map(({ img, cls }, i) => (
-              <figure key={img.src} data-reveal="image" style={d(i * 120)} className={`relative overflow-hidden ${cls}`}>
-                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 45vw, 50vw" className="object-cover" />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Dr. Morgan's book and trailer: one compact card */}
       <section aria-label="A Good Soldier, by Lawrence Morgan" className="bg-ivory">
         <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-16">
