@@ -7,6 +7,7 @@ import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
 import { HomeWatch } from "@/components/home/home-watch";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { BookPromo } from "@/components/home/book-promo";
+import { ImpactSection } from "@/components/home/impact-section";
 import { ProgramsRail } from "@/components/home/programs-rail";
 import { ScheduleFooter, ScheduleHero } from "@/components/schedule-views";
 import { houseImages, images, org, programs, recentEvents } from "@/content/site";
@@ -198,14 +199,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our impact: live totals from KEP's records (Admin controls what shows) */}
+      <ImpactSection
+        facts={[
+          { value: String(programs.length), label: "Community programs", icon: "programs" },
+          { value: "Weekly", label: "Bible Study every Wednesday", icon: "church" },
+          { value: "1", label: "Media studio open to the community", icon: "studio" },
+          { value: "All ages", label: "Youth, adults and families welcome", icon: "ages" },
+        ]}
+      />
+
       {/* Life at KEP: a compact photo collage */}
-      <section aria-labelledby="moments-title" className="bg-night text-white">
+      <section aria-labelledby="moments-title" className="bg-ivory text-ink">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
             <h2 id="moments-title" data-reveal="mask" className={h2}>
               Life at KEP
             </h2>
-            <Link data-reveal href="/gallery" className="btn-quiet group text-white">
+            <Link data-reveal href="/gallery" className="btn-quiet group text-ink">
               See the gallery <Arrow />
             </Link>
           </div>
