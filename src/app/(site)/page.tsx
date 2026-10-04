@@ -19,7 +19,7 @@ const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 const heroLines: { verb: string; rest: string }[] = [
   { verb: "Engage", rest: " the community," },
   { verb: "Equip", rest: " the people," },
-  { verb: "and Empower", rest: " the nation." },
+  { verb: "Empower", rest: " the nation." },
 ];
 
 const h2 = "font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl";
@@ -36,10 +36,10 @@ export default function Home() {
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
           <h1
             id="hero-title"
-            className="max-w-6xl font-display text-[clamp(2.9rem,6.6vw,6.6rem)] font-medium leading-[1] tracking-[-0.01em]"
+            className="max-w-6xl font-display text-[clamp(1.8rem,8.4vw,2.9rem)] font-medium leading-[1.08] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:leading-[1]"
           >
             {heroLines.map((line, i) => (
-              <span key={line.verb} className="mask-line">
+              <span key={line.verb} className="mask-line whitespace-nowrap">
                 <span style={d(120 + i * 260)}>
                   <em className="italic">{line.verb}</em>
                   {line.rest}
