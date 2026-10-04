@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { facebookPluginUrl, isDirectFile, isFacebookUrl, posterFor, sourceLabel, youTubeId, type MediaItem } from "@/lib/media";
+import { isDirectFile, isFacebookUrl, posterFor, sourceLabel, youTubeId, type MediaItem } from "@/lib/media";
 
 // Plays one library item, whatever its source. Nothing loads from YouTube or
 // Facebook until the viewer presses play, so pages stay fast and private.
@@ -9,15 +9,31 @@ import { facebookPluginUrl, isDirectFile, isFacebookUrl, posterFor, sourceLabel,
 export function MediaPlayer({ item, autoPlay = false, fill = false }: { item: MediaItem; autoPlay?: boolean; fill?: boolean }) {
   const [playing, setPlaying] = useState(autoPlay);
   const poster = posterFor(item);
+  const facebook = item.source === "facebook" || isFacebookUrl(item.url);
   const vertical = item.orientation === "vertical";
   const yt = item.source === "youtube" ? youTubeId(item.embed_url || item.url) : null;
-  const fb = item.source === "facebook" || isFacebookUrl(item.url);
   const direct = item.kind === "audio" || item.source === "upload" || isDirectFile(item.url);
   const frame = "absolute inset-0 size-full border-0";
 
   const box = fill
     ? "relative size-full overflow-hidden bg-black"
     : `relative overflow-hidden bg-black shadow-[0_20px_60px_-20px_rgb(0_0_0/0.8)] ring-1 ring-white/10 ${vertical ? "mx-auto aspect-[9/16] max-h-[78dvh]" : "aspect-video w-full"}`;
+
+  // Facebook doesn't allow its videos to play inside other websites, so they open on Facebook.
+  if (facebook) {
+    return (
+      <a href={item.url} target="_blank" rel="noopener noreferrer" className={`${box} group grid place-items-center text-white`}>
+        <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_25%,#1f33b8_0%,#0a1024_60%,#05070d_100%)]" />
+        <span className="relative flex max-w-[80%] flex-col items-center gap-4 px-4 text-center">
+          <span className="grid size-16 place-items-center rounded-full bg-white/95 text-blue transition-transform group-hover:scale-110">
+            <svg viewBox="0 0 24 24" className="ml-1 size-7" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z" /></svg>
+          </span>
+          <span className="font-display text-xl leading-tight">{item.title}</span>
+          <span className="rounded-full border border-white/40 px-4 py-2 text-sm font-semibold">Watch on Facebook ↗</span>
+        </span>
+      </a>
+    );
+  }
 
   if (item.kind === "audio" && playing) {
     return (
@@ -38,14 +54,6 @@ export function MediaPlayer({ item, autoPlay = false, fill = false }: { item: Me
             title={item.title}
             src={`https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=1`}
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-            allowFullScreen
-            className={frame}
-          />
-        ) : fb ? (
-          <iframe
-            title={item.title}
-            src={facebookPluginUrl(item)}
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; fullscreen"
             allowFullScreen
             className={frame}
           />

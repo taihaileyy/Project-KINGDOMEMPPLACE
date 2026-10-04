@@ -1,24 +1,16 @@
-import { CalendarDays, Church, HandHeart, House, Mic, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
-import { GardenBackdrop } from "@/components/paradise/garden";
+import { ChipNav } from "@/components/home/chip-nav";
+import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
+import { HomeWatch } from "@/components/home/home-watch";
 import { EventsCarousel } from "@/components/home/events-carousel";
-import { ImpactSection } from "@/components/home/impact-section";
 import { BookPromo } from "@/components/home/book-promo";
+import { ImpactSection } from "@/components/home/impact-section";
 import { ProgramsRail } from "@/components/home/programs-rail";
-import { ScheduleHero } from "@/components/schedule-views";
+import { ScheduleFooter, ScheduleHero } from "@/components/schedule-views";
 import { houseImages, images, org, programs, recentEvents } from "@/content/site";
-
-const quickNav = [
-  { href: "/church", label: "Worship", title: "Worship with us", line: "Worship with the KEP church family and join Bible study every Wednesday.", Icon: Church },
-  { href: "/housing", label: "Sober Living", title: "The Sober Living Program", line: "A sober home with structure, support and a plan.", Icon: House },
-  { href: "/programs", label: "Programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", Icon: Users },
-  { href: "/studio/book", label: "Studio", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
-  { href: "/events", label: "Events", title: "Attend an event", line: "Conferences, workshops and community gatherings.", Icon: CalendarDays },
-  { href: "/give", label: "Give", title: "Give", line: "Support the work happening on North Foster Drive.", Icon: HandHeart },
-];
 
 // Delay for staggered entrances (read by .mask-line and [data-reveal]).
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
@@ -79,65 +71,64 @@ export default function Home() {
         </div>
       </section>
 
-      {/* One flow on every screen size: a way in, a short welcome, then a featured
-          program, pathways, numbers, events, photos, the studio, scripture, the
-          church, a book, and a closing invitation, with light and dark sections
-          alternating. */}
-
-      {/* Quick navigation: icon tiles on phones, an index with icons from 640px up */}
-      <section aria-labelledby="quick-title" className="bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 pb-2 pt-12 sm:px-6 sm:pb-6 sm:pt-16">
-          <h2 id="quick-title" data-reveal="mask" className="font-display text-[2.1rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
-            What brings you to KEP?
-          </h2>
-          <ul className="mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
-            {quickNav.map(({ href, label, Icon }, i) => (
-              <li key={href} data-reveal style={d(i * 60)}>
-                <Link
-                  href={href}
-                  className="flex min-h-[5.75rem] flex-col items-center justify-center gap-2.5 rounded-[var(--radius-control)] border border-ink/15 bg-white/55 px-3 py-4 text-[15px] font-medium transition-colors active:bg-white"
-                >
-                  <Icon aria-hidden="true" className="size-7 text-blue" strokeWidth={1.5} />
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <ul className="mt-9 hidden border-t border-ink/15 sm:grid lg:grid-cols-2 lg:gap-x-16">
-            {quickNav.map(({ href, title, line, Icon }, i) => (
-              <li key={href} data-reveal style={d((i % 2) * 90 + Math.floor(i / 2) * 70)} className="border-b border-ink/15">
-                <Link href={href} className="group flex items-center gap-5 py-6">
-                  <Icon aria-hidden="true" className="size-9 shrink-0 text-blue" strokeWidth={1.4} />
-                  <span className="min-w-0 flex-1">
-                    <span className="block font-display text-3xl leading-tight transition-colors duration-300 group-hover:text-blue sm:text-4xl">{title}</span>
-                    <span className="mt-1 block text-[15px] leading-relaxed text-muted">{line}</span>
-                  </span>
-                  <Arrow className="text-blue" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+      {/* One app-like flow: shortcuts, the game, watch and listen, then swipeable rows. */}
+      <ChipNav />
+      <CreateWorldSpotlight />
+      <HomeWatch />
+      {/* Events */}
+      <section aria-labelledby="events-title" className="border-t border-ink/10 bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 sm:gap-8">
+            <div className="max-w-2xl">
+              <h2 id="events-title" data-reveal="mask" className={h2}>
+                Events and gatherings
+              </h2>
+              <p data-reveal style={d(150)} className="mt-3 text-[15px] leading-relaxed text-muted sm:mt-6 sm:text-lg">
+                Conferences, workshops, church services, community events and program events.
+              </p>
+            </div>
+            <Link data-reveal href="/events" className="btn-quiet group text-ink">
+              View all events <Arrow />
+            </Link>
+          </div>
+          <div className="mt-7 sm:mt-10">
+            <EventsCarousel events={recentEvents} />
+          </div>
         </div>
       </section>
 
-      {/* Welcome */}
-      <section aria-labelledby="welcome-title" className="bg-ivory">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-12 sm:gap-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
-          <div>
-            <h2 id="welcome-title" className="sr-only">Welcome to Kingdom Empowerment Place</h2>
-            <p data-reveal="mask" className="font-display text-[1.7rem] font-medium leading-[1.2] sm:text-[clamp(2rem,4.2vw,3.6rem)] sm:leading-[1.12]">
-              A church that worships together, and a home on North Foster Drive where young people, families and
-              neighbors in recovery find structure, skills and a place to belong.
-            </p>
-            <p data-reveal style={d(200)} className="mt-5 text-[14px] text-muted sm:mt-8 sm:text-[15px]">
-              Led by {org.pastors}
+      {/* Scripture, full bleed */}
+      <section aria-label="Scripture" className="relative isolate overflow-hidden bg-night text-white">
+        <Image {...images.preaching} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-35" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgb(5_7_13/0.92)_0%,rgb(16_26_61/0.7)_60%,rgb(16_26_61/0.4)_100%)]" />
+        <figure className="mx-auto max-w-5xl px-4 py-14 text-center sm:px-6 sm:py-24">
+          <blockquote data-reveal="mask" className="font-display text-[1.7rem] font-normal italic leading-[1.2] sm:text-[clamp(2rem,4.6vw,4rem)] sm:leading-[1.15]">
+            &ldquo;For I know the plans I have for you,&rdquo; declares the Lord, &ldquo;plans to prosper you and not to
+            harm you, plans to give you hope and a future.&rdquo;
+          </blockquote>
+          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-10 sm:text-[15px]">
+            Jeremiah 29:11
+          </figcaption>
+        </figure>
+      </section>
+
+      {/* Programs */}
+      <section aria-labelledby="programs-title" className="bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 sm:py-20">
+          <div className="grid gap-4 sm:gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+            <h2 id="programs-title" data-reveal="mask" className={h2}>
+              Programs built to empower our community
+            </h2>
+            <p data-reveal style={d(150)} className="max-w-md text-[15px] leading-relaxed text-muted sm:text-lg lg:justify-self-end">
+              One KEP account lets you explore and register. Some programs have requirements or need approval from our staff.
             </p>
           </div>
-          <figure data-reveal="image" style={d(150)} className="relative aspect-[5/4] overflow-hidden sm:aspect-[4/3] lg:mb-2 lg:aspect-[4/5]">
-            <Image {...images.adultMinistry} alt={images.adultMinistry.alt} sizes="(min-width: 1024px) 35vw, 100vw" className="h-full w-full object-cover" />
-          </figure>
+          <div className="mt-7 sm:mt-10">
+            <ProgramsRail items={programs.map((p) => ({ href: `/programs/${p.slug}`, name: p.name, summary: p.summary, image: p.image, art: p.art }))} />
+          </div>
         </div>
       </section>
+
 
       {/* Sober Living: one featured program. Costs, eligibility and how to apply
           live on /housing. */}
@@ -169,144 +160,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Programs */}
-      <section aria-labelledby="programs-title" className="bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 sm:py-20">
-          <div className="grid gap-4 sm:gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
-            <h2 id="programs-title" data-reveal="mask" className={h2}>
-              Programs built to empower our community
-            </h2>
-            <p data-reveal style={d(150)} className="max-w-md text-[15px] leading-relaxed text-muted sm:text-lg lg:justify-self-end">
-              One KEP account lets you explore and register. Some programs have requirements or need approval from our staff.
-            </p>
-          </div>
-          <div className="mt-7 sm:mt-10">
-            <ProgramsRail items={programs.map((p) => ({ href: `/programs/${p.slug}`, name: p.name, summary: p.summary, image: p.image, art: p.art }))} />
-          </div>
-        </div>
-      </section>
-
-      <ImpactSection
-        facts={[
-          { value: String(programs.length), label: "Community programs", icon: "programs" },
-          { value: "Weekly", label: "Bible Study every Wednesday", icon: "church" },
-          { value: "1", label: "Media studio open to the community", icon: "studio" },
-          { value: "All ages", label: "Youth, adults and families welcome", icon: "ages" },
-        ]}
-      />
-
-      {/* Events */}
-      <section aria-labelledby="events-title" className="border-t border-ink/10 bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 sm:gap-8">
-            <div className="max-w-2xl">
-              <h2 id="events-title" data-reveal="mask" className={h2}>
-                Events and gatherings
-              </h2>
-              <p data-reveal style={d(150)} className="mt-3 text-[15px] leading-relaxed text-muted sm:mt-6 sm:text-lg">
-                Conferences, workshops, church services, community events and program events.
-              </p>
-            </div>
-            <Link data-reveal href="/events" className="btn-quiet group text-ink">
-              View all events <Arrow />
-            </Link>
-          </div>
-          <div className="mt-7 sm:mt-10">
-            <EventsCarousel events={recentEvents} />
-          </div>
-        </div>
-      </section>
-
-      {/* Life at KEP: a compact photo collage */}
-      <section aria-labelledby="moments-title" className="bg-night text-white">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
-            <h2 id="moments-title" data-reveal="mask" className={h2}>
-              Life at KEP
-            </h2>
-            <Link data-reveal href="/gallery" className="btn-quiet group text-white">
-              See the gallery <Arrow />
-            </Link>
-          </div>
-          <div className="mt-6 grid h-[21rem] grid-cols-2 grid-rows-2 gap-2 sm:mt-10 sm:h-[30rem] sm:gap-3 lg:h-[36rem] lg:grid-cols-[1.35fr_1fr]">
-            {[
-              { img: images.youthActivity, cls: "row-span-2" },
-              { img: images.computerLab, cls: "" },
-              { img: images.celebration, cls: "" },
-            ].map(({ img, cls }, i) => (
-              <figure key={img.src} data-reveal="image" style={d(i * 120)} className={`relative overflow-hidden ${cls}`}>
-                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 45vw, 50vw" className="object-cover" />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Studio: one feature */}
-      <section aria-labelledby="studio-title" className="bg-ivory text-ink">
-        <div className="grid lg:grid-cols-2">
-          <figure data-reveal="image" className="relative min-h-[240px] overflow-hidden sm:min-h-[360px] lg:min-h-[520px]">
-            <Image {...images.facility} alt={images.facility.alt} sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full object-cover" />
-          </figure>
-          <div className="flex items-center px-4 py-12 sm:px-6 sm:py-16 lg:px-16 lg:py-20">
-            <div className="max-w-lg">
-              <h2 id="studio-title" data-reveal="mask" className={h2}>
-                Reserve our studio
-              </h2>
-              <p data-reveal style={d(150)} className="mt-4 text-[15px] leading-relaxed text-muted sm:mt-6 sm:text-lg">
-                Open to the community. Pick a time and send a request, and our team will confirm your booking.
-              </p>
-              <p data-reveal style={d(200)} className="mt-5 font-display text-[1.35rem] leading-snug sm:text-2xl">
-                Recording · Filming · Creative projects
-              </p>
-              <div data-reveal style={d(300)} className="mt-7 sm:mt-9">
-                <Link href="/studio/book" className="btn-primary group">
-                  Book the studio <Arrow />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Create Your World: a compact teaser for the interactive Bible journey */}
-      <section aria-labelledby="paradise-teaser-title" className="bg-ivory">
-        <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
-          <Link
-            href="/create-your-world"
-            className="group relative isolate flex min-h-[15rem] items-end overflow-hidden rounded-[var(--radius-card)] bg-[#050a1c] p-6 text-white sm:min-h-[17rem] sm:items-center sm:p-10"
-          >
-            <GardenBackdrop focus="middle" className="-z-10 transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(5_8_24/0.88)_0%,rgb(5_8_24/0.5)_55%,rgb(5_8_24/0.15)_100%)] sm:bg-[linear-gradient(90deg,rgb(5_8_24/0.85)_0%,rgb(5_8_24/0.45)_55%,transparent_100%)]" />
-            <div className="max-w-sm sm:max-w-md">
-              <h2 id="paradise-teaser-title" className="font-display text-[1.9rem] font-medium uppercase leading-[1.05] tracking-[0.12em] sm:text-5xl sm:tracking-[0.16em]">
-                Create Your World
-              </h2>
-              <p className="mt-2 font-display text-lg italic text-[#ecd08a] sm:text-2xl">An Interactive Bible Journey</p>
-              <p className="mt-3 text-[14.5px] leading-snug text-white/80 sm:text-base">Test your knowledge. Learn the Word. Continue the journey.</p>
-              <span className="btn-primary mt-4 sm:mt-6">
-                Play the game <Arrow />
-              </span>
-            </div>
-          </Link>
-        </div>
-      </section>
-
-      {/* Scripture, full bleed */}
-      <section aria-label="Scripture" className="relative isolate overflow-hidden bg-night text-white">
-        <Image {...images.preaching} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-35" />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgb(5_7_13/0.92)_0%,rgb(16_26_61/0.7)_60%,rgb(16_26_61/0.4)_100%)]" />
-        <figure className="mx-auto max-w-5xl px-4 py-14 text-center sm:px-6 sm:py-24">
-          <blockquote data-reveal="mask" className="font-display text-[1.7rem] font-normal italic leading-[1.2] sm:text-[clamp(2rem,4.6vw,4rem)] sm:leading-[1.15]">
-            &ldquo;For I know the plans I have for you,&rdquo; declares the Lord, &ldquo;plans to prosper you and not to
-            harm you, plans to give you hope and a future.&rdquo;
-          </blockquote>
-          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-10 sm:text-[15px]">
-            Jeremiah 29:11
-          </figcaption>
-        </figure>
-      </section>
-
       {/* Church: the pastors under a church-window arch */}
       <section aria-labelledby="church-title" className="bg-ivory">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
@@ -330,6 +183,10 @@ export default function Home() {
               Led by {org.pastors}, KEP Church gathers every week to worship, study the Word and serve our
               neighborhood. Come as you are.
             </p>
+            <div data-reveal style={d(220)} className="mt-6 border-t border-ink/15 pt-4">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-blue">This week at KEP</p>
+              <ScheduleFooter className="mt-2 text-[15px] leading-7 text-ink" />
+            </div>
             <div data-reveal style={d(300)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-9 sm:gap-y-4">
               <Link href="/church" className="btn-primary group">
                 About the church <Arrow />
@@ -338,6 +195,41 @@ export default function Home() {
                 Register with the church <Arrow />
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our impact: live totals from KEP's records (Admin controls what shows) */}
+      <ImpactSection
+        facts={[
+          { value: String(programs.length), label: "Community programs", icon: "programs" },
+          { value: "Weekly", label: "Bible Study every Wednesday", icon: "church" },
+          { value: "1", label: "Media studio open to the community", icon: "studio" },
+          { value: "All ages", label: "Youth, adults and families welcome", icon: "ages" },
+        ]}
+      />
+
+      {/* Life at KEP: a compact photo collage */}
+      <section aria-labelledby="moments-title" className="bg-ivory text-ink">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
+            <h2 id="moments-title" data-reveal="mask" className={h2}>
+              Life at KEP
+            </h2>
+            <Link data-reveal href="/gallery" className="btn-quiet group text-ink">
+              See the gallery <Arrow />
+            </Link>
+          </div>
+          <div className="mt-6 grid h-[21rem] grid-cols-2 grid-rows-2 gap-2 sm:mt-10 sm:h-[30rem] sm:gap-3 lg:h-[36rem] lg:grid-cols-[1.35fr_1fr]">
+            {[
+              { img: images.youthActivity, cls: "row-span-2" },
+              { img: images.computerLab, cls: "" },
+              { img: images.celebration, cls: "" },
+            ].map(({ img, cls }, i) => (
+              <figure key={img.src} data-reveal="image" style={d(i * 120)} className={`relative overflow-hidden ${cls}`}>
+                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 45vw, 50vw" className="object-cover" />
+              </figure>
+            ))}
           </div>
         </div>
       </section>
