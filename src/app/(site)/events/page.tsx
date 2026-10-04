@@ -1,7 +1,8 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { PageIntro, Section } from "@/components/section";
-import { org, recentEvents, weekly } from "@/content/site";
+import { ScheduleEvents } from "@/components/schedule-views";
+import { recentEvents } from "@/content/site";
 
 export const metadata: Metadata = { title: "Events" };
 
@@ -13,19 +14,7 @@ export default function EventsPage() {
         lead="Worship, conferences, workshops, youth activities and community gatherings. Online registration is coming soon."
       />
       <Section title="Every week">
-        <ul className="grid gap-5 md:grid-cols-2">
-          {weekly.map((w) => (
-            <li key={w.title} className="card flex items-center gap-6 p-6">
-              <div className="grid size-24 shrink-0 place-items-center rounded-2xl bg-blue text-center text-white">
-                <span className="font-display text-lg font-semibold leading-tight">{w.day}</span>
-              </div>
-              <div>
-                <p className="font-display text-2xl font-medium">{w.title}</p>
-                <p className="mt-1 text-muted">{w.time} at KEP, {org.address.line1}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ScheduleEvents />
       </Section>
       <Section title="Recently at KEP">
         <ul className="grid grid-cols-2 gap-5 lg:grid-cols-4">

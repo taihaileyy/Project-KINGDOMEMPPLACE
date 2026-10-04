@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SocialLinks } from "@/components/social-links";
 import { Wordmark } from "@/components/wordmark";
-import { fullAddress, moreNav, org, siteNav, weekly } from "@/content/site";
+import { ScheduleFooter } from "@/components/schedule-views";
+import { fullAddress, moreNav, org, siteNav } from "@/content/site";
 
 export function SiteFooter() {
   return (
@@ -22,11 +23,7 @@ export function SiteFooter() {
             <br />
             <a href={`mailto:${org.email}`} className="break-all hover:underline">{org.email}</a>
           </address>
-          <ul className="mt-4 leading-7 text-chrome">
-            {weekly.map((w) => (
-              <li key={w.title}>{w.title}: {w.day}s, {w.time}</li>
-            ))}
-          </ul>
+          <ScheduleFooter />
         </div>
         <div>
           <h2 className="text-sm font-bold text-chrome">Explore</h2>

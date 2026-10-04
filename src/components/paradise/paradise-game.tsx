@@ -16,7 +16,7 @@ type Phase =
 type Pos = { l: number; q: number };
 
 // Timings in ms. With reduced motion there is no camera move, so they shrink.
-const T = { enter: 1600, wrong: 1100, descend: 2200, ascend: 1800, ret: 1800, minThink: 450 };
+const T = { enter: 1600, wrong: 1800, descend: 2800, ascend: 1800, ret: 1800, minThink: 450 };
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -190,16 +190,11 @@ export function ParadiseGame({ content }: { content: PdContent }) {
     setPhase("ascending");
   }, [pos, level]);
 
-  const lessonAfter = (): "retry" | "continue" => result?.lesson?.after_video ?? settings.after_lesson;
-
+  // After a wrong answer and the lesson, the player ALWAYS retries the same
+  // question. There is no way forward except answering it correctly.
   const leaveLesson = () => {
-    if (lessonAfter() === "retry") {
-      target.current = { pos, phase: "question" };
-      setAttempt((n) => n + 1);
-    } else {
-      const last = pos.q >= (level?.questions.length ?? 1) - 1;
-      target.current = last ? { pos, phase: "levelComplete" } : { pos: { l: pos.l, q: pos.q + 1 }, phase: "question" };
-    }
+    target.current = { pos, phase: "question" };
+    setAttempt((n) => n + 1);
     setPhase("returning");
   };
 
@@ -233,7 +228,7 @@ export function ParadiseGame({ content }: { content: PdContent }) {
       case "entering": after(T.enter, () => setPhase("question")); break;
       case "wrong": after(T.wrong, () => setPhase("descending")); break;
       case "descending":
-        after(1000, () => setLearning(true));
+        after(1500, () => setLearning(true));
         t = window.setTimeout(() => setPhase("lesson"), T.descend * k);
         break;
       case "correct": if (settings.auto_advance) after(settings.auto_advance_seconds * 1000, goNext); break;
@@ -262,7 +257,7 @@ export function ParadiseGame({ content }: { content: PdContent }) {
   const lastLevel = pos.l >= levels.length - 1;
 
   return (
-    <ParadiseScene level={level ?? null} motion={motion} mode={learning || phase === "lesson" ? "learning" : "garden"} tone={tone} reducedMotion={reduced}>
+    <ParadiseScene level={level ?? null} motion={motion} mode={learning || phase === "lesson" ? "learning" : "garden"} tone={tone} fire={phase === "wrong" || (phase === "descending" && !learning)} reducedMotion={reduced}>
       <audio ref={audioRef} loop preload="none" />
 
       {phase !== "intro" && (
@@ -343,7 +338,7 @@ export function ParadiseGame({ content }: { content: PdContent }) {
               )}
             </div>
           )}
-          {phase === "wrong" && <p className="font-display text-xl text-white/80">Not quite.</p>}
+          {phase === "wrong" && <p className="font-display text-xl text-white/85">Not quite&hellip;</p>}
         </QuestionScreen>
       )}
 
@@ -361,7 +356,7 @@ export function ParadiseGame({ content }: { content: PdContent }) {
           explanation={result.explanation}
           requireWatch={settings.require_video_watch}
           fallbackSeconds={settings.fallback_wait_seconds}
-          actionLabel={lessonAfter() === "retry" ? "Try again" : "Continue journey"}
+          actionLabel="Try again"
           onAction={leaveLesson}
           leaving={phase === "returning"}
         />

@@ -21,7 +21,7 @@ const schema = z.object({
 // account if they later sign up and verify the same address.
 export async function startGift(_: GiveState, form: FormData): Promise<GiveState> {
   if (!stripeConfigured()) {
-    return { error: "Online giving isn't switched on yet. You can give in person on Sunday or Wednesday, or call us." };
+    return { error: "Online giving isn't switched on yet. You can give in person at a service or Bible Study, or call us." };
   }
   const parsed = schema.safeParse(Object.fromEntries(form));
   if (!parsed.success) return { error: parsed.error.issues[0].message };

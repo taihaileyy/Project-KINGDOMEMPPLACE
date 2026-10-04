@@ -1,5 +1,6 @@
 "use client";
 
+import { FireLayer } from "@/components/paradise/fire";
 import { GardenBackdrop } from "@/components/paradise/garden";
 import type { PdLevel } from "@/lib/paradise/types";
 
@@ -21,6 +22,7 @@ export function ParadiseScene({
   motion,
   mode,
   tone,
+  fire,
   children,
   reducedMotion,
 }: {
@@ -28,6 +30,7 @@ export function ParadiseScene({
   motion: Motion;
   mode: "garden" | "learning";
   tone: "neutral" | "correct" | "wrong";
+  fire: boolean;
   children: React.ReactNode;
   reducedMotion: boolean;
 }) {
@@ -57,6 +60,7 @@ export function ParadiseScene({
       <div className="pd-vignette" aria-hidden="true" />
       <div className="pd-bloom" aria-hidden="true" />
       <div className="pd-veil" aria-hidden="true" />
+      <FireLayer on={fire} />
       {children}
     </div>
   );

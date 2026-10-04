@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PageIntro, Section } from "@/components/section";
-import { fullAddress, images, org, weekly } from "@/content/site";
+import { ScheduleCards } from "@/components/schedule-views";
+import { fullAddress, images, org } from "@/content/site";
 
 export const metadata: Metadata = { title: "Church" };
 
@@ -18,16 +19,7 @@ export default function ChurchPage() {
       </PageIntro>
 
       <Section>
-        <ul className="grid gap-5 md:grid-cols-2">
-          {weekly.map((w) => (
-            <li key={w.title} className="card p-8">
-              <p className="text-muted">{w.day}s</p>
-              <p className="mt-1 font-display text-5xl font-medium">{w.time}</p>
-              <p className="mt-4 font-display text-2xl font-medium">{w.title}</p>
-              <p className="mt-2 text-muted">{w.detail}</p>
-            </li>
-          ))}
-        </ul>
+        <ScheduleCards />
       </Section>
 
       <Section dark title="Watch and listen" lead="Catch up on preaching and teaching from KEP, and follow along between Sundays.">

@@ -8,10 +8,11 @@ import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
 import { BookPromo } from "@/components/home/book-promo";
 import { ProgramsRail } from "@/components/home/programs-rail";
-import { houseImages, images, org, programs, recentEvents, weekly } from "@/content/site";
+import { ScheduleHero } from "@/components/schedule-views";
+import { houseImages, images, org, programs, recentEvents } from "@/content/site";
 
 const quickNav = [
-  { href: "/church", label: "Worship", title: "Worship with us", line: "Sundays at 10 AM and Bible study Wednesdays at 6:30 PM.", Icon: Church },
+  { href: "/church", label: "Worship", title: "Worship with us", line: "Worship with the KEP church family and join Bible study every Wednesday.", Icon: Church },
   { href: "/housing", label: "Sober Living", title: "The Sober Living Program", line: "A sober home with structure, support and a plan.", Icon: House },
   { href: "/programs", label: "Programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", Icon: Users },
   { href: "/studio/book", label: "Studio", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
@@ -22,7 +23,12 @@ const quickNav = [
 // Delay for staggered entrances (read by .mask-line and [data-reveal]).
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 
-const heroLines = ["Empowering youth.", "Building futures.", "Changing communities."];
+// The official slogan, one beat at a time. The verb of each beat is set in italics.
+const heroLines: { verb: string; rest: string }[] = [
+  { verb: "Engage", rest: " the community," },
+  { verb: "Equip", rest: " the people," },
+  { verb: "and Empower", rest: " the nation." },
+];
 
 const h2 = "font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl";
 
@@ -35,19 +41,22 @@ export default function Home() {
         className="relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
       >
         <HeroMotion />
-        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-10 pt-40 sm:px-6 lg:pb-20">
+        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
           <h1
             id="hero-title"
             className="max-w-6xl font-display text-[clamp(2.9rem,6.6vw,6.6rem)] font-medium leading-[1] tracking-[-0.01em]"
           >
             {heroLines.map((line, i) => (
-              <span key={line} className="mask-line">
-                <span style={d(120 + i * 140)}>{line}</span>
+              <span key={line.verb} className="mask-line">
+                <span style={d(120 + i * 260)}>
+                  <em className="italic">{line.verb}</em>
+                  {line.rest}
+                </span>
               </span>
             ))}
           </h1>
           <p style={d(620)} className="rise mt-8 max-w-lg text-lg leading-relaxed text-white/80">
-            Kingdom Empowerment Place is a church and a community home in Baton Rouge, with worship, a sober living
+            Kingdom Empowerment Place: a church and a community home in Baton Rouge, with worship, a sober living
             program, programs for every age, events and a media studio.
           </p>
           <div style={d(760)} className="rise mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -57,12 +66,7 @@ export default function Home() {
           </div>
 
           <dl style={d(900)} className="rise mt-16 grid max-w-3xl gap-6 border-t border-white/15 pt-6 sm:grid-cols-3">
-            {weekly.map((w) => (
-              <div key={w.title}>
-                <dt className="text-[13px] text-chrome">{w.title}</dt>
-                <dd className="mt-1 text-[15px] font-semibold">{w.day}s, {w.time}</dd>
-              </div>
-            ))}
+            <ScheduleHero />
             <div>
               <dt className="text-[13px] text-chrome">Find us</dt>
               <dd className="mt-1 text-[15px] font-semibold">
@@ -185,7 +189,7 @@ export default function Home() {
       <ImpactSection
         facts={[
           { value: String(programs.length), label: "Community programs", icon: "programs" },
-          { value: String(weekly.length), label: "Church gatherings every week", icon: "church" },
+          { value: "Weekly", label: "Bible Study every Wednesday", icon: "church" },
           { value: "1", label: "Media studio open to the community", icon: "studio" },
           { value: "All ages", label: "Youth, adults and families welcome", icon: "ages" },
         ]}

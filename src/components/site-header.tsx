@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { OPEN_MENU_EVENT } from "@/components/mobile-tabs";
 import { MenuButton, SideDrawer, isActivePath, type DrawerGroup } from "@/components/side-drawer";
 import { Wordmark } from "@/components/wordmark";
 import { siteNav } from "@/content/site";
@@ -64,6 +65,13 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   const solid = scrolled || pathname !== "/";
+
+  // The phone tab bar's "More" opens this same menu.
+  useEffect(() => {
+    const open = () => setOpen(true);
+    window.addEventListener(OPEN_MENU_EVENT, open);
+    return () => window.removeEventListener(OPEN_MENU_EVENT, open);
+  }, []);
 
   return (
     <header className="site-header fixed inset-x-0 top-0 z-30 text-white">

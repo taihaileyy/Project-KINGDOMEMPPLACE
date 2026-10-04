@@ -153,3 +153,39 @@
 }
 @keyframes pd-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pd-fade-out { to { opacity: 0; } }
+
+/* ── A wrong answer: the room goes dark and fire rises from below ─────── */
+.pd-stage[data-tone="wrong"] .pd-dim { opacity: 0.8; transition-duration: 1.2s; }
+.pd-stage[data-tone="wrong"] .pd-world { filter: brightness(0.4) saturate(0.6); }
+.pd-stage[data-motion="descend"] .pd-dim { opacity: 0.8; }
+.pd-stage[data-motion="descend"] .pd-veil { animation-name: pd-veil-soft; }
+@keyframes pd-veil-soft { 0%, 100% { opacity: 0; } 50%, 62% { opacity: 0.65; } }
+
+.pd-fire { position: absolute; inset: auto 0 0 0; height: 78%; pointer-events: none; overflow: hidden; opacity: 0; transform: translateY(40%); transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 1.1s ease; }
+.pd-fire[data-on="true"] { opacity: 1; transform: none; }
+.pd-fire-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 100%, rgb(255 130 30 / 0.7), rgb(190 40 10 / 0.35) 45%, transparent 75%);
+  animation: pd-glow-pulse 2.6s ease-in-out infinite alternate;
+}
+@keyframes pd-glow-pulse { from { opacity: 0.75; } to { opacity: 1; } }
+.pd-fire-svg { position: absolute; inset: auto 0 0 0; width: 100%; height: 100%; mix-blend-mode: screen; filter: blur(3px) saturate(1.15); }
+.pd-flame { transform-box: fill-box; transform-origin: 50% 100%; animation: pd-flame var(--dur, 1.8s) ease-in-out var(--delay, 0s) infinite alternate; }
+@keyframes pd-flame {
+  0% { transform: scale(1, 0.9) skewX(-4deg); }
+  50% { transform: scale(0.94, 1.08) skewX(2deg); }
+  100% { transform: scale(1.04, 0.96) skewX(4deg); }
+}
+.pd-embers { position: absolute; inset: 0; }
+.pd-ember {
+  position: absolute; bottom: 4%; width: var(--s, 3px); height: var(--s, 3px); border-radius: 50%;
+  background: radial-gradient(circle, #ffd27a, #ff6a1a 60%, transparent);
+  animation: pd-ember var(--t, 5s) ease-out var(--d, 0s) infinite; opacity: 0;
+}
+@keyframes pd-ember { 0% { transform: translate3d(0, 0, 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate3d(var(--x, 20px), -62vh, 0); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-fire { transition: opacity 0.5s ease; transform: none; }
+  .pd-flame, .pd-fire-glow, .pd-ember { animation: none !important; }
+  .pd-ember { display: none; }
+}
