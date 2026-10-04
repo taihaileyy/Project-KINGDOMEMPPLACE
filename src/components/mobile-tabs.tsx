@@ -20,7 +20,7 @@ export function MobileTabs() {
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/"));
   const base = "relative flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium tracking-wide transition-colors";
   return (
-    <nav aria-label="App" className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-blueblack/95 pb-[env(safe-area-inset-bottom)] text-white backdrop-blur-xl sm:hidden">
+    <nav aria-label="App" className="mobile-tabs fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-blueblack/95 pb-[env(safe-area-inset-bottom)] text-white backdrop-blur-xl sm:hidden">
       <ul className="mx-auto flex max-w-md items-stretch px-2">
         {tabs.map(({ href, label, Icon }) => {
           const isPlay = href === "/create-your-world";
