@@ -68,6 +68,17 @@ export async function requireParadiseStaff(): Promise<Session> {
   return session;
 }
 
+// Videos and audio are managed by super admins, church staff and program staff.
+export function canManageMedia(session: Session) {
+  return session.roles.some((r) => r.role === "super_admin" || r.role === "church_staff" || r.role === "program_staff");
+}
+
+export async function requireMediaStaff(): Promise<Session> {
+  const session = await requireUser("/admin/videos");
+  if (!canManageMedia(session)) redirect("/admin?denied=1");
+  return session;
+}
+
 // Server-side gate for staff pages. The database enforces the same rules,
 // so this is for clear errors, not the only protection.
 export async function requireStaff(allowed?: StaffRole[]): Promise<Session> {

@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Ellipsis, House, TreeDeciduous, Users, type LucideIcon } from "lucide-react";
+import { CalendarDays, CirclePlay, Ellipsis, House, TreeDeciduous, type LucideIcon } from "lucide-react";
 
 // App-style navigation for phones: the main places one thumb away, with
 // Create Your World in the middle, and More opening the full menu.
 const tabs: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: "/", label: "Home", Icon: House },
-  { href: "/programs", label: "Programs", Icon: Users },
+  { href: "/watch", label: "Watch", Icon: CirclePlay },
   { href: "/create-your-world", label: "Play", Icon: TreeDeciduous },
   { href: "/events", label: "Events", Icon: CalendarDays },
 ];
@@ -28,13 +28,13 @@ export function MobileTabs() {
             <li key={href} className="flex flex-1">
               <Link href={href} aria-current={active(href) ? "page" : undefined} className={`${base} ${active(href) ? "text-white" : "text-white/60"} ${isPlay ? "-mt-5" : ""}`}>
                 {isPlay ? (
-                  <span className="grid size-14 place-items-center rounded-full bg-[radial-gradient(circle_at_50%_30%,#3f8f6a,#0b3a2d_70%)] text-[#ecd08a] shadow-[0_8px_24px_-6px_rgb(63_143_106/0.7)] ring-2 ring-[#ecd08a]/60">
+                  <span className="grid size-14 place-items-center rounded-full bg-[radial-gradient(circle_at_50%_25%,#5c6bff,#1f33b8_70%)] text-white shadow-[0_8px_24px_-6px_rgb(31_51_184/0.8)] ring-2 ring-white/40">
                     <Icon aria-hidden="true" className="size-7" strokeWidth={1.6} />
                   </span>
                 ) : (
                   <Icon aria-hidden="true" className="size-6" strokeWidth={1.6} />
                 )}
-                <span className={isPlay ? "text-[#ecd08a]" : ""}>{label}</span>
+                <span className={isPlay ? "text-white" : ""}>{label}</span>
                 {active(href) && !isPlay && <span aria-hidden="true" className="absolute inset-x-5 top-0 h-0.5 rounded-full bg-electric" />}
               </Link>
             </li>

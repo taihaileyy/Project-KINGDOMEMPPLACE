@@ -26,6 +26,7 @@ export const siteNav = [
   { href: "/programs", label: "Programs" },
   { href: "/housing", label: "Sober Living" },
   { href: "/events", label: "Events" },
+  { href: "/watch", label: "Watch" },
   { href: "/create-your-world", label: "Create Your World" },
   { href: "/studio/book", label: "Book the Studio" },
   { href: "/give", label: "Give" },
@@ -90,6 +91,8 @@ export type Program = {
   body: string[];
   highlights: string[];
   image: Img;
+  // Programs drawn as artwork instead of a photograph (see components/arts-art.tsx).
+  art?: "arts";
 };
 
 // Starting programs. Admins will manage these from the dashboard once the
@@ -112,7 +115,8 @@ export const programs: Program[] = [
     summary: "Space for young people and adults to develop their creative gifts.",
     body: ["The Arts Program gives people of every age room to create, perform and develop the gifts God has given them."],
     highlights: ["Creative expression", "Performance opportunities", "Open to all ages"],
-    image: images.celebration,
+    image: images.celebration, // only the fallback; the Arts Program shows its own artwork
+    art: "arts",
   },
   {
     slug: "entrepreneurship",

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 
-const ACCEPT = { video: "video/mp4,video/webm,video/quicktime", image: "image/jpeg,image/png,image/webp", audio: "audio/mpeg,audio/mp4,audio/ogg,audio/wav" } as const;
+const ACCEPT = { video: "video/mp4,video/webm,video/quicktime", image: "image/jpeg,image/png,image/webp", audio: "audio/mpeg,audio/mp4,audio/ogg,audio/wav", captions: ".vtt,text/vtt" } as const;
 
 // A web address field that can also upload a file to KEP's media storage and
 // fill the address in. Only the address is saved with the content.
@@ -13,6 +13,7 @@ export function MediaField({
   kind,
   defaultValue = "",
   hint,
+  bucket = "paradise-media",
   onValue,
 }: {
   name: string;
@@ -20,6 +21,7 @@ export function MediaField({
   kind: keyof typeof ACCEPT;
   defaultValue?: string;
   hint?: string;
+  bucket?: string;
   onValue?: (url: string) => void;
 }) {
   const [value, setValue] = useState(defaultValue);
@@ -33,9 +35,9 @@ export function MediaField({
       const supabase = createBrowserSupabase();
       const ext = (file.name.split(".").pop() || "bin").toLowerCase().replace(/[^a-z0-9]/g, "");
       const path = `${kind}/${new Date().toISOString().slice(0, 10)}-${crypto.randomUUID()}.${ext}`;
-      const { error: err } = await supabase.storage.from("paradise-media").upload(path, file, { contentType: file.type, cacheControl: "31536000" });
+      const { error: err } = await supabase.storage.from(bucket).upload(path, file, { contentType: file.type, cacheControl: "31536000" });
       if (err) throw err;
-      const { data } = supabase.storage.from("paradise-media").getPublicUrl(path);
+      const { data } = supabase.storage.from(bucket).getPublicUrl(path);
       setValue(data.publicUrl);
       onValue?.(data.publicUrl);
     } catch (e) {
@@ -54,7 +56,7 @@ export function MediaField({
         type="url"
         value={value}
         onChange={(e) => { setValue(e.target.value); onValue?.(e.target.value); }}
-        placeholder="https://… (or upload a file below)"
+        placeholder={kind === "captions" ? "https://… .vtt file (optional)" : "https://… (or upload a file below)"}
         className="field-input"
         maxLength={1000}
       />

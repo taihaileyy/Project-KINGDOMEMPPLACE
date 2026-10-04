@@ -4,7 +4,7 @@
   position: absolute; inset: 0;
   background:
     radial-gradient(120% 70% at 50% 72%, rgb(236 208 138 / 0.55) 0%, rgb(214 170 90 / 0.18) 38%, transparent 70%),
-    linear-gradient(180deg, #05231c 0%, #0b3a2d 38%, #1b5f48 66%, #b59a58 100%);
+    linear-gradient(180deg, #060a24 0%, #101a52 38%, #2a3fa8 66%, #b59a58 100%);
 }
 .pd-layer { position: absolute; inset: -14% 0 -14%; width: 100%; height: 128%; will-change: transform; }
 .pd-svg { display: block; }
@@ -27,7 +27,7 @@
   top: auto; bottom: -14%; height: 34%;
   background:
     repeating-linear-gradient(180deg, transparent 0 9px, rgb(255 244 210 / 0.1) 9px 10px),
-    linear-gradient(180deg, rgb(14 74 60 / 0) 0%, rgb(8 44 36 / 0.85) 40%, #04150f 100%);
+    linear-gradient(180deg, rgb(24 44 140 / 0) 0%, rgb(10 22 78 / 0.85) 40%, #050a1c 100%);
   background-size: 100% 20px, 100% 100%;
   animation: pd-shimmer 9s linear infinite;
 }

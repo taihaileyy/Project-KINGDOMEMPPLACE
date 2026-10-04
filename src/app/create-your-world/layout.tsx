@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 // Fills the whole screen on phones, including under the browser's own bars.
-export const viewport: Viewport = { themeColor: "#04130f", viewportFit: "cover" };
+export const viewport: Viewport = { themeColor: "#050a1c", viewportFit: "cover" };
 
 // Create Your World is its own world: no site header or footer.
 export default function ParadiseLayout({ children }: { children: React.ReactNode }) {

@@ -27,6 +27,7 @@ const drawerGroups: DrawerGroup[] = [
     items: [
       { href: "/church", title: "Church", line: "Worship times and what to expect.", icon: "church" },
       { href: "/events", title: "Events", line: "Conferences, workshops and gatherings.", icon: "events" },
+      { href: "/watch", title: "Watch & Listen", line: "Teaching and short videos.", icon: "watch" },
       { href: "/programs", title: "Programs", line: "Youth, arts, business, media and tech.", icon: "programs" },
     ],
   },

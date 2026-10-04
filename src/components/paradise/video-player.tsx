@@ -1,27 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { youTubeId } from "@/lib/media";
 import type { PdVideoType } from "@/lib/paradise/types";
 
 // Plays a lesson video from any of the three sources an administrator can use:
 // an uploaded file, a YouTube link or another web address. It reports when the
 // video has finished (`onEnded`) so the game can unlock Continue; when a source
 // can't report that, `onUntracked` lets the game fall back to a timed wait.
-
-export function youTubeId(url: string): string | null {
-  try {
-    const u = new URL(url);
-    if (u.hostname === "youtu.be") return u.pathname.slice(1).split("/")[0] || null;
-    if (u.hostname.endsWith("youtube.com") || u.hostname.endsWith("youtube-nocookie.com")) {
-      if (u.searchParams.get("v")) return u.searchParams.get("v");
-      const m = u.pathname.match(/\/(embed|shorts|live|v)\/([\w-]{6,})/);
-      if (m) return m[2];
-    }
-  } catch {
-    /* not a URL */
-  }
-  return null;
-}
 
 const isDirectFile = (url: string) => /\.(mp4|webm|mov|m4v|ogv)(\?|#|$)/i.test(url);
 

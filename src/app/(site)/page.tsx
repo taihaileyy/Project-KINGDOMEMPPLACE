@@ -181,7 +181,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-7 sm:mt-10">
-            <ProgramsRail items={programs.map((p) => ({ href: `/programs/${p.slug}`, name: p.name, summary: p.summary, image: p.image }))} />
+            <ProgramsRail items={programs.map((p) => ({ href: `/programs/${p.slug}`, name: p.name, summary: p.summary, image: p.image, art: p.art }))} />
           </div>
         </div>
       </section>
@@ -274,10 +274,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
           <Link
             href="/create-your-world"
-            className="group relative isolate flex min-h-[15rem] items-end overflow-hidden rounded-[var(--radius-card)] bg-[#04130f] p-6 text-white sm:min-h-[17rem] sm:items-center sm:p-10"
+            className="group relative isolate flex min-h-[15rem] items-end overflow-hidden rounded-[var(--radius-card)] bg-[#050a1c] p-6 text-white sm:min-h-[17rem] sm:items-center sm:p-10"
           >
             <GardenBackdrop focus="middle" className="-z-10 transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(3_14_10/0.88)_0%,rgb(3_14_10/0.5)_55%,rgb(3_14_10/0.15)_100%)] sm:bg-[linear-gradient(90deg,rgb(3_14_10/0.85)_0%,rgb(3_14_10/0.45)_55%,transparent_100%)]" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(5_8_24/0.88)_0%,rgb(5_8_24/0.5)_55%,rgb(5_8_24/0.15)_100%)] sm:bg-[linear-gradient(90deg,rgb(5_8_24/0.85)_0%,rgb(5_8_24/0.45)_55%,transparent_100%)]" />
             <div className="max-w-sm sm:max-w-md">
               <h2 id="paradise-teaser-title" className="font-display text-[1.9rem] font-medium uppercase leading-[1.05] tracking-[0.12em] sm:text-5xl sm:tracking-[0.16em]">
                 Create Your World

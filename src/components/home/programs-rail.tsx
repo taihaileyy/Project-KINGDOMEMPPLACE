@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
+import { ArtsArt } from "@/components/arts-art";
 import { RailDots, useSnapRail } from "@/components/home/use-snap-rail";
 import type { Img } from "@/content/site";
 
-type Item = { href: string; name: string; summary: string; image: Img };
+type Item = { href: string; name: string; summary: string; image: Img; art?: "arts" };
 
 // Phone-only programs: swipe through photo cards, with the next card peeking
 // in from the right (~15%) to show there is more. Details live on each
@@ -23,7 +24,7 @@ export function ProgramsRail({ items }: { items: Item[] }) {
         {items.map((it, i) => (
           <li key={it.href} aria-roledescription="slide" aria-label={`${i + 1} of ${items.length}: ${it.name}`} className="w-[80%] shrink-0 snap-start last:mr-4 sm:w-[44%] lg:w-[31.5%] xl:w-[23.5%]">
             <Link href={it.href} className="group relative block aspect-[4/5] overflow-hidden bg-night">
-              <Image src={it.image.src} alt={it.image.alt} fill sizes="(min-width: 1280px) 24vw, (min-width: 1024px) 32vw, (min-width: 640px) 44vw, 80vw" className="object-cover transition-transform duration-700 group-active:scale-[1.03]" />
+              {it.art ? <ArtsArt className="absolute inset-0 size-full transition-transform duration-700 group-active:scale-[1.03]" /> : <Image src={it.image.src} alt={it.image.alt} fill sizes="(min-width: 1280px) 24vw, (min-width: 1024px) 32vw, (min-width: 640px) 44vw, 80vw" className="object-cover transition-transform duration-700 group-active:scale-[1.03]" />}
               <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,rgb(5_7_13/0.92)_0%,rgb(5_7_13/0.55)_38%,transparent_70%)]" />
               <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 text-white">
                 <span>

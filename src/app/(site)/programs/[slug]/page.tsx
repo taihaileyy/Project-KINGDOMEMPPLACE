@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { ArtsArt } from "@/components/arts-art";
 import { org, programs } from "@/content/site";
 
 export function generateStaticParams() {
@@ -38,15 +39,19 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
           <a href={org.phoneHref} className="btn-secondary">Ask a question</a>
         </div>
       </div>
-      <Image
-        src={p.image.src}
-        alt={p.image.alt}
-        width={p.image.width}
-        height={p.image.height}
-        priority
-        sizes="(min-width: 1024px) 45vw, 100vw"
-        className="aspect-[4/5] w-full rounded-[var(--radius-card)] object-cover"
-      />
+      {p.art ? (
+        <ArtsArt className="aspect-[4/5] w-full rounded-[var(--radius-card)]" label="Brush strokes, a palette, a paintbrush and a musical note" />
+      ) : (
+        <Image
+          src={p.image.src}
+          alt={p.image.alt}
+          width={p.image.width}
+          height={p.image.height}
+          priority
+          sizes="(min-width: 1024px) 45vw, 100vw"
+          className="aspect-[4/5] w-full rounded-[var(--radius-card)] object-cover"
+        />
+      )}
     </div>
   );
 }
