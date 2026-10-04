@@ -9,14 +9,17 @@ export const metadata: Metadata = { title: "Add a question" };
 export default async function NewQuestionPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const sp = await searchParams;
   const supabase = await createClient();
-  const { data: levels } = await supabase.from("paradise_levels").select("id, level_number, name").order("level_number");
+  const [{ data: levels }, { data: library }] = await Promise.all([
+    supabase.from("paradise_levels").select("id, level_number, name").order("level_number"),
+    supabase.from("media_items").select("id, title, source").eq("kind", "video").order("title"),
+  ]);
   return (
     <div>
       <ParadiseAdminTabs current="/admin/paradise/questions" />
       <h1 className="mb-4 text-2xl font-extrabold">Add a question</h1>
       <Notice error={sp.error} />
       {levels?.length ? (
-        <QuestionForm draft={{}} levels={levels} />
+        <QuestionForm draft={{}} levels={levels} library={library ?? []} />
       ) : (
         <p className="card p-6 text-muted">Add a level first. <Link href="/admin/paradise/levels" className="font-semibold text-blue hover:underline">Go to Levels</Link></p>
       )}

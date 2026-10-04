@@ -32,6 +32,15 @@ end $$;
 insert into public.paradise_questions (id, level_id, question_text, is_active) values ('20000000-0000-0000-0000-0000000000a2', '20000000-0000-0000-0000-000000000001', 'Inactive', false);
 insert into public.paradise_questions (id, level_id, question_text) values ('20000000-0000-0000-0000-0000000000a3', '20000000-0000-0000-0000-000000000001', 'No answers');
 
+-- A lesson can use a library video; it brings its transcript.
+insert into public.media_items (id, source, url, title, transcript, kind)
+  values ('20000000-0000-0000-0000-0000000000c1', 'youtube', 'https://youtu.be/abcdefghijk', 'Library lesson', 'Words spoken in the video.', 'video');
+insert into public.paradise_questions (id, level_id, question_text, question_order) values ('20000000-0000-0000-0000-0000000000a4', '20000000-0000-0000-0000-000000000001', '[Placeholder] Q4', 4);
+insert into public.paradise_answers (id, question_id, answer_text, answer_order, is_correct) values
+  ('20000000-0000-0000-0000-0000000000b8', '20000000-0000-0000-0000-0000000000a4', 'A', 1, true),
+  ('20000000-0000-0000-0000-0000000000b9', '20000000-0000-0000-0000-0000000000a4', 'B', 2, false);
+insert into public.paradise_lessons (question_id, media_id) values ('20000000-0000-0000-0000-0000000000a4', '20000000-0000-0000-0000-0000000000c1');
+
 -- Visitors can't read the tables, but can play.
 select pg_temp.act_as(null);
 do $$ begin
@@ -39,7 +48,7 @@ do $$ begin
   raise exception 'FAILED: anon read the answer table';
 exception when insufficient_privilege then null;
 end $$;
-select pg_temp.assert(jsonb_array_length(public.paradise_content() -> 'levels' -> 0 -> 'questions') = 1, 'only the playable question is served');
+select pg_temp.assert(jsonb_array_length(public.paradise_content() -> 'levels' -> 0 -> 'questions') = 2, 'only the playable questions are served');
 select pg_temp.assert(position('is_correct' in public.paradise_content()::text) = 0, 'the content never carries the answer key');
 select pg_temp.assert((public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b1') ->> 'correct')::boolean, 'right answer is right');
 select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b1') -> 'lesson' is null, 'no lesson on a correct answer');
@@ -50,6 +59,9 @@ do $$ begin
   raise exception 'FAILED: an inactive question could be answered';
 exception when invalid_parameter_value then null;
 end $$;
+
+select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a4', '20000000-0000-0000-0000-0000000000b9') -> 'lesson' ->> 'transcript' = 'Words spoken in the video.', 'a library lesson brings its transcript');
+select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a4', '20000000-0000-0000-0000-0000000000b9') -> 'lesson' ->> 'title' = 'Library lesson', 'a library lesson uses the library title');
 
 -- Other staff and members cannot edit content.
 select pg_temp.act_as('10000000-0000-0000-0000-000000000004');

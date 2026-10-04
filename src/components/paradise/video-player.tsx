@@ -15,12 +15,16 @@ export function VideoPlayer({
   type,
   url,
   title,
+  watchUrl,
+  captionsUrl,
   onEnded,
   onUntracked,
 }: {
   type: PdVideoType | null;
   url: string;
   title: string;
+  watchUrl?: string | null;
+  captionsUrl?: string | null;
   onEnded: () => void;
   onUntracked: () => void;
 }) {
@@ -30,8 +34,9 @@ export function VideoPlayer({
   endedRef.current = onEnded;
   untrackedRef.current = onUntracked;
 
+  const facebook = type === "facebook";
   const yt = type === "youtube" || (type !== "upload" && youTubeId(url)) ? youTubeId(url) : null;
-  const direct = !yt && (type === "upload" || isDirectFile(url));
+  const direct = !facebook && !yt && (type === "upload" || isDirectFile(url));
 
   // YouTube reports its state through postMessage once we say we're listening.
   useEffect(() => {
@@ -64,6 +69,18 @@ export function VideoPlayer({
     if (!yt && !direct) untrackedRef.current(); // an outside page we can't follow
   }, [yt, direct]);
 
+  // Facebook doesn't allow its videos inside other sites, so the lesson links out.
+  if (facebook) {
+    return (
+      <a href={watchUrl || url} target="_blank" rel="noopener noreferrer" className="grid aspect-video w-full place-items-center rounded-md bg-[radial-gradient(80%_80%_at_50%_25%,#1f33b8_0%,#0a1024_60%,#05070d_100%)] p-4 text-center text-white ring-1 ring-white/15">
+        <span className="flex flex-col items-center gap-3">
+          <span className="font-display text-xl leading-tight">{title}</span>
+          <span className="rounded-full border border-white/40 px-4 py-2 text-sm font-semibold">Watch on Facebook ↗</span>
+        </span>
+      </a>
+    );
+  }
+
   const frame = "absolute inset-0 size-full border-0";
 
   return (
@@ -72,14 +89,16 @@ export function VideoPlayer({
         <iframe
           ref={frameRef}
           title={title}
-          src={`https://www.youtube-nocookie.com/embed/${yt}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+          src={`https://www.youtube-nocookie.com/embed/${yt}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=1`}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
           className={frame}
           onLoad={() => frameRef.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: 1, channel: "widget" }), "https://www.youtube-nocookie.com")}
         />
       ) : direct ? (
-        <video src={url} controls playsInline preload="metadata" className={frame} onEnded={() => endedRef.current()} aria-label={title} />
+        <video src={url} controls playsInline preload="metadata" className={frame} onEnded={() => endedRef.current()} aria-label={title}>
+          {captionsUrl && <track kind="captions" src={captionsUrl} default />}
+        </video>
       ) : (
         <iframe title={title} src={url} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen className={frame} />
       )}

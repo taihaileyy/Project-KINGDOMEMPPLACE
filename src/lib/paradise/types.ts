@@ -15,13 +15,16 @@ export type PdLevel = {
   questions: PdQuestion[];
 };
 
-export type PdVideoType = "upload" | "youtube" | "external";
+export type PdVideoType = "upload" | "youtube" | "facebook" | "external";
 
 export type PdLesson = {
   title: string | null;
   description: string | null;
   video_type: PdVideoType | null;
   video_url: string | null;
+  watch_url?: string | null; // the original page, for sources that cannot play inside the game
+  transcript?: string | null;
+  captions_url?: string | null;
 };
 
 // What the database says about one answer. Only returned after a player answers.

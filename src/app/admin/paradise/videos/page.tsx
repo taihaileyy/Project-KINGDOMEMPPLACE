@@ -8,18 +8,18 @@ export const metadata: Metadata = { title: "Create Your World videos" };
 type Q = {
   id: string; question_text: string; is_active: boolean;
   paradise_levels: { level_number: number } | null;
-  paradise_lessons: { title: string | null; video_type: string | null; video_url: string | null }[] | { title: string | null; video_type: string | null; video_url: string | null } | null;
+  paradise_lessons: { title: string | null; video_type: string | null; video_url: string | null; media_id: string | null }[] | { title: string | null; video_type: string | null; video_url: string | null; media_id: string | null } | null;
 };
 const typeLabel: Record<string, string> = { upload: "Uploaded file", youtube: "YouTube", external: "Web link" };
 
 export default async function VideosPage() {
   const supabase = await createClient();
-  const { data } = await supabase.from("paradise_questions").select("id, question_text, is_active, paradise_levels(level_number), paradise_lessons(title, video_type, video_url)").order("question_order");
+  const { data } = await supabase.from("paradise_questions").select("id, question_text, is_active, paradise_levels(level_number), paradise_lessons(title, video_type, video_url, media_id)").order("question_order");
   const rows = ((data ?? []) as unknown as Q[])
     .map((q) => ({ ...q, lesson: Array.isArray(q.paradise_lessons) ? q.paradise_lessons[0] : q.paradise_lessons }))
     .sort((a, b) => (a.paradise_levels?.level_number ?? 0) - (b.paradise_levels?.level_number ?? 0));
-  const withVideo = rows.filter((r) => r.lesson?.video_url);
-  const without = rows.filter((r) => !r.lesson?.video_url);
+  const withVideo = rows.filter((r) => r.lesson?.video_url || r.lesson?.media_id);
+  const without = rows.filter((r) => !(r.lesson?.video_url || r.lesson?.media_id));
 
   return (
     <div className="grid gap-6">
@@ -33,9 +33,9 @@ export default async function VideosPage() {
             {withVideo.map((r) => (
               <li key={r.id} className="card flex flex-wrap items-center gap-x-4 gap-y-1 p-4">
                 <span className="font-semibold">{r.question_text}</span>
-                <span className="text-sm text-muted">Level {r.paradise_levels?.level_number} · {typeLabel[r.lesson?.video_type ?? ""] ?? "Video"}{r.lesson?.title ? ` · ${r.lesson.title}` : ""}</span>
+                <span className="text-sm text-muted">Level {r.paradise_levels?.level_number} · {typeLabel[r.lesson?.video_type ?? ""] ?? "Video"}{r.lesson?.media_id ? " · from the video library" : ""}{r.lesson?.title ? ` · ${r.lesson.title}` : ""}</span>
                 <span className="ml-auto flex gap-4 text-sm font-semibold">
-                  <a href={r.lesson!.video_url!} target="_blank" rel="noopener noreferrer" className="text-blue hover:underline">Open video ↗</a>
+                  {r.lesson?.video_url && <a href={r.lesson.video_url} target="_blank" rel="noopener noreferrer" className="text-blue hover:underline">Open video ↗</a>}
                   <Link href={`/admin/paradise/questions/${r.id}`} className="text-blue hover:underline">Change</Link>
                 </span>
               </li>

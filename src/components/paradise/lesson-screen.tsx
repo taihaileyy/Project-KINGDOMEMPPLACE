@@ -47,7 +47,7 @@ export function LessonScreen({
 
         {hasVideo && lesson?.video_url && (
           <div className="pd-card-in" style={{ "--d": "200ms" } as React.CSSProperties}>
-            <VideoPlayer type={lesson.video_type} url={lesson.video_url} title={lesson.title || "Teaching video"} onEnded={() => setDone(true)} onUntracked={untracked} />
+            <VideoPlayer type={lesson.video_type} url={lesson.video_url} watchUrl={lesson.watch_url} captionsUrl={lesson.captions_url} title={lesson.title || "Teaching video"} onEnded={() => setDone(true)} onUntracked={untracked} />
           </div>
         )}
 
@@ -56,6 +56,12 @@ export function LessonScreen({
             {lesson?.title && <h3 className="font-display text-2xl font-medium sm:text-3xl">{lesson.title}</h3>}
             {lesson?.description && <p className="mt-2 text-[15px] leading-relaxed text-white/80 sm:text-base">{lesson.description}</p>}
             {explanation && <p className="mt-2 text-[15px] leading-relaxed text-white/70">{explanation}</p>}
+            {lesson?.transcript && (
+              <details className="mt-3 rounded-md border border-white/15 p-3 text-left">
+                <summary className="cursor-pointer text-sm font-semibold">Transcript</summary>
+                <p className="mt-2 max-h-40 overflow-y-auto whitespace-pre-line text-sm leading-relaxed text-white/80">{lesson.transcript}</p>
+              </details>
+            )}
             {scripture && <p className="mt-3 text-sm tracking-[0.08em] text-[var(--pd-gold)]">{scripture}</p>}
           </div>
         )}
