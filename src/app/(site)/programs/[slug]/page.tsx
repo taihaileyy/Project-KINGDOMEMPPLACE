@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArtsArt } from "@/components/arts-art";
+import { CollectionVideos } from "@/components/media/collection-videos";
+import { COLLECTION } from "@/lib/media";
 import { org, programs } from "@/content/site";
 
 export function generateStaticParams() {
@@ -21,7 +23,8 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
   if (!p) notFound();
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-24 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.1fr_1fr]">
+    <>
+    <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-16 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.1fr_1fr]">
       <div>
         <Link href="/programs" className="text-sm font-semibold text-blue hover:underline">All programs</Link>
         <h1 className="mt-4 font-display text-5xl font-medium leading-[0.98] sm:text-6xl">{p.name}</h1>
@@ -53,5 +56,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
         />
       )}
     </div>
+    <CollectionVideos collection={COLLECTION.program(p.slug)} title={`Watch: ${p.name}`} />
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
+import { CollectionVideos } from "@/components/media/collection-videos";
 import { PageIntro, Section } from "@/components/section";
 import { ScheduleEvents } from "@/components/schedule-views";
 import { recentEvents } from "@/content/site";
@@ -34,6 +35,7 @@ export default function EventsPage() {
           ))}
         </ul>
       </Section>
+      <CollectionVideos prefix="event:" title="Watch from our events" lead="Highlights and recordings from KEP gatherings." />
     </>
   );
 }
