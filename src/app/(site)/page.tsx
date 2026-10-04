@@ -36,14 +36,13 @@ export default function Home() {
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
           <h1
             id="hero-title"
-            className="max-w-6xl font-display text-[1.85rem] font-semibold leading-[1.1] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:font-medium sm:leading-[1]"
+            className="max-w-6xl font-display text-[8.1vw] font-semibold leading-[1.1] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:font-medium sm:leading-[1]"
           >
             {heroLines.map((line, i) => (
               <span key={line.verb} className="mask-line whitespace-nowrap">
                 <span style={d(120 + i * 260)}>
-                  <em className="block text-[clamp(3.2rem,16.5vw,4.4rem)] font-bold italic leading-[0.95] sm:inline sm:text-[1em] sm:font-medium sm:leading-[inherit]">{line.verb}</em>
-                  <span className="hidden sm:inline">{" "}</span>
-                  <span className="block text-white/90 max-sm:mb-3 sm:inline sm:text-white">{line.rest.trim()}</span>
+                  <em className="italic">{line.verb}</em>
+                  {line.rest}
                 </span>
               </span>
             ))}
