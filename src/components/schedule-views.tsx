@@ -20,10 +20,10 @@ export function ScheduleHero() {
   );
 }
 
-export function ScheduleFooter() {
+export function ScheduleFooter({ className = "mt-4 leading-7 text-chrome" }: { className?: string }) {
   const items = useSchedule();
   return (
-    <ul className="mt-4 leading-7 text-chrome">
+    <ul className={className}>
       {items.map((it) => (
         <li key={it.id}>{it.title}: {describe(it, org.phone).line}</li>
       ))}
