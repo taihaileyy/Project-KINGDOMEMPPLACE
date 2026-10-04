@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Ellipsis, House, TreeDeciduous, Users, type LucideIcon } from "lucide-react";
+import { CalendarDays, CirclePlay, Ellipsis, House, TreeDeciduous, type LucideIcon } from "lucide-react";
 
 // App-style navigation for phones: the main places one thumb away, with
 // Create Your World in the middle, and More opening the full menu.
 const tabs: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: "/", label: "Home", Icon: House },
-  { href: "/programs", label: "Programs", Icon: Users },
+  { href: "/watch", label: "Watch", Icon: CirclePlay },
   { href: "/create-your-world", label: "Play", Icon: TreeDeciduous },
   { href: "/events", label: "Events", Icon: CalendarDays },
 ];
