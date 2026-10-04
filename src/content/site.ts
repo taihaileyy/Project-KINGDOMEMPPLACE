@@ -91,6 +91,8 @@ export type Program = {
   body: string[];
   highlights: string[];
   image: Img;
+  // Programs drawn as artwork instead of a photograph (see components/arts-art.tsx).
+  art?: "arts";
 };
 
 // Starting programs. Admins will manage these from the dashboard once the
@@ -113,7 +115,8 @@ export const programs: Program[] = [
     summary: "Space for young people and adults to develop their creative gifts.",
     body: ["The Arts Program gives people of every age room to create, perform and develop the gifts God has given them."],
     highlights: ["Creative expression", "Performance opportunities", "Open to all ages"],
-    image: images.celebration,
+    image: images.celebration, // only the fallback; the Arts Program shows its own artwork
+    art: "arts",
   },
   {
     slug: "entrepreneurship",

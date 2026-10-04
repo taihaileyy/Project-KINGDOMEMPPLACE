@@ -23,7 +23,7 @@ function FrondCluster() {
   const blade = "M0 0 C40 -34 120 -46 190 -18 C130 -8 70 8 0 0 Z";
   const fronds = [[-84, 1.5], [-62, 1.3], [-40, 1.1], [-20, 0.9], [-4, 0.7], [-100, 0.8]];
   return (
-    <svg viewBox="0 0 420 420" className="size-full" fill="#03120c">
+    <svg viewBox="0 0 420 420" className="size-full" fill="#02050f">
       {fronds.map(([rot, sc]) => (
         <g key={rot} transform={`translate(8 420) rotate(${rot}) scale(${sc})`}>
           {[-30, -14, 2, 18, 34].map((a, i) => (
@@ -48,12 +48,12 @@ export function GardenBackdrop({ className = "", focus = "bottom" }: { className
       <svg className="pd-layer pd-svg" style={{ "--depth": 0.35 } as React.CSSProperties} viewBox={`0 0 ${W} 900`} preserveAspectRatio={fit}>
         <defs>
           <linearGradient id="pd-far" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#2f7a5a" />
-            <stop offset="1" stopColor="#0f3d2f" />
+            <stop offset="0" stopColor="#2c45b3" />
+            <stop offset="1" stopColor="#0e1850" />
           </linearGradient>
           <linearGradient id="pd-mid" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#1d5a43" />
-            <stop offset="1" stopColor="#072a20" />
+            <stop offset="0" stopColor="#1a2a86" />
+            <stop offset="1" stopColor="#080f33" />
           </linearGradient>
         </defs>
         <path d={ridge(560, 46, 1.2)} fill="url(#pd-far)" opacity="0.75" />
@@ -61,7 +61,7 @@ export function GardenBackdrop({ className = "", focus = "bottom" }: { className
       </svg>
       {/* The Tree of Life: a dark canopy with a golden rim of light. */}
       <svg className="pd-layer pd-svg" style={{ "--depth": 0.55 } as React.CSSProperties} viewBox={`0 0 ${W} 900`} preserveAspectRatio={fit}>
-        <g fill="#04170f">
+        <g fill="#050a1c">
           <path d="M786 640 C790 560 782 520 792 470 L812 470 C820 520 812 560 816 640 Z" />
           {[[800, 430, 120], [730, 470, 84], [872, 470, 84], [700, 520, 56], [900, 520, 56], [770, 380, 70], [832, 382, 70]].map(([cx, cy, r]) => (
             <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={r} />
@@ -72,7 +72,7 @@ export function GardenBackdrop({ className = "", focus = "bottom" }: { className
           <circle cx="730" cy="470" r="84" strokeOpacity="0.35" />
           <circle cx="872" cy="470" r="84" strokeOpacity="0.35" />
         </g>
-        <path d={ridge(690, 34, 7.7)} fill="#041a12" />
+        <path d={ridge(690, 34, 7.7)} fill="#060b20" />
       </svg>
       <div className="pd-layer pd-water" style={{ "--depth": 0.8 } as React.CSSProperties} />
       <div className="pd-frond left-0" style={{ "--depth": 1.1 } as React.CSSProperties}>

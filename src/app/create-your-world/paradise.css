@@ -3,11 +3,11 @@
 .pd-root {
   --pd-gold: #ecd08a;
   --pd-gold-soft: rgb(236 208 138 / 0.5);
-  --pd-leaf: #7fd6a4;
+  --pd-leaf: #9aa8ff;
   position: fixed;
   inset: 0;
-  overflow: hidden;
-  background: #04130f;
+  overflow: clip; /* never scrolls; each screen scrolls inside itself if it must */
+  background: #050a1c;
   color: #f5f1e8;
   height: 100dvh;
 }
@@ -28,7 +28,7 @@
 
 /* Level artwork supplied by an administrator sits over the drawn garden. */
 .pd-bg-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.pd-bg-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(4 19 15 / 0.45) 0%, rgb(4 19 15 / 0.2) 40%, rgb(4 19 15 / 0.65) 100%); }
+.pd-bg-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(5 9 28 / 0.45) 0%, rgb(5 9 28 / 0.2) 40%, rgb(5 9 28 / 0.65) 100%); }
 
 /* ── Camera: ascend lifts through light, descend sinks into shadow ───── */
 .pd-world { position: absolute; inset: 0; transform-origin: 50% 60%; transition: filter 1.2s ease; }
@@ -71,15 +71,15 @@
 .pd-stage[data-mode="learning"] .pd-world { filter: brightness(0.35) saturate(0.6); }
 
 /* A gentle darkening when an answer is wrong, before the descent begins. */
-.pd-dim { position: absolute; inset: 0; background: #020806; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+.pd-dim { position: absolute; inset: 0; background: #02040e; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
 .pd-stage[data-tone="wrong"] .pd-dim { opacity: 0.35; }
 .pd-stage[data-tone="correct"] .pd-world { filter: brightness(1.18) saturate(1.1); }
 
-.pd-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, transparent 40%, rgb(2 8 6 / 0.7) 100%); }
+.pd-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, transparent 40%, rgb(2 4 14 / 0.7) 100%); }
 
 /* ── Screens ──────────────────────────────────────────────────────────── */
 .pd-ui {
-  position: absolute; inset: 0; display: flex; flex-direction: column;
+  position: absolute; inset: 0; display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain;
   padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
 }
 .pd-card-in { animation: pd-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0ms); }
@@ -94,12 +94,12 @@
 .pd-answer {
   display: flex; align-items: center; gap: 0.9rem; width: 100%; min-height: 4rem; padding: 0.85rem 1rem; text-align: left;
   border: 1px solid rgb(245 241 232 / 0.22); border-radius: 0.5rem;
-  background: rgb(3 14 10 / 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  background: rgb(5 8 24 / 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   font-size: 1.0625rem; line-height: 1.3; color: #f5f1e8;
   transition: border-color 0.25s, background-color 0.25s, box-shadow 0.4s, opacity 0.4s, translate 0.25s;
   -webkit-tap-highlight-color: transparent;
 }
-.pd-answer:not(:disabled):hover, .pd-answer:not(:disabled):focus-visible { border-color: var(--pd-gold); background: rgb(3 14 10 / 0.75); translate: 0 -1px; outline: none; }
+.pd-answer:not(:disabled):hover, .pd-answer:not(:disabled):focus-visible { border-color: var(--pd-gold); background: rgb(5 8 24 / 0.75); translate: 0 -1px; outline: none; }
 .pd-answer:not(:disabled):active { translate: 0 0; }
 .pd-answer .pd-key {
   display: grid; place-items: center; flex: none; width: 2rem; height: 2rem; border-radius: 999px;
@@ -107,7 +107,7 @@
 }
 .pd-answer[data-state="picked"] { border-color: var(--pd-gold); box-shadow: 0 0 0 1px var(--pd-gold-soft); }
 .pd-answer[data-state="correct"] {
-  border-color: #cfe9a8; background: linear-gradient(90deg, rgb(127 214 164 / 0.28), rgb(236 208 138 / 0.28));
+  border-color: #f3dc9b; background: linear-gradient(90deg, rgb(236 208 138 / 0.22), rgb(236 208 138 / 0.34));
   box-shadow: 0 0 34px rgb(236 208 138 / 0.45), inset 0 0 0 1px rgb(236 208 138 / 0.5);
   animation: pd-glow 1.6s ease-in-out infinite alternate;
 }
@@ -122,7 +122,7 @@
   transition: background-color 0.3s, color 0.3s, border-color 0.3s, translate 0.2s, opacity 0.3s;
   -webkit-tap-highlight-color: transparent;
 }
-.pd-btn-gold { background: var(--pd-gold); color: #04170f; }
+.pd-btn-gold { background: var(--pd-gold); color: #050a1c; }
 .pd-btn-gold:hover:not(:disabled) { background: #f6dd9c; translate: 0 -1px; }
 .pd-btn-ghost { border: 1px solid rgb(245 241 232 / 0.4); color: #f5f1e8; }
 .pd-btn-ghost:hover:not(:disabled) { border-color: #f5f1e8; background: rgb(245 241 232 / 0.08); }

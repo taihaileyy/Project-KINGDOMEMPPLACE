@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ArtsArt } from "@/components/arts-art";
 import { PageIntro, Section } from "@/components/section";
 import { programs } from "@/content/site";
 
@@ -18,14 +19,18 @@ export default function ProgramsPage() {
           {programs.map((p) => (
             <li key={p.slug} className="card overflow-hidden">
               <Link href={`/programs/${p.slug}`} className="group grid h-full sm:grid-cols-[1fr_1.2fr]">
-                <Image
-                  src={p.image.src}
-                  alt={p.image.alt}
-                  width={p.image.width}
-                  height={p.image.height}
-                  sizes="(min-width: 768px) 25vw, 100vw"
-                  className="aspect-[4/3] h-full w-full object-cover sm:aspect-auto"
-                />
+                {p.art ? (
+                  <ArtsArt className="aspect-[4/3] h-full w-full sm:aspect-auto" label="Brush strokes, a palette, a paintbrush and a musical note" />
+                ) : (
+                  <Image
+                    src={p.image.src}
+                    alt={p.image.alt}
+                    width={p.image.width}
+                    height={p.image.height}
+                    sizes="(min-width: 768px) 25vw, 100vw"
+                    className="aspect-[4/3] h-full w-full object-cover sm:aspect-auto"
+                  />
+                )}
                 <div className="p-6">
                   <h2 className="font-display text-2xl font-medium group-hover:text-blue">{p.name}</h2>
                   <p className="mt-2 text-muted">{p.summary}</p>
