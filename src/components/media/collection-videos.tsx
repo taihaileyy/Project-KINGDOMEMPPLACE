@@ -13,7 +13,7 @@ export function CollectionVideos({ collection, prefix, title, lead }: { collecti
     let live = true;
     fetchMedia(collection).then((all) => {
       if (!live) return;
-      setItems(prefix ? all.filter((m) => m.collections.some((c) => c.startsWith(prefix))) : all);
+      setItems(all.filter((m) => (collection ? m.collections.includes(collection) : true) && (prefix ? m.collections.some((c) => c.startsWith(prefix)) : true)));
     });
     return () => { live = false; };
   }, [collection, prefix]);
