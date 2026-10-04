@@ -281,6 +281,17 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
   .hero-art { inset: calc(var(--header-h) + 4px) 0 auto 0; height: auto; }
   /* The copy starts below the artwork, so nothing is written over it. */
   .hero-copy { padding-top: calc(var(--header-h) + 56.25vw + 1.5rem); }
+
+  /* When the film is over, the hero tightens: its copy is bottom-aligned, so
+     shrinking the hero lifts the words up over the logo, and the logo steps
+     back behind them. The page below slides up to meet it. */
+  .hero-section { transition: min-height 1.8s cubic-bezier(0.65, 0, 0.15, 1); }
+  .hero-section[data-settled] { min-height: 0; }
+  .hero-copy { transition: padding 1.8s cubic-bezier(0.65, 0, 0.15, 1); }
+  .hero-section[data-settled] .hero-copy { padding-top: calc(var(--header-h) + 28px); padding-bottom: 2.5rem; }
+  .hero-art { transition: opacity 1.8s ease, filter 1.8s ease; }
+  .hero-section[data-settled] .hero-art { opacity: 0.3; filter: blur(1.5px); }
+  .hero-section[data-settled="instant"], .hero-section[data-settled="instant"] .hero-copy, .hero-section[data-settled="instant"] .hero-art { transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

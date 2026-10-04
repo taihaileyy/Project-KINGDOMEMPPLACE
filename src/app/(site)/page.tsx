@@ -19,7 +19,7 @@ const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 const heroLines: { verb: string; rest: string }[] = [
   { verb: "Engage", rest: " the community," },
   { verb: "Equip", rest: " the people," },
-  { verb: "and Empower", rest: " the nation." },
+  { verb: "Empower", rest: " the nation." },
 ];
 
 const h2 = "font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl";
@@ -30,16 +30,16 @@ export default function Home() {
       {/* Hero: full-bleed, under the transparent header. */}
       <section
         aria-labelledby="hero-title"
-        className="relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
+        className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
       >
         <HeroMotion />
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
           <h1
             id="hero-title"
-            className="max-w-6xl font-display text-[clamp(2.9rem,6.6vw,6.6rem)] font-medium leading-[1] tracking-[-0.01em]"
+            className="max-w-6xl font-display text-[8.1vw] font-semibold leading-[1.1] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:font-medium sm:leading-[1]"
           >
             {heroLines.map((line, i) => (
-              <span key={line.verb} className="mask-line">
+              <span key={line.verb} className="mask-line whitespace-nowrap">
                 <span style={d(120 + i * 260)}>
                   <em className="italic">{line.verb}</em>
                   {line.rest}
@@ -47,21 +47,20 @@ export default function Home() {
               </span>
             ))}
           </h1>
-          <p style={d(620)} className="rise mt-8 max-w-lg text-lg leading-relaxed text-white/80">
-            Kingdom Empowerment Place: a church and a community home in Baton Rouge, with worship, a sober living
-            program, programs for every age, events and a media studio.
+          <p style={d(620)} className="rise mt-2 max-w-lg text-base font-medium leading-snug text-white/85 sm:mt-8 sm:text-lg sm:font-normal">
+            Church and community home in Baton Rouge.
           </p>
-          <div style={d(760)} className="rise mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <div style={d(760)} className="rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-10">
             <Link href="/church#visit" className="btn-primary group">
               Plan your visit <Arrow />
             </Link>
           </div>
 
-          <dl style={d(900)} className="rise mt-16 grid max-w-3xl gap-6 border-t border-white/15 pt-6 sm:grid-cols-3">
+          <dl style={d(900)} className="rise mt-8 grid max-w-3xl gap-y-1.5 border-t border-white/15 pt-4 sm:mt-16 sm:grid-cols-3 sm:gap-6 sm:pt-6">
             <ScheduleHero />
-            <div>
+            <div className="flex flex-wrap items-baseline gap-x-2 sm:block">
               <dt className="text-[13px] text-chrome">Find us</dt>
-              <dd className="mt-1 text-[15px] font-semibold">
+              <dd className="text-[14.5px] font-semibold sm:mt-1 sm:text-[15px]">
                 <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="underline decoration-white/30 underline-offset-4 hover:decoration-white">
                   {org.address.line1}
                 </a>
@@ -208,31 +207,6 @@ export default function Home() {
           { value: "All ages", label: "Youth, adults and families welcome", icon: "ages" },
         ]}
       />
-
-      {/* Life at KEP: a compact photo collage */}
-      <section aria-labelledby="moments-title" className="bg-ivory text-ink">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2 sm:gap-8">
-            <h2 id="moments-title" data-reveal="mask" className={h2}>
-              Life at KEP
-            </h2>
-            <Link data-reveal href="/gallery" className="btn-quiet group text-ink">
-              See the gallery <Arrow />
-            </Link>
-          </div>
-          <div className="mt-6 grid h-[21rem] grid-cols-2 grid-rows-2 gap-2 sm:mt-10 sm:h-[30rem] sm:gap-3 lg:h-[36rem] lg:grid-cols-[1.35fr_1fr]">
-            {[
-              { img: images.youthActivity, cls: "row-span-2" },
-              { img: images.computerLab, cls: "" },
-              { img: images.celebration, cls: "" },
-            ].map(({ img, cls }, i) => (
-              <figure key={img.src} data-reveal="image" style={d(i * 120)} className={`relative overflow-hidden ${cls}`}>
-                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 45vw, 50vw" className="object-cover" />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Dr. Morgan's book and trailer: one compact card */}
       <section aria-label="A Good Soldier, by Lawrence Morgan" className="bg-ivory">

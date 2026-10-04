@@ -24,8 +24,40 @@ export function HeroMotion() {
   useEffect(() => {
     const layer = layerRef.current;
     const video = videoRef.current;
-    if (!layer || !video || playedThisLoad) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!layer || !video) return;
+
+    // On phones and tablets, once the film is over the hero tightens: the words
+    // rise over the logo and the hero ends where the words end, so the space at
+    // the top is used and nothing is left empty.
+    const section = layer.closest<HTMLElement>(".hero-section");
+    const small = () => window.matchMedia("(max-width: 1023px)").matches;
+    const measure = () => {
+      if (!section) return;
+      const h1 = section.querySelector<HTMLElement>("h1");
+      if (!h1) return;
+      const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 60;
+      const current = Number(section.dataset.lift || 0);
+      // Where the headline sits when the hero is full height, and where we want it: just under the header.
+      const natural = h1.getBoundingClientRect().top + window.scrollY + current;
+      // The bottom padding that clears the phone tab bar also tightens (112px to 40px).
+      const extra = window.innerWidth < 640 ? 72 : 0;
+      const lift = Math.max(0, Math.round(natural - (header + 28) + extra));
+      section.dataset.lift = String(lift);
+      section.style.setProperty("--hero-lift", `${lift}px`);
+    };
+    const settle = (instant: boolean) => {
+      if (!section || !small()) return;
+      measure();
+      section.dataset.settled = instant ? "instant" : "true";
+    };
+    const onResize = () => { if (section?.dataset.settled) measure(); };
+    window.addEventListener("resize", onResize);
+    const stopResize = () => window.removeEventListener("resize", onResize);
+
+    if (playedThisLoad || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      settle(true); // no film this time: show the finished layout straight away
+      return stopResize;
+    }
     playedThisLoad = true;
     layer.dataset.phase = "wait"; // the still steps aside; the film opens bright
 
@@ -55,6 +87,7 @@ export function HeroMotion() {
         await video.play();
       } catch {
         layer.dataset.phase = "rest"; // autoplay refused: the calm hero stays
+        settle(false);
         return;
       }
       // The film is at full brightness from the first frame.
@@ -65,6 +98,7 @@ export function HeroMotion() {
           // Settling: the film fades back into the faint artwork, which is
           // its own final frame, so the hand-off is invisible.
           layer.dataset.phase = "out";
+          settle(false); // the words rise as the film recedes
           return;
         }
         frame = requestAnimationFrame(watch);
@@ -82,6 +116,7 @@ export function HeroMotion() {
     video.addEventListener("ended", onEnded, { once: true });
 
     return () => {
+      stopResize();
       cancelled = true;
       cancelAnimationFrame(frame);
       clearTimeout(timer);
