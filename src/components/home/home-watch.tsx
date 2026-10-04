@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Arrow } from "@/components/arrow";
-import { MediaRail } from "@/components/media/media-rail";
 import { MediaPlayer } from "@/components/media/media-player";
 import { images } from "@/content/site";
 import { COLLECTION, fetchMedia, type MediaItem } from "@/lib/media";
@@ -21,7 +20,6 @@ export function HomeWatch() {
   }, []);
 
   const featured = items.find((m) => m.collections.includes(COLLECTION.featured)) ?? items[0];
-  const rest = items.filter((m) => m.id !== featured?.id && (m.collections.includes(COLLECTION.shorts) || m.collections.includes(COLLECTION.watch)));
   const playable = featured && featured.source !== "facebook";
 
   return (
@@ -52,11 +50,6 @@ export function HomeWatch() {
             </Link>
           </div>
         </div>
-        {rest.length > 0 && (
-          <div className="mt-8 sm:mt-12">
-            <MediaRail items={rest} label="More from KEP" tone="white" />
-          </div>
-        )}
       </div>
     </section>
   );
