@@ -36,18 +36,19 @@ export default function Home() {
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
           <h1
             id="hero-title"
-            className="max-w-6xl font-display text-[clamp(1.8rem,8.4vw,2.9rem)] font-medium leading-[1.08] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:leading-[1]"
+            className="max-w-6xl font-display text-[1.85rem] font-semibold leading-[1.1] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:font-medium sm:leading-[1]"
           >
             {heroLines.map((line, i) => (
               <span key={line.verb} className="mask-line whitespace-nowrap">
                 <span style={d(120 + i * 260)}>
-                  <em className="italic">{line.verb}</em>
-                  {line.rest}
+                  <em className="block text-[clamp(3.2rem,16.5vw,4.4rem)] font-bold italic leading-[0.95] sm:inline sm:text-[1em] sm:font-medium sm:leading-[inherit]">{line.verb}</em>
+                  <span className="hidden sm:inline">{" "}</span>
+                  <span className="block text-white/90 max-sm:mb-3 sm:inline sm:text-white">{line.rest.trim()}</span>
                 </span>
               </span>
             ))}
           </h1>
-          <p style={d(620)} className="rise mt-4 max-w-lg text-base leading-snug text-white/80 sm:mt-8 sm:text-lg">
+          <p style={d(620)} className="rise mt-2 max-w-lg text-base font-medium leading-snug text-white/85 sm:mt-8 sm:text-lg sm:font-normal">
             Church and community home in Baton Rouge.
           </p>
           <div style={d(760)} className="rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-10">
