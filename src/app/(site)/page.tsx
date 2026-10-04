@@ -47,21 +47,20 @@ export default function Home() {
               </span>
             ))}
           </h1>
-          <p style={d(620)} className="rise mt-8 max-w-lg text-lg leading-relaxed text-white/80">
-            Kingdom Empowerment Place: a church and a community home in Baton Rouge, with worship, a sober living
-            program, programs for every age, events and a media studio.
+          <p style={d(620)} className="rise mt-4 max-w-lg text-base leading-snug text-white/80 sm:mt-8 sm:text-lg">
+            Church and community home in Baton Rouge.
           </p>
-          <div style={d(760)} className="rise mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <div style={d(760)} className="rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-10">
             <Link href="/church#visit" className="btn-primary group">
               Plan your visit <Arrow />
             </Link>
           </div>
 
-          <dl style={d(900)} className="rise mt-16 grid max-w-3xl gap-6 border-t border-white/15 pt-6 sm:grid-cols-3">
+          <dl style={d(900)} className="rise mt-8 grid max-w-3xl gap-y-1.5 border-t border-white/15 pt-4 sm:mt-16 sm:grid-cols-3 sm:gap-6 sm:pt-6">
             <ScheduleHero />
-            <div>
+            <div className="flex flex-wrap items-baseline gap-x-2 sm:block">
               <dt className="text-[13px] text-chrome">Find us</dt>
-              <dd className="mt-1 text-[15px] font-semibold">
+              <dd className="text-[14.5px] font-semibold sm:mt-1 sm:text-[15px]">
                 <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="underline decoration-white/30 underline-offset-4 hover:decoration-white">
                   {org.address.line1}
                 </a>

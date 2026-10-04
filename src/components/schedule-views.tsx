@@ -11,9 +11,9 @@ export function ScheduleHero() {
   return (
     <>
       {items.map((it) => (
-        <div key={it.id}>
+        <div key={it.id} className="flex flex-wrap items-baseline gap-x-2 sm:block">
           <dt className="text-[13px] text-chrome">{it.title}</dt>
-          <dd className="mt-1 text-[15px] font-semibold">{describe(it, org.phone).line}</dd>
+          <dd className="text-[14.5px] font-semibold sm:mt-1 sm:text-[15px]">{describe(it, org.phone).line}</dd>
         </div>
       ))}
     </>
