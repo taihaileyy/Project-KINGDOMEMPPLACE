@@ -67,7 +67,8 @@ export default async function VideosAdminPage({ searchParams }: { searchParams: 
   return (
     <div className="grid gap-6">
       <DashboardBand title="Videos" lead="Add videos and audio once and they can appear on Watch & Listen, the short-form feed, programs and events. No developer needed.">
-        <Link href="/watch" target="_blank" className="btn border border-white/25 text-white hover:bg-white/10">View Watch &amp; Listen ↗</Link>
+        <Link href="/watch" target="_blank" className="btn border border-white/25 text-white hover:bg-white/10">View Watch ↗</Link>
+        <Link href="/admin/videos/comments" className="btn border border-white/25 text-white hover:bg-white/10">Comments</Link>
       </DashboardBand>
       <Notice saved={sp.saved} error={sp.error} />
       <ul className="grid gap-3">
