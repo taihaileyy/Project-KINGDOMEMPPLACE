@@ -96,6 +96,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Scripture, full bleed */}
+      <section aria-label="Scripture" className="relative isolate overflow-hidden bg-night text-white">
+        <Image {...images.preaching} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-35" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgb(5_7_13/0.92)_0%,rgb(16_26_61/0.7)_60%,rgb(16_26_61/0.4)_100%)]" />
+        <figure className="mx-auto max-w-5xl px-4 py-14 text-center sm:px-6 sm:py-24">
+          <blockquote data-reveal="mask" className="font-display text-[1.7rem] font-normal italic leading-[1.2] sm:text-[clamp(2rem,4.6vw,4rem)] sm:leading-[1.15]">
+            &ldquo;For I know the plans I have for you,&rdquo; declares the Lord, &ldquo;plans to prosper you and not to
+            harm you, plans to give you hope and a future.&rdquo;
+          </blockquote>
+          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-10 sm:text-[15px]">
+            Jeremiah 29:11
+          </figcaption>
+        </figure>
+      </section>
+
       {/* Programs */}
       <section aria-labelledby="programs-title" className="bg-ivory">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 sm:py-20">
