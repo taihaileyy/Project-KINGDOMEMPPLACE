@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 // (it moves for under 5 seconds), and reduced-motion visitors see only the
 // calm resting hero.
 
-const ENTRANCE_MS = 1420; // the diagonal panels finish opening (see globals.css)
+const ENTRANCE_MS = 2300; // the diagonal panels finish opening (see globals.css)
 const FADE_OUT_S = 1.3; // seconds before the film's end that it starts to recede
 
 // Module state survives client-side navigation but not a full reload, so the
@@ -87,7 +87,7 @@ export function HeroMotion() {
         await video.play();
       } catch {
         layer.dataset.phase = "rest"; // autoplay refused: the calm hero stays
-        settle(false);
+        window.setTimeout(() => settle(false), 2500); // hold the hero a moment before the words rise
         return;
       }
       // The film is at full brightness from the first frame.
