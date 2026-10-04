@@ -6,11 +6,11 @@ import { MediaField } from "@/components/paradise/media-field";
 export type QuestionDraft = {
   id?: string; level_id?: string; question_text?: string; scripture_reference?: string | null; explanation?: string | null;
   question_order?: number; is_active?: boolean; answers?: { answer_text: string; answer_order: number; is_correct: boolean }[];
-  lesson?: { title: string | null; description: string | null; video_url: string | null } | null;
+  lesson?: { title: string | null; description: string | null; video_url: string | null; media_id?: string | null } | null;
 };
 
 // The one editor for creating and editing a question, its answers and its lesson.
-export function QuestionForm({ draft, levels }: { draft: QuestionDraft; levels: { id: string; level_number: number; name: string }[] }) {
+export function QuestionForm({ draft, levels, library = [] }: { draft: QuestionDraft; levels: { id: string; level_number: number; name: string }[]; library?: { id: string; title: string; source: string }[] }) {
   const ans = (n: number) => draft.answers?.find((a) => a.answer_order === n);
   const correct = draft.answers?.find((a) => a.is_correct)?.answer_order ?? 1;
   return (
@@ -50,7 +50,15 @@ export function QuestionForm({ draft, levels }: { draft: QuestionDraft; levels: 
           <h2 className="text-lg font-extrabold">Teaching lesson</h2>
           <p className="text-sm text-muted">Shown when a player misses this question. All of it is optional; with no video, the player just sees the lesson text.</p>
         </div>
-        <MediaField name="video_url" kind="video" label="Teaching video" defaultValue={draft.lesson?.video_url ?? ""} hint="Paste a YouTube link or any video address, or upload a file (up to 50 MB)." />
+        {library.length > 0 && (
+          <Field label="Choose from the video library" hint="Videos added in Admin > Videos. When you pick one, it is used instead of the link or upload below.">
+            <select name="media_id" defaultValue={draft.lesson?.media_id ?? ""} className="field-input">
+              <option value="">None (use a link or upload instead)</option>
+              {library.map((m) => <option key={m.id} value={m.id}>{m.title} ({m.source})</option>)}
+            </select>
+          </Field>
+        )}
+        <MediaField name="video_url" kind="video" label="Teaching video" defaultValue={draft.lesson?.video_url ?? ""} hint="Or paste a YouTube link or any video address, or upload a file (up to 50 MB)." />
         <Field label="Lesson title"><input name="lesson_title" defaultValue={draft.lesson?.title ?? ""} maxLength={200} className="field-input" /></Field>
         <Field label="Lesson description"><textarea name="lesson_description" defaultValue={draft.lesson?.description ?? ""} maxLength={1500} rows={3} className="field-input" /></Field>
         <p className="text-sm text-muted">After the video, the player always tries this same question again. They can only continue once they answer it correctly.</p>

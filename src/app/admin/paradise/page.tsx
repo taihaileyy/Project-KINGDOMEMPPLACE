@@ -6,17 +6,17 @@ import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Create Your World" };
 
-type Q = { id: string; is_active: boolean; paradise_answers: { is_correct: boolean }[]; paradise_lessons: { video_url: string | null }[] | { video_url: string | null } | null };
+type Q = { id: string; is_active: boolean; paradise_answers: { is_correct: boolean }[]; paradise_lessons: { video_url: string | null; media_id: string | null }[] | { video_url: string | null; media_id: string | null } | null };
 
 export default async function ParadiseDashboard() {
   const supabase = await createClient();
   const [{ data: levels }, { data: questions }, { data: progress }] = await Promise.all([
     supabase.from("paradise_levels").select("id, is_active"),
-    supabase.from("paradise_questions").select("id, is_active, paradise_answers(is_correct), paradise_lessons(video_url)"),
+    supabase.from("paradise_questions").select("id, is_active, paradise_answers(is_correct), paradise_lessons(video_url, media_id)"),
     supabase.from("paradise_player_progress").select("progress_percentage, correct_count, incorrect_count"),
   ]);
   const qs = (questions ?? []) as unknown as Q[];
-  const lessonUrl = (q: Q) => (Array.isArray(q.paradise_lessons) ? q.paradise_lessons[0]?.video_url : q.paradise_lessons?.video_url);
+  const lessonUrl = (q: Q) => { const l = Array.isArray(q.paradise_lessons) ? q.paradise_lessons[0] : q.paradise_lessons; return l?.video_url || l?.media_id; };
   const active = qs.filter((q) => q.is_active);
   const playable = active.filter((q) => q.paradise_answers.length >= 2 && q.paradise_answers.some((a) => a.is_correct));
   const withVideo = qs.filter((q) => lessonUrl(q));

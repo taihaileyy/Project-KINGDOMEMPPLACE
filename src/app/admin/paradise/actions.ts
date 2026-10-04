@@ -35,6 +35,7 @@ const questionSchema = z.object({
   scripture_reference: optional(200),
   explanation: optional(1500),
   video_url: optional(1000).refine((v) => v === null || /^https?:\/\//i.test(v), "The video address must start with https://"),
+  media_id: z.string().uuid().optional().or(z.literal("").transform(() => undefined)),
   lesson_title: optional(200),
   lesson_description: optional(1500),
   question_order: z.coerce.number().int().min(0).max(100000).optional(),
@@ -54,6 +55,7 @@ export async function saveQuestion(formData: FormData) {
     scripture_reference: formData.get("scripture_reference") ?? "",
     explanation: formData.get("explanation") ?? "",
     video_url: formData.get("video_url") ?? "",
+    media_id: String(formData.get("media_id") ?? ""),
     lesson_title: formData.get("lesson_title") ?? "",
     lesson_description: formData.get("lesson_description") ?? "",
     question_order: formData.get("question_order") || undefined,
@@ -99,11 +101,11 @@ export async function saveQuestion(formData: FormData) {
   await supabase.from("paradise_answers").delete().eq("question_id", questionId!).not("answer_order", "in", `(${keep.join(",")})`);
 
   // The lesson shown when a player misses the question.
-  const hasLesson = v.video_url || v.lesson_title || v.lesson_description;
+  const hasLesson = v.media_id || v.video_url || v.lesson_title || v.lesson_description;
   if (hasLesson) {
     const { error } = await supabase.from("paradise_lessons").upsert({
       question_id: questionId!, title: v.lesson_title, description: v.lesson_description,
-      video_type: v.video_url ? videoTypeFor(v.video_url) : null, video_url: v.video_url,
+      video_type: v.video_url ? videoTypeFor(v.video_url) : null, video_url: v.video_url, media_id: v.media_id ?? null,
     }, { onConflict: "question_id" });
     if (error) back(here, "error", error.message);
   } else {
