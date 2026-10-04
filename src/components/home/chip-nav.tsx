@@ -1,37 +1,51 @@
 import Link from "next/link";
-import { CalendarDays, Church, CirclePlay, HandHeart, House, Mic, TreeDeciduous, Users, type LucideIcon } from "lucide-react";
+import { Arrow } from "@/components/arrow";
+import { CalendarDays, Church, HandHeart, House, Mic, Users, type LucideIcon } from "lucide-react";
 
-// A single swipeable row of places to go, like an app's home shortcuts. One row
-// instead of a stack of tiles keeps the page short.
-const chips: { href: string; label: string; Icon: LucideIcon }[] = [
-  { href: "/create-your-world", label: "Play the game", Icon: TreeDeciduous },
-  { href: "/watch", label: "Watch & Listen", Icon: CirclePlay },
-  { href: "/church", label: "Worship", Icon: Church },
-  { href: "/events", label: "Events", Icon: CalendarDays },
-  { href: "/programs", label: "Programs", Icon: Users },
-  { href: "/housing", label: "Sober Living", Icon: House },
-  { href: "/studio/book", label: "Studio", Icon: Mic },
-  { href: "/give", label: "Give", Icon: HandHeart },
+// Where to go from the homepage, all in view at once and nothing to swipe:
+// icon tiles in two columns on phones, and an icon index from tablet width up.
+// (Create Your World and Watch have their own big spots and tab-bar buttons.)
+const links: { href: string; label: string; title: string; line: string; Icon: LucideIcon }[] = [
+  { href: "/church", label: "Worship", title: "Worship with us", line: "Worship with the KEP church family and join Bible study every Wednesday.", Icon: Church },
+  { href: "/housing", label: "Sober Living", title: "The Sober Living Program", line: "A sober home with structure, support and a plan.", Icon: House },
+  { href: "/programs", label: "Programs", title: "Join a program", line: "Youth mentorship, arts, entrepreneurship, media and the computer lab.", Icon: Users },
+  { href: "/studio/book", label: "Studio", title: "Book the studio", line: "Record, film and create in KEP's media studio.", Icon: Mic },
+  { href: "/events", label: "Events", title: "Attend an event", line: "Conferences, workshops and community gatherings.", Icon: CalendarDays },
+  { href: "/give", label: "Give", title: "Give", line: "Support the work happening on North Foster Drive.", Icon: HandHeart },
 ];
 
 export function ChipNav() {
   return (
-    <nav aria-label="Quick links" className="bg-ivory">
-      <ul className="mx-auto flex max-w-7xl snap-x scroll-pl-4 gap-2 overflow-x-auto px-4 py-4 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:px-6 sm:py-6 [&::-webkit-scrollbar]:hidden">
-        {chips.map(({ href, label, Icon }, i) => (
-          <li key={href} className="shrink-0 snap-start">
-            <Link
-              href={href}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-[14px] font-semibold transition-colors ${
-                i === 0 ? "border-blue bg-blue text-white hover:bg-blue-hover" : "border-ink/20 bg-white/60 hover:border-blue hover:text-blue"
-              }`}
-            >
-              <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.7} />
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <section aria-labelledby="quick-title" className="bg-ivory">
+      <div className="mx-auto max-w-7xl px-4 pb-6 pt-10 sm:px-6 sm:pb-6 sm:pt-16">
+        <h2 id="quick-title" className="font-display text-[2.1rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
+          What brings you to KEP?
+        </h2>
+        <ul className="mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
+          {links.map(({ href, label, Icon }) => (
+            <li key={href}>
+              <Link href={href} className="flex min-h-[5.75rem] flex-col items-center justify-center gap-2.5 rounded-[var(--radius-control)] border border-ink/15 bg-white/55 px-3 py-4 text-[15px] font-medium transition-colors active:bg-white">
+                <Icon aria-hidden="true" className="size-7 text-blue" strokeWidth={1.5} />
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <ul className="mt-9 hidden border-t border-ink/15 sm:grid lg:grid-cols-2 lg:gap-x-16">
+          {links.map(({ href, title, line, Icon }) => (
+            <li key={href} className="border-b border-ink/15">
+              <Link href={href} className="group flex items-center gap-5 py-6">
+                <Icon aria-hidden="true" className="size-9 shrink-0 text-blue" strokeWidth={1.4} />
+                <span className="min-w-0 flex-1">
+                  <span className="block font-display text-3xl leading-tight transition-colors duration-300 group-hover:text-blue sm:text-4xl">{title}</span>
+                  <span className="mt-1 block text-[15px] leading-relaxed text-muted">{line}</span>
+                </span>
+                <Arrow className="text-blue" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
