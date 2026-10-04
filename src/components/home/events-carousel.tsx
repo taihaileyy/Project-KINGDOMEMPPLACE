@@ -19,6 +19,8 @@ export function EventsCarousel({ events }: { events: EventItem[] }) {
     <div role="region" aria-roledescription="carousel" aria-label="Recent events">
       <ul
         ref={scroller}
+        tabIndex={0}
+        aria-label="Event flyers. Use the left and right arrow keys to scroll."
         className="-mx-4 flex snap-x snap-mandatory items-start gap-3 overflow-x-auto overscroll-x-contain scroll-pl-4 px-4 pb-1 sm:gap-4 lg:mx-0 lg:gap-5 lg:scroll-pl-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {events.map((e, i) => (

@@ -35,7 +35,7 @@ export default function HousingPage() {
             Clean, simple and ready to be a home: shared kitchen and dining, bedrooms and bathrooms.
           </p>
         </div>
-        <ul className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-12 [scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6 [&::-webkit-scrollbar]:hidden max-sm:scroll-pl-4">
+        <ul tabIndex={0} aria-label="Photos of the KEP house. Use the left and right arrow keys to scroll." className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-12 [scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-6 [&::-webkit-scrollbar]:hidden max-sm:scroll-pl-4">
           {homePhotos.map((img, i) => (
             <li key={img.src} data-reveal="image" style={{ "--d": `${i * 70}ms` } as React.CSSProperties} className="w-[62%] shrink-0 snap-start sm:w-auto">
               <Image src={img.src} alt={img.alt} width={img.width} height={img.height} sizes="(min-width: 1024px) 17vw, (min-width: 640px) 33vw, 62vw" className="aspect-[3/4] h-auto w-full object-cover" />
