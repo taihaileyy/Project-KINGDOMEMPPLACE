@@ -30,7 +30,7 @@ export default function Home() {
       {/* Hero: full-bleed, under the transparent header. */}
       <section
         aria-labelledby="hero-title"
-        className="relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
+        className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
       >
         <HeroMotion />
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
