@@ -11,7 +11,7 @@ export default async function EditQuestionPage({ params, searchParams }: { param
   const supabase = await createClient();
   const [{ data: levels }, { data: q }] = await Promise.all([
     supabase.from("paradise_levels").select("id, level_number, name").order("level_number"),
-    supabase.from("paradise_questions").select("*, paradise_answers(answer_text, answer_order, is_correct), paradise_lessons(title, description, video_url, after_video)").eq("id", id).maybeSingle(),
+    supabase.from("paradise_questions").select("*, paradise_answers(answer_text, answer_order, is_correct), paradise_lessons(title, description, video_url)").eq("id", id).maybeSingle(),
   ]);
   if (!q) notFound();
   const lesson = Array.isArray(q.paradise_lessons) ? q.paradise_lessons[0] : q.paradise_lessons;

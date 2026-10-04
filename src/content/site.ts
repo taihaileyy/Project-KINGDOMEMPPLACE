@@ -5,7 +5,7 @@
 export const org = {
   name: "Kingdom Empowerment Place",
   short: "KEP",
-  tagline: "Empowering youth. Building futures. Changing communities.",
+  tagline: "Engage the community, Equip the people, and Empower the nation.",
   pastors: "Dr. Lawrence & Lady Kennetta Morgan",
   phone: "(225) 413-9854",
   phoneHref: "tel:+12254139854",
@@ -36,10 +36,6 @@ export const moreNav = [{ href: "/gallery", label: "Gallery" }, { href: "/privac
 
 export const fullAddress = `${org.address.line1}, ${org.address.city}, ${org.address.state} ${org.address.zip}`;
 
-export const weekly = [
-  { day: "Sunday", time: "10:00 AM", title: "Sunday Worship", detail: "Worship, the Word and fellowship with the KEP church family." },
-  { day: "Wednesday", time: "6:30 PM", title: "Bible Study", detail: "A midweek Bible study taught by a Kingdom minister." },
-] as const;
 
 export type Img = { src: string; width: number; height: number; alt: string };
 

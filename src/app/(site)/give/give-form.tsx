@@ -112,7 +112,7 @@ export function GiveForm({ signedInAs, enabled }: { signedInAs: string | null; e
       <p className="-mt-3 text-center text-sm text-muted">
         {enabled
           ? "You'll pay on Stripe's secure checkout. KEP never sees your card or bank details."
-          : "Online giving is almost ready. Until then, give in person on Sunday or Wednesday."}
+          : "Online giving is almost ready. Until then, give in person at a service or Bible Study."}
       </p>
     </form>
   );

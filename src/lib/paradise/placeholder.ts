@@ -34,9 +34,9 @@ export function checkPlaceholder(questionId: string, answerId: string): PdCheck 
   const correct = right === answerId;
   return {
     correct,
-    correct_answer_id: right,
+    correct_answer_id: correct ? right : undefined,
     scripture_reference: "[Scripture reference]",
     explanation: "[Optional explanation]",
-    lesson: correct ? null : { title: "[Lesson title]", description: "[Short lesson description. Real lessons and videos are added in Admin > Create Your World.]", video_type: null, video_url: null, after_video: null },
+    lesson: correct ? null : { title: "[Lesson title]", description: "[Short lesson description. Real lessons and videos are added in Admin > Create Your World.]", video_type: null, video_url: null },
   };
 }

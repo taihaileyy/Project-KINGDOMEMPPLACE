@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HandHeart, MapPin } from "lucide-react";
-import { fullAddress, org, weekly } from "@/content/site";
+import { ScheduleInline } from "@/components/schedule-views";
+import { fullAddress, org } from "@/content/site";
 import { displayName, getSession } from "@/lib/auth";
 import { stripeConfigured } from "@/lib/stripe";
 import { GiveForm } from "./give-form";
@@ -26,7 +27,7 @@ export default async function GivePage() {
                 <div>
                   <p className="font-semibold">Give in person</p>
                   <p className="mt-0.5 text-sm text-chrome">
-                    {weekly.map((w) => `${w.title}, ${w.day}s at ${w.time}`).join(" · ")}
+                    <ScheduleInline />
                   </p>
                 </div>
               </li>

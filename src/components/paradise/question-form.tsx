@@ -6,7 +6,7 @@ import { MediaField } from "@/components/paradise/media-field";
 export type QuestionDraft = {
   id?: string; level_id?: string; question_text?: string; scripture_reference?: string | null; explanation?: string | null;
   question_order?: number; is_active?: boolean; answers?: { answer_text: string; answer_order: number; is_correct: boolean }[];
-  lesson?: { title: string | null; description: string | null; video_url: string | null; after_video: "retry" | "continue" | null } | null;
+  lesson?: { title: string | null; description: string | null; video_url: string | null } | null;
 };
 
 // The one editor for creating and editing a question, its answers and its lesson.
@@ -48,18 +48,12 @@ export function QuestionForm({ draft, levels }: { draft: QuestionDraft; levels: 
       <section className="card grid gap-4 p-5">
         <div>
           <h2 className="text-lg font-extrabold">Teaching lesson</h2>
-          <p className="text-sm text-muted">Shown when a player misses this question. All of it is optional.</p>
+          <p className="text-sm text-muted">Shown when a player misses this question. All of it is optional; with no video, the player just sees the lesson text.</p>
         </div>
         <MediaField name="video_url" kind="video" label="Teaching video" defaultValue={draft.lesson?.video_url ?? ""} hint="Paste a YouTube link or any video address, or upload a file (up to 50 MB)." />
         <Field label="Lesson title"><input name="lesson_title" defaultValue={draft.lesson?.title ?? ""} maxLength={200} className="field-input" /></Field>
         <Field label="Lesson description"><textarea name="lesson_description" defaultValue={draft.lesson?.description ?? ""} maxLength={1500} rows={3} className="field-input" /></Field>
-        <Field label="After the video" hint="Leave on the game setting unless this question should behave differently.">
-          <select name="after_video" defaultValue={draft.lesson?.after_video ?? ""} className="field-input">
-            <option value="">Use the game setting</option>
-            <option value="retry">Try Again (repeat this question)</option>
-            <option value="continue">Continue Journey (next question)</option>
-          </select>
-        </Field>
+        <p className="text-sm text-muted">After the video, the player always tries this same question again. They can only continue once they answer it correctly.</p>
       </section>
 
       <section className="card grid gap-4 p-5 sm:grid-cols-2">

@@ -4,7 +4,6 @@
 export type PdSettings = {
   auto_advance: boolean; // after a correct answer, continue on its own
   auto_advance_seconds: number; // how long the CORRECT screen stays before ascending
-  after_lesson: "retry" | "continue"; // what follows a teaching video
   require_video_watch: boolean; // the player must finish the video first
   fallback_wait_seconds: number; // when a video can't report its end, wait this long
   shuffle_answers: boolean;
@@ -17,7 +16,6 @@ export type PdSettings = {
 export const SETTING_DEFAULTS: PdSettings = {
   auto_advance: true,
   auto_advance_seconds: 3.5,
-  after_lesson: "retry",
   require_video_watch: true,
   fallback_wait_seconds: 45,
   shuffle_answers: false,
@@ -37,7 +35,6 @@ type Field =
 export const SETTING_FIELDS: Field[] = [
   { key: "auto_advance", label: "Continue automatically after a correct answer", help: "Off: the player taps Continue Journey.", type: "boolean" },
   { key: "auto_advance_seconds", label: "Seconds to show CORRECT before continuing", help: "Only used when automatic continue is on.", type: "number", min: 1, max: 15, step: 0.5 },
-  { key: "after_lesson", label: "After a teaching video", help: "Try Again repeats the same question; Continue Journey moves to the next one. A question's own lesson can override this.", type: "choice", options: [{ value: "retry", label: "Try Again (repeat the question)" }, { value: "continue", label: "Continue Journey (next question)" }] },
   { key: "require_video_watch", label: "Players must finish the teaching video", help: "Off: the button is available right away.", type: "boolean" },
   { key: "fallback_wait_seconds", label: "Wait (seconds) when a video can't report that it finished", help: "Some outside videos can't tell us when they end; the button unlocks after this long.", type: "number", min: 5, max: 600, step: 5 },
   { key: "shuffle_answers", label: "Shuffle answer order", help: "Off: answers show in the order you wrote them.", type: "boolean" },

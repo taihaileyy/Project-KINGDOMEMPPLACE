@@ -290,3 +290,7 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
   .mask-line > span { animation: none !important; }
   .kep-intro { display: none !important; }
 }
+
+/* Page-to-page fade (opacity only, so fixed elements inside keep working). */
+.kep-page { animation: kep-page-in 0.4s ease-out both; }
+@keyframes kep-page-in { from { opacity: 0; } to { opacity: 1; } }

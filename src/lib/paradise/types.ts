@@ -22,13 +22,12 @@ export type PdLesson = {
   description: string | null;
   video_type: PdVideoType | null;
   video_url: string | null;
-  after_video: "retry" | "continue" | null;
 };
 
 // What the database says about one answer. Only returned after a player answers.
 export type PdCheck = {
   correct: boolean;
-  correct_answer_id: string;
+  correct_answer_id?: string; // only sent for a correct answer
   scripture_reference: string | null;
   explanation: string | null;
   lesson?: PdLesson | null;

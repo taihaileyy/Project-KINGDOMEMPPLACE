@@ -44,7 +44,7 @@ select pg_temp.assert(position('is_correct' in public.paradise_content()::text) 
 select pg_temp.assert((public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b1') ->> 'correct')::boolean, 'right answer is right');
 select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b1') -> 'lesson' is null, 'no lesson on a correct answer');
 select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b2') -> 'lesson' ->> 'title' = 'Lesson', 'wrong answer returns the lesson');
-select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b2') ->> 'correct_answer_id' = '20000000-0000-0000-0000-0000000000b1', 'wrong answer reveals the right one');
+select pg_temp.assert(public.paradise_check_answer('20000000-0000-0000-0000-0000000000a1', '20000000-0000-0000-0000-0000000000b2') ->> 'correct_answer_id' is null, 'a wrong answer does not reveal the right one (the player retries the same question)');
 do $$ begin
   perform public.paradise_check_answer('20000000-0000-0000-0000-0000000000a2', '20000000-0000-0000-0000-0000000000b1');
   raise exception 'FAILED: an inactive question could be answered';
