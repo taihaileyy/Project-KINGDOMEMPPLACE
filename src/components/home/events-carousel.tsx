@@ -1,59 +1,56 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
+import { Arrow } from "@/components/arrow";
 import { RailDots, useSnapRail } from "@/components/home/use-snap-rail";
-import type { Img } from "@/content/site";
+import type { PastEvent } from "@/content/site";
 
-type EventItem = { title: string; when: string; image: Img };
-
-// Phone-only events: a native horizontal swipe with scroll-snap. One large
-// flyer leads and the next peeks in from the right edge (~13%) so it's clear
-// there is more. No autoplay, no arrows. The active event's title and date
-// show beneath, with minimal pagination dots that also work as buttons.
-export function EventsCarousel({ events }: { events: EventItem[] }) {
-  const { ref: scroller, active, goTo } = useSnapRail<HTMLUListElement>();
-
-  const current = events[active];
-
+// Event cards in a native horizontal swipe with scroll-snap. On phones one card
+// leads and the next peeks in from the right (~20%) so it's clear there is more;
+// from tablet width two and then three cards show. Pagination dots below.
+export function EventsCarousel({ events }: { events: PastEvent[] }) {
+  const { ref, active, goTo } = useSnapRail<HTMLUListElement>();
+  const meta = "flex items-center gap-2 text-[13.5px] text-muted";
   return (
-    <div role="region" aria-roledescription="carousel" aria-label="Recent events">
+    <div role="region" aria-roledescription="carousel" aria-label="Upcoming events">
       <ul
-        ref={scroller}
+        ref={ref}
         tabIndex={0}
-        aria-label="Event flyers. Use the left and right arrow keys to scroll."
-        className="-mx-4 flex snap-x snap-mandatory items-start gap-3 overflow-x-auto overscroll-x-contain scroll-pl-4 px-4 pb-1 sm:gap-4 lg:mx-0 lg:gap-5 lg:scroll-pl-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        aria-label="Events. Use the left and right arrow keys to scroll."
+        className="-mx-6 flex snap-x snap-mandatory items-stretch gap-3 overflow-x-auto overscroll-x-contain scroll-pl-6 px-6 pb-1 sm:mx-0 sm:gap-5 sm:scroll-pl-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {events.map((e, i) => (
           <li
             key={e.title}
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${events.length}: ${e.title}`}
-            className="w-[80%] shrink-0 snap-start last:mr-4 sm:w-[46%] lg:w-[23.5%] lg:last:mr-0"
+            className="w-[80%] shrink-0 snap-start last:mr-6 sm:w-[calc((100%-1.25rem)/2)] sm:last:mr-0 lg:w-[calc((100%-2.5rem)/3)]"
           >
-            <Image
-              src={e.image.src}
-              alt={e.image.alt}
-              width={e.image.width}
-              height={e.image.height}
-              sizes="(min-width: 1024px) 24vw, (min-width: 640px) 46vw, 80vw"
-              priority={i === 0}
-              className="h-auto w-full"
-            />
-            <div className="mt-4 hidden sm:block">
-              <p className="font-display text-2xl leading-tight">{e.title}</p>
-              <p className="mt-1 text-[14px] text-muted">{e.when}</p>
-            </div>
+            <article className="flex h-full flex-col overflow-hidden rounded-xl border border-ink/12 bg-white/70 shadow-[0_18px_40px_-30px_rgb(5_7_13/0.6)]">
+              <Image
+                src={e.image.src}
+                alt={e.image.alt}
+                width={e.image.width}
+                height={e.image.height}
+                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 80vw"
+                priority={i === 0}
+                className="h-auto w-full"
+              />
+              <div className="flex flex-1 flex-col p-4">
+                <h3 className="font-display text-[1.45rem] leading-tight">{e.title}</h3>
+                <p className={`${meta} mt-2`}><CalendarDays aria-hidden="true" className="size-4 text-blue" strokeWidth={1.6} />{e.when}</p>
+                {e.time && <p className={`${meta} mt-1`}><Clock aria-hidden="true" className="size-4 text-blue" strokeWidth={1.6} />{e.time}</p>}
+                {e.place && <p className={`${meta} mt-1`}><MapPin aria-hidden="true" className="size-4 text-blue" strokeWidth={1.6} />{e.place}</p>}
+                <Link href="/events" className="btn-quiet group mt-auto pt-3 !min-h-11 text-ink">View Event <Arrow /></Link>
+              </div>
+            </article>
           </li>
         ))}
       </ul>
-
-      <div className="mt-5 min-h-[4.25rem] sm:hidden" aria-live="polite">
-        <p className="font-display text-[1.7rem] leading-tight">{current.title}</p>
-        <p className="mt-1 text-[14px] text-muted">{current.when}</p>
-      </div>
-
-      <div className="lg:hidden">
-  <RailDots count={events.length} active={active} goTo={goTo} label="Choose an event" names={events.map((e, i) => `event ${i + 1}: ${e.title}`)} />
+      <div className="mt-2 lg:hidden">
+        <RailDots count={events.length} active={active} goTo={goTo} label="Choose an event" names={events.map((e) => e.title)} />
       </div>
     </div>
   );

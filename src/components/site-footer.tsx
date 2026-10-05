@@ -1,41 +1,44 @@
 import Link from "next/link";
 import { SocialLinks } from "@/components/social-links";
 import { Wordmark } from "@/components/wordmark";
-import { ScheduleFooter } from "@/components/schedule-views";
-import { fullAddress, moreNav, org, siteNav } from "@/content/site";
+import { fullAddress, org } from "@/content/site";
+
+// Compact footer: who we are, how to reach us, and the main places to go.
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/church", label: "Church" },
+  { href: "/programs", label: "Programs" },
+  { href: "/housing", label: "Sober Living" },
+  { href: "/events", label: "Events" },
+  { href: "/give", label: "Give" },
+];
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-white/10 bg-night text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-7xl gap-6 px-6 py-8 sm:grid-cols-2 sm:py-10 lg:grid-cols-[1fr_1fr_1.2fr] lg:items-start">
         <div>
-          <Wordmark showName={false} logoClass="h-20 w-auto sm:h-24" priority={false} />
-          <p className="mt-6 max-w-sm font-display text-3xl font-medium leading-[1.1]">{org.tagline}</p>
-          <p className="mt-4 text-sm text-chrome">Led by {org.pastors}</p>
-          <SocialLinks className="mt-6" />
+          <Wordmark nameClass="" logoClass="h-12 w-auto sm:h-14" priority={false} />
+          <p className="mt-3 text-[0.95rem] text-chrome">Faith. Community. Opportunity.</p>
+          <SocialLinks className="mt-4" />
         </div>
-        <div>
-          <h2 className="text-sm font-bold text-chrome">Visit</h2>
-          <address className="mt-3 not-italic leading-7">
-            <a href={org.mapsUrl} className="hover:underline" target="_blank" rel="noopener noreferrer">{fullAddress}</a>
-            <br />
-            <a href={org.phoneHref} className="hover:underline">{org.phone}</a>
-            <br />
-            <a href={`mailto:${org.email}`} className="break-all hover:underline">{org.email}</a>
-          </address>
-          <ScheduleFooter />
-        </div>
-        <div>
-          <h2 className="text-sm font-bold text-chrome">Explore</h2>
-          <ul className="mt-3 grid grid-cols-2 gap-x-4 leading-8 md:grid-cols-1">
-            {[...siteNav, moreNav[0]].map((l) => (
-              <li key={l.href}><Link href={l.href} className="hover:underline">{l.label}</Link></li>
+        <address className="text-[0.9rem] not-italic leading-6 text-white/85">
+          <a href={org.mapsUrl} className="hover:underline" target="_blank" rel="noopener noreferrer">{fullAddress}</a>
+          <br />
+          <a href={org.phoneHref} className="hover:underline">{org.phone}</a>
+          <br />
+          <a href={`mailto:${org.email}`} className="break-all hover:underline">{org.email}</a>
+        </address>
+        <nav aria-label="Footer" className="sm:col-span-2 lg:col-span-1 lg:justify-self-end">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1 text-[0.9rem] text-white/85">
+            {links.map((l) => (
+              <li key={l.href}><Link href={l.href} className="inline-flex min-h-9 items-center hover:underline">{l.label}</Link></li>
             ))}
           </ul>
-        </div>
+        </nav>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 px-4 py-6 text-sm text-chrome sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 px-6 py-4 text-[13px] text-chrome">
           <p>© {new Date().getFullYear()} {org.name}</p>
           <p className="flex gap-4">
             <Link href="/privacy" className="hover:underline">Privacy</Link>

@@ -159,12 +159,12 @@ export const housing = {
   ],
 };
 
-export type PastEvent = { title: string; when: string; image: Img };
+export type PastEvent = { title: string; when: string; time?: string; place?: string; image: Img };
 
 export const recentEvents: PastEvent[] = [
-  { title: "The Gathering", when: "July 18, 2026", image: { src: "/images/flyer-the-gathering.webp", width: 1100, height: 1657, alt: "Flyer for The Gathering, a free concert event" } },
-  { title: "Stop the Violence March", when: "August 29", image: { src: "/images/flyer-violence-march.webp", width: 1100, height: 1633, alt: "Flyer for the Violence and Killing March to stop the violence" } },
-  { title: "KEP Summer Program", when: "Summer", image: { src: "/images/flyer-summer-program.webp", width: 1100, height: 1621, alt: "Flyer for the KEP youth summer program, 4:30 to 7:00 PM" } },
+  { title: "The Gathering", when: "July 18, 2026", time: "3:00 PM - 6:00 PM", place: "Baton Rouge, LA", image: { src: "/images/flyer-the-gathering.webp", width: 1100, height: 1657, alt: "Flyer for The Gathering, a free concert event" } },
+  { title: "Stop the Violence March", when: "August 29", place: "Baton Rouge, LA", image: { src: "/images/flyer-violence-march.webp", width: 1100, height: 1633, alt: "Flyer for the Violence and Killing March to stop the violence" } },
+  { title: "KEP Summer Program", when: "Summer", time: "4:30 PM - 7:00 PM", place: "KEP, N. Foster Dr.", image: { src: "/images/flyer-summer-program.webp", width: 1100, height: 1621, alt: "Flyer for the KEP youth summer program, 4:30 to 7:00 PM" } },
   { title: "Sound the Alarm Conference", when: "April 27, 2024", image: { src: "/images/flyer-sound-the-alarm.webp", width: 1100, height: 1375, alt: "Flyer for Sound the Alarm, a conference for men and women" } },
 ];
 
