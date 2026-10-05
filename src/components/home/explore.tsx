@@ -32,7 +32,7 @@ export function Explore() {
 
         <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-[1.35fr_1fr_1fr] lg:gap-5">
           <Link data-reveal href="/church" className={`${base} col-span-2 h-[15.5rem] p-5 sm:h-[20rem] sm:p-8 lg:col-span-1 lg:h-[26rem]`}>
-            <Image {...images.preaching} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className={`${photo} object-[40%_45%]`} />
+            <Image {...images.drMorgan} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className={`${photo} object-[50%_8%]`} />
             <span aria-hidden="true" className={shade} />
             <span className="text-[1.05rem] font-medium text-[#6f7cff]">01</span>
             <span className="block font-display text-[2.4rem] font-medium leading-[1.05] sm:text-6xl">Church</span>
