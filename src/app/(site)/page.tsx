@@ -6,7 +6,7 @@ import { Explore } from "@/components/home/explore";
 import { HeroMotion } from "@/components/hero-motion";
 import { WorshipBackdrop } from "@/components/home/worship-backdrop";
 import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
-import { HomeWatch } from "@/components/home/home-watch";
+import { BookFeature } from "@/components/home/book-feature";
 import { EventsCarousel } from "@/components/home/events-carousel";
 import { ImpactSection } from "@/components/home/impact-section";
 import { images, programs, recentEvents } from "@/content/site";
@@ -122,7 +122,7 @@ export default function Home() {
         ]}
       />
 
-      <HomeWatch />
+      <BookFeature />
 
       {/* Meet our leaders: the full story lives on the About page */}
       <section aria-labelledby="leaders-title" className="bg-[#f5f0e6]">
