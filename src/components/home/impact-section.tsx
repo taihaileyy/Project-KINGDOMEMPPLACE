@@ -16,6 +16,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/env";
 
 type Metric = { key: string; label: string; value: number | null };
@@ -91,6 +92,7 @@ export function ImpactSection({ facts, className = "", tone = "dark" }: { facts:
                 </Stat>
               ))}
         </dl>
+        <Link href="/impact" className={`btn-quiet mt-4 ${light ? "text-ink" : "text-white"}`}>See our full impact</Link>
       </div>
     </section>
   );

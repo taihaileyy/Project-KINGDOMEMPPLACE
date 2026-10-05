@@ -32,6 +32,7 @@ const drawerGroups: DrawerGroup[] = [
   {
     title: "Discover",
     items: [
+      { href: "/impact", title: "Our impact", line: "What we do together, in numbers.", icon: "dashboard" },
       { href: "/about", title: "About KEP", line: "Our story, our leaders and where to find us.", icon: "about" },
       { href: "/create-your-world", title: "Create Your World", line: "An interactive Bible journey.", icon: "paradise" },
       { href: "/gallery", title: "Gallery", line: "Photos from life at KEP.", icon: "gallery" },

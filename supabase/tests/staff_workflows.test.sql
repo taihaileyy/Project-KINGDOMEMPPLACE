@@ -85,3 +85,11 @@ select pg_temp.assert((select count(*) from public.studio_blocks) = 0, 'members 
 do $$ begin perform public.add_studio_block(current_date, '09:00', '10:00'); raise exception 'FAILED: member added a block';
 exception when insufficient_privilege then null; end $$;
 rollback;
+
+-- Impact counts come from the new tables, and still hide totals under 5.
+begin;
+update public.impact_metrics set is_public = true where key in ('events_held', 'program_completions');
+select pg_temp.act_as(null);
+select pg_temp.assert((select value is null from public.public_impact() where key = 'events_held'), 'events held: 3 seeded past events is under 5 so withheld');
+select pg_temp.assert((select count(*) from public.public_impact()) = 2, 'both switched-on metrics are listed');
+rollback;

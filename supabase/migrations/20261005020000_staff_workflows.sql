@@ -174,5 +174,7 @@ grant execute on function
   public.add_studio_block(date, time, time, text),
   public.decide_studio_request(uuid, public.studio_request_status, text)
   to authenticated;
+-- The overlap check is for the functions above only; nobody calls it directly.
+revoke execute on function public.studio_slot_taken(date, time, int, uuid) from public, anon, authenticated;
 revoke execute on function public.studio_busy(date, date) from public;
 grant execute on function public.studio_busy(date, date) to anon, authenticated;
