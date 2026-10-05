@@ -59,6 +59,7 @@
 
 /* The header is fixed, so in-page links (#visit) must stop below it. */
 html { scroll-padding-top: calc(var(--header-h) + 12px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 /* Phones: avoid single-word last lines in running text. */
 @media (max-width: 639px) {

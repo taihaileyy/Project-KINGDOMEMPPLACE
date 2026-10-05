@@ -115,7 +115,7 @@ export function ReelsFeed({ items, startId }: { items: MediaItem[]; startId?: st
         ref={listRef}
         tabIndex={0}
         aria-label="Videos. Swipe or use the up and down arrow keys to move between videos."
-        className="h-[calc(100dvh-var(--header-h)-3.6rem-env(safe-area-inset-bottom))] snap-y snap-mandatory overflow-y-auto overscroll-contain [scrollbar-width:none] sm:h-[calc(100dvh-var(--header-h))] [&::-webkit-scrollbar]:hidden"
+        className="h-[calc(100dvh-var(--header-h))] snap-y snap-mandatory overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {items.map((m, i) => {
           const on = i === active;
