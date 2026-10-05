@@ -24,7 +24,7 @@ export default function ChurchPage() {
 
       <Section dark title="Watch and listen" lead="Catch up on preaching and teaching from KEP, and follow along between Sundays.">
         <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
-          <Image {...images.preaching} alt={images.preaching.alt} sizes="(min-width: 1024px) 55vw, 100vw" className="w-full rounded-[var(--radius-card)]" />
+          <Image {...images.drMorgan} alt={images.drMorgan.alt} sizes="(min-width: 1024px) 55vw, 100vw" className="aspect-[4/3] w-full rounded-[var(--radius-card)] object-cover object-[50%_18%]" />
           <div className="flex flex-wrap gap-3">
             {org.social.filter((s) => s.href).map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="btn bg-paper text-ink hover:bg-surface">
