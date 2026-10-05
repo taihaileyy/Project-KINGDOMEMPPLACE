@@ -52,10 +52,15 @@ export default function Home() {
             <br />
             A place for the whole family.
           </p>
-          <div style={d(760)} className="rise mt-6 flex w-[min(14rem,62%)] flex-col items-center sm:mt-10 sm:w-60">
-            <Link href="/church#visit" className="btn-primary group w-full !min-h-[3.6rem] !rounded-[5px] text-[1.05rem] active:scale-[0.98]">
-              Plan your visit <Arrow />
-            </Link>
+          <div style={d(760)} className="rise mt-6 flex w-fit max-w-full flex-col items-center sm:mt-10">
+            <div className="flex flex-wrap items-center gap-3">
+              <Link href="/give" className="btn-primary group !min-h-[3.6rem] !rounded-[5px] !px-6 text-[1.05rem] active:scale-[0.98]">
+                Give <Arrow />
+              </Link>
+              <Link href="/signup" className="btn !min-h-[3.6rem] !rounded-[5px] border border-white/45 !px-5 text-[1.05rem] text-white hover:bg-white/10 active:scale-[0.98]">
+                Become a member
+              </Link>
+            </div>
             <a href="#explore" className="mt-5 flex flex-col items-center gap-0.5 text-[15px] text-white/65 transition-colors hover:text-white sm:mt-7">
               Explore KEP
               <ChevronDown aria-hidden="true" className="size-5 animate-bounce [animation-duration:2.4s]" strokeWidth={1.5} />
