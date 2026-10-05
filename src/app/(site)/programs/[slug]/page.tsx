@@ -5,21 +5,21 @@ import type { Metadata } from "next";
 import { ArtsArt } from "@/components/arts-art";
 import { CollectionVideos } from "@/components/media/collection-videos";
 import { COLLECTION } from "@/lib/media";
-import { org, programs } from "@/content/site";
+import { EnrollPanel } from "@/components/join/enroll-panel";
+import { org } from "@/content/site";
+import { fetchProgram } from "@/lib/catalog";
 
-export function generateStaticParams() {
-  return programs.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const p = programs.find((x) => x.slug === slug);
+  const p = await fetchProgram(slug);
   return p ? { title: p.name, description: p.summary } : {};
 }
 
 export default async function ProgramPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const p = programs.find((x) => x.slug === slug);
+  const p = await fetchProgram(slug);
   if (!p) notFound();
 
   return (
@@ -37,9 +37,9 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
             <li key={h} className="rounded-[var(--radius-control)] border border-line px-4 py-3 font-semibold">{h}</li>
           ))}
         </ul>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Link href="/signup" className="btn-primary">Create an account to join</Link>
-          <a href={org.phoneHref} className="btn-secondary">Ask a question</a>
+        <div className="mt-10 grid justify-items-start gap-4">
+          <EnrollPanel programId={p.id} slug={p.slug} needsApproval={p.requires_approval} />
+          <a href={org.phoneHref} className="btn-secondary self-start">Ask a question</a>
         </div>
       </div>
       {p.art ? (

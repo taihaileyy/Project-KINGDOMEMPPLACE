@@ -3,21 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useSignedIn } from "@/lib/use-signed-in";
 import { OPEN_MENU_EVENT } from "@/components/mobile-tabs";
 import { MenuButton, SideDrawer, isActivePath, type DrawerGroup } from "@/components/side-drawer";
 import { Wordmark } from "@/components/wordmark";
 import { siteNav } from "@/content/site";
-
-// Public pages stay static, so the header doesn't ask the server who is signed
-// in. It only looks for Supabase's session cookie to pick which links to show;
-// /portal still checks the session properly on the server.
-function useSignedIn() {
-  const [signedIn, setSignedIn] = useState(false);
-  useEffect(() => {
-    setSignedIn(/(?:^|;\s*)sb-[^=]+-auth-token(?:\.\d+)?=/.test(document.cookie));
-  }, []);
-  return signedIn;
-}
 
 // The slide-out menu groups every page under a plain heading, each with an
 // icon and a one-line description, so people can find their way in by need.

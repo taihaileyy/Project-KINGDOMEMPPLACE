@@ -5,13 +5,31 @@ import Link from "next/link";
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import { Arrow } from "@/components/arrow";
 import { RailDots, useSnapRail } from "@/components/home/use-snap-rail";
+import { useEffect, useState } from "react";
+import { eventDate, eventTime, fetchEvents, isUpcoming } from "@/lib/catalog";
 import type { PastEvent } from "@/content/site";
 
 // Event cards in a native horizontal swipe with scroll-snap. On phones one card
 // leads and the next peeks in from the right (~20%) so it's clear there is more;
 // from tablet width two and then three cards show. Pagination dots below.
-export function EventsCarousel({ events }: { events: PastEvent[] }) {
+export function EventsCarousel({ events: initial }: { events: PastEvent[] }) {
   const { ref, active, goTo } = useSnapRail<HTMLUListElement>();
+  // Starts with the built-in list, then shows the live list from the database:
+  // upcoming events first (soonest first), then recent ones.
+  const [events, setEvents] = useState<PastEvent[]>(initial);
+  useEffect(() => {
+    let live = true;
+    fetchEvents().then((rows) => {
+      if (!live) return;
+      const withImage = rows.filter((e) => e.image && e.starts_at);
+      if (withImage.length === 0) return;
+      const now = new Date();
+      const up = withImage.filter((e) => isUpcoming(e, now)).sort((a, b) => a.starts_at!.localeCompare(b.starts_at!));
+      const past = withImage.filter((e) => !isUpcoming(e, now));
+      setEvents([...up, ...past].map((e) => ({ title: e.title, when: eventDate(e), time: eventTime(e) || undefined, place: e.location ?? undefined, image: e.image! })));
+    });
+    return () => { live = false; };
+  }, []);
   const meta = "flex items-center gap-2 text-[13.5px] text-muted";
   return (
     <div role="region" aria-roledescription="carousel" aria-label="Upcoming events">
