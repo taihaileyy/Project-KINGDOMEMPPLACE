@@ -131,6 +131,11 @@ export function HeroMotion({ overlay = false }: { overlay?: boolean }) {
     return (
       <div ref={layerRef} data-phase="rest" aria-hidden="true" className="hero-stage pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="hero-haze-lit" />
+        {/* On phones the film's last frame (the whole KEP artwork) stays once it ends. */}
+        <div className="hero-art hero-keep">
+          {/* eslint-disable-next-line @next/next/no-img-element -- must match the film's box exactly */}
+          <img src="/images/hero-kep-still.webp" alt="" width={1280} height={720} decoding="async" />
+        </div>
         <div className="hero-art hero-motion">
           <video ref={videoRef} muted playsInline disablePictureInPicture preload="none" tabIndex={-1} />
         </div>

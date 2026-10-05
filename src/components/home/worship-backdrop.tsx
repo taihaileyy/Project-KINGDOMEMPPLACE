@@ -22,7 +22,7 @@ export function WorshipBackdrop() {
         alt=""
         priority
         sizes="(min-width: 1024px) 60vw, 130vw"
-        className="absolute right-[-40%] top-[4%] w-[130%] max-w-none opacity-[0.2] mix-blend-screen [mask-image:radial-gradient(closest-side,#000_45%,transparent)] sm:right-[-8%] sm:top-[2%] sm:w-[62%]"
+        className="absolute max-lg:hidden right-[-40%] top-[4%] w-[130%] max-w-none opacity-[0.2] mix-blend-screen [mask-image:radial-gradient(closest-side,#000_45%,transparent)] sm:right-[-8%] sm:top-[2%] sm:w-[62%]"
       />
       {/* layered overlays: overall navy, darker on the left behind the words, a blue glow on the right */}
       <div className="absolute inset-0 bg-[rgb(3_6_18/0.22)]" />

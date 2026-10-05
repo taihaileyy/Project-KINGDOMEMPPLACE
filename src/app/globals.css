@@ -273,6 +273,11 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
 }
 
 .hero-motion { opacity: 0; }
+.hero-keep { opacity: 0; }
+@media (max-width: 1023px) {
+  .hero-keep { opacity: 1; transition: opacity 1.5s cubic-bezier(0.45, 0, 0.55, 1); }
+  .hero-stage[data-phase="wait"] .hero-keep, .hero-stage[data-phase="in"] .hero-keep { opacity: 0; transition: none; }
+}
 .hero-read { opacity: 0; transition: opacity 1.5s cubic-bezier(0.45, 0, 0.55, 1); }
 .hero-stage[data-phase="in"] .hero-read { opacity: 1; transition: opacity 0.5s ease-out; }
 /* The film is bright and playing from the first moment. */
