@@ -23,7 +23,7 @@ export default function HousingPage() {
         lead="A stable, sober home with structure, community and support while you rebuild. Many of our residents come to us after a treatment program."
       >
         <a href={org.phoneHref} className="btn-primary">Call about openings</a>
-        <Link href="/signup" className="btn-secondary">Create an account</Link>
+        <Link href="/portal/housing/apply" className="btn-secondary">Apply online</Link>
       </PageIntro>
 
       <section aria-labelledby="home-title" className="bg-night text-white">
@@ -104,7 +104,7 @@ export default function HousingPage() {
           <p data-reveal style={{ "--d": "150ms" } as React.CSSProperties} className="mt-4 text-[15px] text-chrome">Dr. L. Morgan</p>
           <div data-reveal style={{ "--d": "250ms" } as React.CSSProperties} className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <a href={org.phoneHref} className="btn-primary">Call about openings</a>
-            <Link href="/signup" className="btn-quiet text-white">Create an account</Link>
+            <Link href="/portal/housing/apply" className="btn-quiet text-white">Apply online</Link>
           </div>
         </div>
       </section>

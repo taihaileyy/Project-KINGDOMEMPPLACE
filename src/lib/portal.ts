@@ -15,13 +15,15 @@ export const getPortalAccess = cache(async (): Promise<PortalAccess> => {
   const supabase = await createClient();
   const count = async (q: PromiseLike<{ count: number | null }>) => ((await q).count ?? 0) > 0;
   const head = { count: "exact", head: true } as const;
-  const [church, programs, events, giving] = await Promise.all([
+  const [church, programs, events, giving, applied, resident] = await Promise.all([
     count(supabase.from("church_memberships").select("id", head).eq("status", "active")),
     count(supabase.from("program_enrollments").select("id", head).in("status", ["pending", "approved", "completed"])),
     count(supabase.from("event_registrations").select("id", head)),
     count(supabase.from("gifts").select("id", head)),
+    count(supabase.from("housing_applications").select("id", head)),
+    count(supabase.from("housing_residencies").select("id", head)),
   ]);
-  return { church, programs, events, giving, housing: false };
+  return { church, programs, events, giving, housing: applied || resident };
 });
 
 export async function requireAccess(area: PortalArea, next = "/portal"): Promise<void> {

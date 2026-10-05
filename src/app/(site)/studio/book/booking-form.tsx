@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { CalendarCheck, Camera, Clapperboard, Mic, Podcast, Sparkles, type LucideIcon } from "lucide-react";
 import { FormMessage } from "@/components/form-message";
 import { requestStudioBooking, type StudioState } from "../actions";
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/env";
 
 const services: { value: string; label: string; Icon: LucideIcon }[] = [
   { value: "recording", label: "Recording", Icon: Mic },
@@ -24,6 +25,27 @@ const durations = [
   { value: 480, label: "8 hours" },
 ];
 
+// Times already taken on the chosen day (never who booked), so people can pick a free one.
+function BusyTimes({ date }: { date: string }) {
+  const [busy, setBusy] = useState<{ start_time: string; end_time: string }[]>([]);
+  useEffect(() => {
+    if (!date) return;
+    let live = true;
+    fetch(`${SUPABASE_URL}/rest/v1/rpc/studio_busy`, {
+      method: "POST",
+      headers: { apikey: SUPABASE_ANON_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_from: date, p_to: date }),
+    })
+      .then((r) => (r.ok ? r.json() : []))
+      .then((rows) => { if (live) setBusy(Array.isArray(rows) ? rows : []); })
+      .catch(() => {});
+    return () => { live = false; };
+  }, [date]);
+  const t12 = (t: string) => { const [h, m] = t.split(":").map(Number); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`; };
+  if (!date || busy.length === 0) return null;
+  return <p className="mt-1.5 text-sm text-muted">Already booked that day: {busy.map((b) => `${t12(b.start_time)} to ${t12(b.end_time)}`).join(", ")}.</p>;
+}
+
 function todayInBatonRouge() {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(new Date());
 }
@@ -38,6 +60,7 @@ function formatWhen(date: string, time: string) {
 export function BookingForm({ defaults }: { defaults: { name: string; email: string; phone: string } }) {
   const [state, action, pending] = useActionState<StudioState, FormData>(requestStudioBooking, {});
   const [service, setService] = useState("recording");
+  const [day, setDay] = useState("");
   const fe = state.fieldErrors ?? {};
 
   if (state.done) {
@@ -101,7 +124,8 @@ export function BookingForm({ defaults }: { defaults: { name: string; email: str
       <div className="grid gap-5 sm:grid-cols-3">
         <div>
           <label htmlFor="date" className="field-label">Date</label>
-          <input {...field("date")} type="date" min={todayInBatonRouge()} required className="field-input" />
+          <input {...field("date")} type="date" min={todayInBatonRouge()} required className="field-input" onChange={(e) => setDay(e.target.value)} />
+          <BusyTimes date={day} />
           {err("date")}
         </div>
         <div>

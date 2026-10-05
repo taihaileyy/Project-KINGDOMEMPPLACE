@@ -91,3 +91,18 @@ export async function requireStaff(allowed?: StaffRole[]): Promise<Session> {
 export function displayName(p: Person) {
   return p.preferred_name || p.first_name || p.email || "Friend";
 }
+
+// Who can run what. The database enforces the same rules; these decide which
+// staff pages and menu items are shown.
+export const canManagePrograms = (s: Session) =>
+  s.roles.some((r) => r.role === "super_admin" || (r.role === "program_staff" && !r.scope));
+export const canManageEvents = (s: Session) =>
+  s.roles.some((r) => r.role === "super_admin" || r.role === "church_staff" || (r.role === "program_staff" && !r.scope));
+export const canManageStudio = (s: Session) =>
+  s.roles.some((r) => r.role === "super_admin" || (r.role === "program_staff" && r.scope === "studio"));
+
+export async function requireCapability(check: (s: Session) => boolean, next: string): Promise<Session> {
+  const session = await requireUser(next);
+  if (!check(session)) redirect("/admin?denied=1");
+  return session;
+}
