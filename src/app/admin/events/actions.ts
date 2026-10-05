@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { type ActionState, failed } from "@/lib/action-state";
 import { canManageEvents, requireCapability } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { chicagoToISO } from "@/lib/time";
@@ -54,11 +55,14 @@ export async function saveEvent(_: EventFormState, form: FormData): Promise<Even
   redirect(`/admin/events/${data.id}`);
 }
 
-export async function checkIn(form: FormData): Promise<void> {
+export async function checkIn(_: ActionState, form: FormData): Promise<ActionState> {
   await requireCapability(canManageEvents, "/admin/events");
   const parsed = z.object({ id: z.string().uuid(), event: z.string().uuid(), in: z.enum(["1", "0"]) }).safeParse(Object.fromEntries(form));
-  if (!parsed.success) return;
+  if (!parsed.success) return { error: "Tap Check in again." };
   const supabase = await createClient();
-  await supabase.rpc("check_in_registration", { p_id: parsed.data.id, p_in: parsed.data.in === "1" });
+  const { error } = await supabase.rpc("check_in_registration", { p_id: parsed.data.id, p_in: parsed.data.in === "1" });
+  const f = failed(error, "check them in");
+  if (f) return f;
   revalidatePath(`/admin/events/${parsed.data.event}`);
+  return { notice: parsed.data.in === "1" ? "Checked in." : "Check-in undone." };
 }

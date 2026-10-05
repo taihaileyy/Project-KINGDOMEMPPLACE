@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DashboardBand } from "@/components/app-shell";
+import { ActionForm } from "@/components/action-form";
 import { SubmitButton } from "@/components/submit-button";
 import { Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { requireStaff } from "@/lib/auth";
@@ -46,7 +47,7 @@ export default async function ResidentPage({ params }: { params: Promise<{ id: s
       </Panel>
 
       <Panel id="pay" title="Record a payment">
-        <form action={recordPayment} className="grid items-end gap-3 px-2 sm:grid-cols-[8rem_9rem_10rem_1fr_auto]">
+        <ActionForm action={recordPayment} className="grid items-end gap-3 px-2 sm:grid-cols-[8rem_9rem_10rem_1fr_auto]">
           <input type="hidden" name="id" value={id} />
           <div><label className="field-label" htmlFor="amount">Amount ($)</label><input id="amount" name="amount" type="number" step="0.01" min="1" required className="field-input" /></div>
           <div><label className="field-label" htmlFor="method">Method</label>
@@ -54,7 +55,7 @@ export default async function ResidentPage({ params }: { params: Promise<{ id: s
           <div><label className="field-label" htmlFor="pdate">Date</label><input id="pdate" name="date" type="date" defaultValue={today()} className="field-input" /></div>
           <div><label className="field-label" htmlFor="pnote">Note</label><input id="pnote" name="note" maxLength={300} className="field-input" /></div>
           <SubmitButton className="btn-primary">Record</SubmitButton>
-        </form>
+        </ActionForm>
         <ul className="mt-4">
           {(pays ?? []).map((p) => (
             <li key={p.id as string} className="flex justify-between border-t border-line px-2 py-2.5 text-[15px]">
@@ -65,13 +66,13 @@ export default async function ResidentPage({ params }: { params: Promise<{ id: s
       </Panel>
 
       <Panel id="checkins" title="Check-ins">
-        <form action={addCheckin} className="grid gap-3 px-2">
+        <ActionForm action={addCheckin} className="grid gap-3 px-2">
           <input type="hidden" name="id" value={id} />
           <label className="field-label" htmlFor="cnote">New note</label>
           <textarea id="cnote" name="note" rows={3} required maxLength={2000} className="field-input" />
           <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="visible" defaultChecked className="size-4" /> Show this note to the resident</label>
           <div><SubmitButton className="btn-primary">Add check-in</SubmitButton></div>
-        </form>
+        </ActionForm>
         <ul className="mt-4">
           {(checks ?? []).map((c) => (
             <li key={c.id as string} className="border-t border-line px-2 py-3 text-[15px]">
@@ -85,19 +86,19 @@ export default async function ResidentPage({ params }: { params: Promise<{ id: s
 
       {active && (
         <Panel id="manage" title="Employment and move-out">
-          <form action={setEmployed} className="flex flex-wrap items-center gap-3 px-2">
+          <ActionForm action={setEmployed} className="flex flex-wrap items-center gap-3 px-2">
             <input type="hidden" name="id" value={id} />
             <input type="hidden" name="employed" value={stay.employed ? "0" : "1"} />
             <span className="text-[15px]">Employed: <strong>{stay.employed ? "Yes" : "No"}</strong></span>
             <SubmitButton className="btn border border-ink/20">{stay.employed ? "Mark not employed" : "Mark employed"}</SubmitButton>
-          </form>
-          <form action={moveOut} className="mt-5 grid items-end gap-3 px-2 sm:grid-cols-[9rem_10rem_auto]">
+          </ActionForm>
+          <ActionForm action={moveOut} className="mt-5 grid items-end gap-3 px-2 sm:grid-cols-[9rem_10rem_auto]">
             <input type="hidden" name="id" value={id} />
             <div><label className="field-label" htmlFor="mdate">Move-out date</label><input id="mdate" name="date" type="date" defaultValue={today()} required className="field-input" /></div>
             <div><label className="field-label" htmlFor="mreason">Reason</label>
               <select id="mreason" name="reason" className="field-input"><option value="graduated">Completed the program</option><option value="left">Left</option><option value="removed">Removed</option><option value="other">Other</option></select></div>
             <SubmitButton className="btn border border-danger/40 text-danger">Move out</SubmitButton>
-          </form>
+          </ActionForm>
         </Panel>
       )}
     </div>
