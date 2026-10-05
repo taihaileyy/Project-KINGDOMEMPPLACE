@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { Panel } from "@/components/portal-ui";
 import { requireStaff } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -26,7 +27,7 @@ export default async function AdminImpact() {
               <input name={`label_${m.key}`} defaultValue={m.label as string} maxLength={80} aria-label={`Label for ${m.key}`} className="field-input" />
             </div>
           ))}
-          <div><button className="btn-primary">Save</button></div>
+          <div><SubmitButton className="btn-primary">Save</SubmitButton></div>
         </form>
       </Panel>
     </div>

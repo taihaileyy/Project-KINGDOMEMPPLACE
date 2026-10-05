@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
+import { FlyerImage } from "@/components/flyer-image";
 import Link from "next/link";
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import { Arrow } from "@/components/arrow";
 import { RailDots, useSnapRail } from "@/components/home/use-snap-rail";
 import { useEffect, useState } from "react";
 import { eventDate, eventTime, fetchEvents, isUpcoming } from "@/lib/catalog";
-import type { PastEvent } from "@/content/site";
+import { images, type PastEvent } from "@/content/site";
 
 // Event cards in a native horizontal swipe with scroll-snap. On phones one card
 // leads and the next peeks in from the right (~20%) so it's clear there is more;
@@ -21,12 +21,12 @@ export function EventsCarousel({ events: initial }: { events: PastEvent[] }) {
     let live = true;
     fetchEvents().then((rows) => {
       if (!live) return;
-      const withImage = rows.filter((e) => e.image && e.starts_at);
+      const withImage = rows.filter((e) => e.starts_at);
       if (withImage.length === 0) return;
       const now = new Date();
       const up = withImage.filter((e) => isUpcoming(e, now)).sort((a, b) => a.starts_at!.localeCompare(b.starts_at!));
       const past = withImage.filter((e) => !isUpcoming(e, now));
-      setEvents([...up, ...past].map((e) => ({ title: e.title, when: eventDate(e), time: eventTime(e) || undefined, place: e.location ?? undefined, image: e.image! })));
+      setEvents([...up, ...past].map((e) => ({ title: e.title, when: eventDate(e), time: eventTime(e) || undefined, place: e.location ?? undefined, image: e.image ?? images.heroPoster })));
     });
     return () => { live = false; };
   }, []);
@@ -47,15 +47,7 @@ export function EventsCarousel({ events: initial }: { events: PastEvent[] }) {
             className="w-[80%] shrink-0 snap-start last:mr-6 sm:w-[calc((100%-1.25rem)/2)] sm:last:mr-0 lg:w-[calc((100%-2.5rem)/3)]"
           >
             <article className="flex h-full flex-col overflow-hidden rounded-xl border border-ink/12 bg-white/70 shadow-[0_18px_40px_-30px_rgb(5_7_13/0.6)]">
-              <Image
-                src={e.image.src}
-                alt={e.image.alt}
-                width={e.image.width}
-                height={e.image.height}
-                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 80vw"
-                priority={i === 0}
-                className="h-auto w-full"
-              />
+              <FlyerImage image={e.image} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 80vw" priority={i === 0} className="h-auto w-full" />
               <div className="flex flex-1 flex-col p-4">
                 <h3 className="font-display text-[1.45rem] leading-tight">{e.title}</h3>
                 <p className={`${meta} mt-2`}><CalendarDays aria-hidden="true" className="size-4 text-blue" strokeWidth={1.6} />{e.when}</p>

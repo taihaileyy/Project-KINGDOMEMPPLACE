@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Users } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { EmptyState, Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { requireAccess } from "@/lib/portal";
 import { createClient } from "@/lib/supabase/server";
@@ -37,7 +38,7 @@ export default async function MyPrograms() {
                   {(r.status === "pending" || r.status === "approved") && (
                     <form action={withdrawEnrollment}>
                       <input type="hidden" name="id" value={r.id} />
-                      <button className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Withdraw</button>
+                      <SubmitButton className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Withdraw</SubmitButton>
                     </form>
                   )}
                 </span>

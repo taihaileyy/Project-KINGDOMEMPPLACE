@@ -51,5 +51,9 @@ export function StatusPill({ status }: { status: string }) {
   );
 }
 
+// Dates without a time of day (a move-in date, a birthday) are shown as written;
+// moments in time are shown in Baton Rouge time.
 export const fmtDate = (iso: string, opts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric" }) =>
-  new Date(iso).toLocaleDateString("en-US", { timeZone: "America/Chicago", ...opts });
+  /^\d{4}-\d{2}-\d{2}$/.test(iso)
+    ? new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", ...opts })
+    : new Date(iso).toLocaleDateString("en-US", { timeZone: "America/Chicago", ...opts });

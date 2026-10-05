@@ -17,7 +17,7 @@ const schema = z.object({
   starts: z.string().min(1, "Choose a start date and time."),
   ends: z.string().default(""),
   location: z.string().trim().max(200).default(""),
-  image_path: z.string().trim().max(300).default(""),
+  image_path: z.string().trim().max(300).default("").refine((v) => v === "" || /^\/images\/[\w.-]+$/.test(v) || /^https:\/\/[\w.-]+\.supabase\.co\/storage\/v1\/object\/public\/event-flyers\/[\w.-]+$/.test(v), "That picture address isn't allowed. Upload the picture again."),
   capacity: z.coerce.number().int().min(0).max(100000).default(0),
 });
 

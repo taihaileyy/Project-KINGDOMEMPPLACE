@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Home } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { EmptyState, Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { requireStaff } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -57,9 +58,9 @@ export default async function AdminHousing() {
                     <input type="hidden" name="id" value={a.id} />
                     <input name="note" placeholder="Note (optional)" maxLength={2000} aria-label="Note" className="field-input" />
                     <div className="flex flex-wrap gap-2">
-                      {a.status === "submitted" && <button name="status" value="in_review" className="btn border border-ink/20">Start review</button>}
-                      <button name="status" value="approved" className="btn-primary">Approve</button>
-                      <button name="status" value="declined" className="btn border border-danger/40 text-danger">Decline</button>
+                      {a.status === "submitted" && <SubmitButton name="status" value="in_review" className="btn border border-ink/20">Start review</SubmitButton>}
+                      <SubmitButton name="status" value="approved" className="btn-primary">Approve</SubmitButton>
+                      <SubmitButton name="status" value="declined" className="btn border border-danger/40 text-danger">Decline</SubmitButton>
                     </div>
                   </form>
                 ) : (
@@ -67,7 +68,7 @@ export default async function AdminHousing() {
                     <input type="hidden" name="id" value={a.id} />
                     <div><label className="field-label" htmlFor={`d-${a.id}`}>Move-in date</label><input id={`d-${a.id}`} name="date" type="date" defaultValue={today()} required className="field-input" /></div>
                     <div><label className="field-label" htmlFor={`r-${a.id}`}>Room</label><input id={`r-${a.id}`} name="room" maxLength={60} className="field-input" /></div>
-                    <button className="btn-primary">Move in</button>
+                    <SubmitButton className="btn-primary">Move in</SubmitButton>
                   </form>
                 )}
               </li>

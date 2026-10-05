@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Church } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { requireAccess } from "@/lib/portal";
 import { createClient } from "@/lib/supabase/server";
@@ -25,7 +26,7 @@ export default async function MyChurch() {
           {m && <StatusPill status={m.status as string} />}
         </div>
         <form action={leaveChurch} className="mt-5 px-2">
-          <button className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Leave the church</button>
+          <SubmitButton className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Leave the church</SubmitButton>
         </form>
       </Panel>
     </div>

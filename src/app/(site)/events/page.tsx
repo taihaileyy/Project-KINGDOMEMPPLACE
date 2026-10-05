@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { FlyerImage } from "@/components/flyer-image";
 import type { Metadata } from "next";
 import { CollectionVideos } from "@/components/media/collection-videos";
 import { RegisterForm } from "@/components/join/register-form";
@@ -13,7 +13,7 @@ function EventCard({ e, past = false }: { e: CatalogEvent; past?: boolean }) {
   return (
     <li id={e.slug} className="card flex scroll-mt-24 flex-col overflow-hidden">
       {e.image && (
-        <Image src={e.image.src} alt={e.image.alt} width={e.image.width} height={e.image.height} sizes="(min-width: 1024px) 25vw, 50vw" className={`h-auto w-full ${past ? "grayscale-[35%]" : ""}`} />
+        <FlyerImage image={e.image} sizes="(min-width: 1024px) 25vw, 50vw" className={`h-auto w-full ${past ? "grayscale-[35%]" : ""}`} />
       )}
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <p className="font-display text-2xl leading-tight">{e.title}</p>

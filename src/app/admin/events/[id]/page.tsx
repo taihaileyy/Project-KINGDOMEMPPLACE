@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { Panel, StatusPill } from "@/components/portal-ui";
 import { canManageEvents, requireCapability } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -49,7 +50,7 @@ export default async function EditEvent({ params }: { params: Promise<{ id: stri
                 <form action={checkIn} className="flex items-center gap-3">
                   <input type="hidden" name="id" value={r.id} /><input type="hidden" name="event" value={id} />
                   {r.checked_in_at && <StatusPill status="completed" />}
-                  <button name="in" value={r.checked_in_at ? "0" : "1"} className={r.checked_in_at ? "text-sm font-semibold text-muted underline" : "btn-primary"}>{r.checked_in_at ? "Undo" : "Check in"}</button>
+                  <SubmitButton name="in" value={r.checked_in_at ? "0" : "1"} className={r.checked_in_at ? "text-sm font-semibold text-muted underline" : "btn-primary"}>{r.checked_in_at ? "Undo" : "Check in"}</SubmitButton>
                 </form>
               </li>
             ))}</ul>

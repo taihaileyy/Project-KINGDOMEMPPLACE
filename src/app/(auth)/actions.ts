@@ -57,6 +57,9 @@ export async function signUp(_: FormState, form: FormData): Promise<FormState> {
   });
   // Same message whether or not the email already has an account, so this
   // form can't be used to find out who has one.
+  if (error && error.code === "over_email_send_rate_limit") {
+    return { error: "We're sending a lot of confirmation emails right now. Please try again in about an hour, or call us at (225) 413-9854 and we'll help you." };
+  }
   if (error && error.code !== "user_already_exists") {
     return { error: "We couldn't create your account just now. Please try again in a minute." };
   }
