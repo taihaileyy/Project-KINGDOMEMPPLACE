@@ -34,7 +34,9 @@ export async function fetchMedia(collection?: string): Promise<MediaItem[]> {
     });
     if (!r.ok) return [];
     const rows = await r.json();
-    return Array.isArray(rows) ? rows : [];
+    // Never show unfinished placeholder titles such as "reel 1" or "video 2".
+    const placeholder = /(^|:\s*)(reel|video|post)\s*\d*$/i;
+    return Array.isArray(rows) ? rows.filter((m: MediaItem) => !placeholder.test((m.title ?? "").trim())) : [];
   } catch {
     return [];
   }
