@@ -1,29 +1,22 @@
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
-import { GardenBackdrop } from "@/components/paradise/garden";
 
-// The game, front and center: a tall cinematic card with the sunrise garden,
-// one clear line and a big button.
+// The game, as a full-width navy band with a soft fan of light rays behind it.
 export function CreateWorldSpotlight() {
   return (
-    <section aria-labelledby="cyw-title" className="bg-ivory">
-      <div className="mx-auto max-w-7xl px-4 pb-10 pt-2 sm:px-6 sm:pb-16 sm:pt-4">
-        <Link
-          href="/create-your-world"
-          className="group relative isolate flex min-h-[26rem] items-end overflow-hidden rounded-[var(--radius-card)] bg-[#050a1c] p-6 text-white sm:min-h-[26rem] sm:items-center sm:p-12 lg:min-h-[30rem]"
-        >
-          <GardenBackdrop focus="middle" className="-z-10 scale-[1.02] transition-transform duration-[1600ms] ease-out group-hover:scale-110" />
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(5_8_24/0.92)_0%,rgb(5_8_24/0.55)_50%,rgb(5_8_24/0.05)_100%)] sm:bg-[linear-gradient(90deg,rgb(5_8_24/0.9)_0%,rgb(5_8_24/0.5)_52%,transparent_100%)]" />
-          <div className="max-w-md">
-            <p className="inline-block rounded-full border border-white/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ecd08a]">Interactive Bible journey</p>
-            <h2 id="cyw-title" className="mt-4 font-display text-[clamp(2.6rem,10vw,5.2rem)] font-medium uppercase leading-[1] tracking-[0.1em]">
-              Create Your World
-            </h2>
-            <p className="mt-3 font-display text-xl italic text-[#ecd08a] sm:text-2xl">Test your knowledge. Learn the Word. Continue the journey.</p>
-            <span className="btn-primary mt-6 sm:mt-8">
-              Play the game <Arrow />
-            </span>
-          </div>
+    <section aria-labelledby="cyw-title" className="relative isolate overflow-hidden bg-[#050a1c] text-white">
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(70%_90%_at_50%_100%,#1a2b7a_0%,#0a1240_45%,#050a1c_100%)]" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 opacity-35 [background:repeating-conic-gradient(from_-60deg_at_50%_115%,rgb(120_150_255/0.5)_0deg_2deg,transparent_2deg_9deg)] [mask-image:radial-gradient(70%_90%_at_50%_100%,#000,transparent)]"
+      />
+      <div className="mx-auto flex max-w-7xl flex-col items-center px-6 py-9 text-center sm:py-20">
+        <p data-reveal className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ecd08a] sm:text-sm">An interactive Bible journey</p>
+        <h2 id="cyw-title" data-reveal="mask" className="mt-3 font-display text-[clamp(2.3rem,10.5vw,3.4rem)] font-medium uppercase leading-[1.02] tracking-[0.08em] sm:text-7xl">
+          Create<br />Your World
+        </h2>
+        <Link data-reveal style={{ "--d": "150ms" } as React.CSSProperties} href="/create-your-world" className="btn-primary group mt-6 !min-h-14 !rounded-[5px] sm:mt-9">
+          Enter Paradise <Arrow />
         </Link>
       </div>
     </section>

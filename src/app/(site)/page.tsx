@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
-import { ArrowDown } from "lucide-react";
-import { Discover } from "@/components/home/discover";
+import { ChevronDown } from "lucide-react";
+import { Explore } from "@/components/home/explore";
 import { WorshipBackdrop } from "@/components/home/worship-backdrop";
-import { ChipNav } from "@/components/home/chip-nav";
 import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
 import { HomeWatch } from "@/components/home/home-watch";
 import { EventsCarousel } from "@/components/home/events-carousel";
@@ -33,14 +32,14 @@ export default function Home() {
           and a soft curve into the cream Discover section. */}
       <section
         aria-labelledby="hero-title"
-        className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[64svh] flex-col overflow-hidden bg-night text-white sm:min-h-[84svh]"
+        className="hero-section relative isolate -mt-[var(--header-h)] flex flex-col overflow-hidden bg-night text-white sm:min-h-[84svh]"
       >
         <WorshipBackdrop />
-        <div className="hero-copy mx-auto w-full max-w-7xl px-6 !pt-[11rem] pb-[3.5rem] sm:px-6 sm:!pt-44 sm:pb-28 lg:pb-32">
+        <div className="hero-copy mx-auto w-full max-w-7xl px-6 !pt-[6.5rem] pb-[3.25rem] sm:px-6 sm:!pt-44 sm:pb-28 lg:pb-32">
           <p style={d(60)} className="rise text-[12.5px] font-semibold uppercase tracking-[0.3em] text-[#5c6bff] sm:text-sm">Kingdom Empowerment Place</p>
           <h1
             id="hero-title"
-            className="mt-3.5 font-display text-[clamp(2.1rem,9.2vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.005em] sm:mt-6 sm:text-[clamp(3rem,5.4vw,5.4rem)] sm:leading-[1]"
+            className="mt-3.5 font-display text-[clamp(1.9rem,8.6vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.005em] sm:mt-6 sm:text-[clamp(3rem,5.4vw,5.4rem)] sm:leading-[1]"
           >
             {heroLines.map((line, i) => (
               <span key={line.verb} className="mask-line whitespace-nowrap">
@@ -57,12 +56,12 @@ export default function Home() {
             A place for the whole family.
           </p>
           <div style={d(760)} className="rise mt-6 flex w-[min(14rem,62%)] flex-col items-center sm:mt-10 sm:w-60">
-            <Link href="/church#visit" className="btn-primary group w-full !min-h-[3.25rem] !rounded-[5px] text-[1.05rem] active:scale-[0.98]">
+            <Link href="/church#visit" className="btn-primary group w-full !min-h-[3.6rem] !rounded-[5px] text-[1.05rem] active:scale-[0.98]">
               Plan your visit <Arrow />
             </Link>
-            <a href="#discover" className="mt-5 flex flex-col items-center gap-0.5 text-[15px] text-white/65 transition-colors hover:text-white sm:mt-7">
+            <a href="#explore" className="mt-5 flex flex-col items-center gap-0.5 text-[15px] text-white/65 transition-colors hover:text-white sm:mt-7">
               Explore KEP
-              <ArrowDown aria-hidden="true" className="size-5 animate-bounce [animation-duration:2.4s]" strokeWidth={1.5} />
+              <ChevronDown aria-hidden="true" className="size-5 animate-bounce [animation-duration:2.4s]" strokeWidth={1.5} />
             </a>
           </div>
         </div>
@@ -73,10 +72,9 @@ export default function Home() {
         </svg>
       </section>
 
-      <Discover />
+      <Explore />
       {/* One app-like flow: shortcuts, the game, watch and listen, then swipeable rows. */}
-      <ChipNav />
-      <CreateWorldSpotlight />
+            <CreateWorldSpotlight />
       <HomeWatch />
       {/* Events */}
       <section aria-labelledby="events-title" className="border-t border-ink/10 bg-ivory">
