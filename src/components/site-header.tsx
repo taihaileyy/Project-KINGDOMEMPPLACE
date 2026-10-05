@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { OPEN_MENU_EVENT } from "@/components/mobile-tabs";
-import { MenuButton, SideDrawer, isActivePath, type DrawerGroup } from "@/components/side-drawer";
+import { MenuButton, SideDrawer, type DrawerGroup } from "@/components/side-drawer";
 import { Wordmark } from "@/components/wordmark";
-import { siteNav } from "@/content/site";
+import { NavItemView } from "@/components/nav-dropdown";
+import { navTree } from "@/content/site";
 
 // Public pages stay static, so the header doesn't ask the server who is signed
 // in. It only looks for Supabase's session cookie to pick which links to show;
@@ -19,34 +20,14 @@ function useSignedIn() {
   return signedIn;
 }
 
-// The slide-out menu groups every page under a plain heading, each with an
-// icon and a one-line description, so people can find their way in by need.
+// The phone and tablet menu follows the desktop hierarchy: direct links, and
+// accordion groups that open to show what is inside.
 const drawerGroups: DrawerGroup[] = [
-  {
-    title: "Get connected",
-    items: [
-      { href: "/church", title: "Church", line: "Worship times and what to expect.", icon: "church" },
-      { href: "/events", title: "Events", line: "Conferences, workshops and gatherings.", icon: "events" },
-      { href: "/watch", title: "Watch & Listen", line: "Teaching and short videos.", icon: "watch" },
-      { href: "/programs", title: "Programs", line: "Youth, arts, business, media and tech.", icon: "programs" },
-    ],
-  },
-  {
-    title: "Take your next step",
-    items: [
-      { href: "/housing", title: "Sober Living Program", line: "A sober home with structure and support.", icon: "housing" },
-      { href: "/studio/book", title: "Book the Studio", line: "Record, film and create at KEP.", icon: "studio" },
-      { href: "/give", title: "Give", line: "Support the work on North Foster Drive.", icon: "give" },
-    ],
-  },
-  {
-    title: "Discover",
-    items: [
-      { href: "/about", title: "About KEP", line: "Our story, our leaders and where to find us.", icon: "about" },
-      { href: "/create-your-world", title: "Create Your World", line: "An interactive Bible journey.", icon: "paradise" },
-      { href: "/gallery", title: "Gallery", line: "Photos from life at KEP.", icon: "gallery" },
-    ],
-  },
+  ...navTree.map<DrawerGroup>((n) =>
+    n.children
+      ? { title: n.label, collapsible: true, href: n.href, items: n.children.map((c) => ({ href: c.href, title: c.label, line: c.line })) }
+      : { items: [{ href: n.href, title: n.label, icon: n.href === "/" ? "home" : n.href === "/housing" ? "housing" : "give" }] },
+  ),
 ];
 
 export function SiteHeader() {
@@ -91,17 +72,9 @@ export function SiteHeader() {
       <div className="relative mx-auto flex h-[var(--header-h)] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
         <Wordmark nameClass="max-[359px]:hidden xl:hidden 2xl:inline" logoClass="h-8 w-auto sm:h-9" />
         <nav aria-label="Main" className="hidden xl:block">
-          <ul className="flex items-center gap-7">
-            {siteNav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
-                  className="relative inline-flex min-h-11 items-center whitespace-nowrap text-[14px] font-medium tracking-[0.02em] text-white/75 transition-colors after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-left after:scale-x-0 after:bg-electric after:transition-transform after:duration-300 hover:text-white hover:after:scale-x-100 aria-[current=page]:text-white aria-[current=page]:after:scale-x-100"
-                >
-                  {item.label}
-                </Link>
-              </li>
+          <ul className="flex items-center gap-5 2xl:gap-7">
+            {navTree.map((item) => (
+              <NavItemView key={item.href} item={item} />
             ))}
           </ul>
         </nav>
@@ -112,14 +85,11 @@ export function SiteHeader() {
             </Link>
           ) : (
             <>
-              <Link href="/login" className="hidden min-h-11 items-center text-[14px] font-medium text-white/75 hover:text-white sm:inline-flex">
-                Log in
-              </Link>
               <Link
-                href="/signup"
-                className="hidden min-h-10 items-center rounded-[var(--radius-control)] border border-white/35 px-4 text-[14px] font-semibold text-white transition-colors hover:border-white hover:bg-white/10 sm:inline-flex"
+                href="/login"
+                className="hidden min-h-10 items-center rounded-[var(--radius-control)] border border-white/35 px-5 text-[14px] font-semibold text-white transition-colors hover:border-white hover:bg-white/10 sm:inline-flex"
               >
-                Create account
+                Log in
               </Link>
             </>
           )}

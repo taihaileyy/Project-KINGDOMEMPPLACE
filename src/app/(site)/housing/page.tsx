@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Compass, Home, Users, HeartHandshake } from "lucide-react";
+import { Arrow } from "@/components/arrow";
 import { PageIntro, Section } from "@/components/section";
 import { housing, houseImages, org } from "@/content/site";
 
@@ -9,10 +11,10 @@ export const metadata: Metadata = { title: "Sober Living Program" };
 const homePhotos = [houseImages.kitchen, houseImages.bedroom, houseImages.hallway, houseImages.bathroom, houseImages.bedroom2, houseImages.dining];
 
 const pillars = [
-  { title: "Mentorship", line: "We support and encourage people to manage their own learning, build their skills, improve their performance and become the person they want to be." },
-  { title: "Community", line: "We encourage groups of people who have something in common, such as place, culture or heritage, to come together and look out for one another." },
-  { title: "Family", line: "We support people who, though not related, share a sense of common interest, identity and solidarity, and who stand with one another." },
-  { title: "Belonging", line: "A close family gives each member a strong sense of belonging. We help every resident feel like an important part of the group." },
+  { title: "Mentorship", icon: Compass, line: "Support to build skills, set goals and become who you want to be." },
+  { title: "Community", icon: Users, line: "Neighbors who look out for one another." },
+  { title: "Family", icon: HeartHandshake, line: "People who stand with you, related or not." },
+  { title: "Belonging", icon: Home, line: "Every resident is an important part of the group." },
 ];
 
 export default function HousingPage() {
@@ -22,8 +24,8 @@ export default function HousingPage() {
         title="Sober Living Program"
         lead="A stable, sober home with structure, community and support while you rebuild. Many of our residents come to us after a treatment program."
       >
-        <a href={org.phoneHref} className="btn-primary">Call about openings</a>
-        <Link href="/signup" className="btn-secondary">Create an account</Link>
+        <Link href="#apply" className="btn-primary group">Apply <Arrow /></Link>
+        <a href={org.phoneHref} className="btn-quiet text-ink">Call about openings</a>
       </PageIntro>
 
       <section aria-labelledby="home-title" className="bg-night text-white">
@@ -60,9 +62,9 @@ export default function HousingPage() {
       </Section>
 
       <Section dark title="How it works">
-        <ol className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {housing.steps.map((s, i) => (
-            <li key={s.title} className="rounded-[var(--radius-card)] border border-white/15 p-6">
+            <li key={s.title} className="rounded-[var(--radius-card)] border border-white/15 p-4 sm:p-6">
               <p className="font-display text-5xl font-semibold text-blue-soft/40">{i + 1}</p>
               <p className="mt-3 font-display text-2xl font-medium">{s.title}</p>
               <p className="mt-2 text-chrome">{s.detail}</p>
@@ -71,12 +73,13 @@ export default function HousingPage() {
         </ol>
       </Section>
 
-      <Section title="What we stand for">
-        <ul className="grid border-t border-ink/15 sm:grid-cols-2 lg:grid-cols-4">
+      <Section title="What residents receive">
+        <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <li key={p.title} data-reveal style={{ "--d": `${i * 90}ms` } as React.CSSProperties} className="border-b border-ink/15 py-6 sm:pr-8 lg:border-b-0 lg:border-r lg:px-8 lg:first:pl-0 lg:last:border-r-0">
-              <h3 className="font-display text-3xl font-medium text-blue">{p.title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.line}</p>
+            <li key={p.title} data-reveal style={{ "--d": `${i * 90}ms` } as React.CSSProperties} className="card p-4 sm:p-6">
+              <p.icon aria-hidden="true" className="size-7 text-blue" strokeWidth={1.6} />
+              <h3 className="mt-4 font-display text-2xl font-medium">{p.title}</h3>
+              <p className="mt-2 text-[15px] leading-snug text-muted">{p.line}</p>
             </li>
           ))}
         </ul>
@@ -96,15 +99,14 @@ export default function HousingPage() {
         </p>
       </Section>
 
-      <section className="bg-night text-white">
-        <div className="mx-auto max-w-4xl px-4 py-14 text-center sm:px-6 sm:py-24">
-          <p data-reveal="mask" className="font-display text-[2rem] font-medium italic leading-[1.15] sm:text-6xl sm:leading-[1.1]">
-            &ldquo;At KEP, we engage, equip and empower.&rdquo;
-          </p>
-          <p data-reveal style={{ "--d": "150ms" } as React.CSSProperties} className="mt-4 text-[15px] text-chrome">Dr. L. Morgan</p>
-          <div data-reveal style={{ "--d": "250ms" } as React.CSSProperties} className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-            <a href={org.phoneHref} className="btn-primary">Call about openings</a>
-            <Link href="/signup" className="btn-quiet text-white">Create an account</Link>
+      <section id="apply" aria-labelledby="apply-title" className="scroll-mt-20 bg-night text-white">
+        <div className="wrap section-y">
+          <p className="eyebrow text-electric">Ready to start?</p>
+          <h2 id="apply-title" data-reveal="mask" className="heading-2 mt-3 max-w-2xl">Apply or ask about openings</h2>
+          <p className="mt-4 max-w-lg text-[15.5px] leading-relaxed text-white/80 sm:text-lg">Create a free account to apply, or call us and we&apos;ll walk you through it.</p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link href="/signup" className="btn-primary group">Create an account to apply <Arrow /></Link>
+            <a href={org.phoneHref} className="btn-light">Call {org.phone}</a>
           </div>
         </div>
       </section>

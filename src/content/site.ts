@@ -20,16 +20,60 @@ export const org = {
   ],
 } as const;
 
+// The primary navigation. Groups with `children` open as a dropdown on desktop
+// and an accordion in the phone menu; every page below still has its own route.
+export type NavChild = { href: string; label: string; line?: string };
+export type NavItem = { href: string; label: string; children?: NavChild[] };
+
+export const navTree: NavItem[] = [
+  { href: "/", label: "Home" },
+  {
+    href: "/church",
+    label: "Church",
+    children: [
+      { href: "/church#visit", label: "Plan Your Visit", line: "What to expect and how to find us" },
+      { href: "/church#bible-study", label: "Bible Study", line: "Wednesdays at 6:30 PM" },
+      { href: "/watch", label: "Watch & Listen", line: "Messages and short videos" },
+      { href: "/about", label: "About KEP / Our Pastors", line: "Our story and our leaders" },
+    ],
+  },
+  {
+    href: "/programs",
+    label: "Programs",
+    children: [
+      { href: "/programs/youth-mentorship", label: "Youth Mentorship" },
+      { href: "/programs/arts", label: "Arts" },
+      { href: "/programs/entrepreneurship", label: "Entrepreneurship" },
+      { href: "/programs/media", label: "Media Program" },
+      { href: "/programs/computer-lab", label: "Computer Lab" },
+      { href: "/create-your-world", label: "Create Your World", line: "An interactive Bible journey" },
+    ],
+  },
+  { href: "/housing", label: "Sober Living" },
+  {
+    href: "/events",
+    label: "Media & Events",
+    children: [
+      { href: "/events#upcoming", label: "Upcoming Events" },
+      { href: "/watch", label: "Watch & Listen" },
+      { href: "/gallery", label: "Gallery" },
+      { href: "/studio", label: "Media Studio" },
+      { href: "/studio/book", label: "Book the Studio" },
+    ],
+  },
+  { href: "/give", label: "Give" },
+];
+
+// Footer links: the same places, flattened.
 export const siteNav = [
-  { href: "/about", label: "About" },
   { href: "/church", label: "Church" },
   { href: "/programs", label: "Programs" },
   { href: "/housing", label: "Sober Living" },
-  { href: "/events", label: "Events" },
-  { href: "/watch", label: "Watch" },
+  { href: "/events", label: "Media & Events" },
+  { href: "/watch", label: "Watch & Listen" },
   { href: "/create-your-world", label: "Create Your World" },
-  { href: "/studio/book", label: "Book the Studio" },
   { href: "/give", label: "Give" },
+  { href: "/about", label: "About KEP" },
 ];
 
 // Linked from the footer and pages rather than the main nav, to keep it short.
@@ -159,13 +203,17 @@ export const housing = {
   ],
 };
 
-export type PastEvent = { title: string; when: string; image: Img };
+// Events. `date` (YYYY-MM-DD, Baton Rouge time) decides whether an event is
+// upcoming or past; an event with no date is treated as past (an archive item).
+// Add a new upcoming event here with a future date and it appears on the
+// homepage and Events page automatically.
+export type KepEvent = { slug: string; title: string; date?: string; time?: string; when: string; blurb: string; image: Img };
 
-export const recentEvents: PastEvent[] = [
-  { title: "The Gathering", when: "July 18, 2026", image: { src: "/images/flyer-the-gathering.webp", width: 1100, height: 1657, alt: "Flyer for The Gathering, a free concert event" } },
-  { title: "Stop the Violence March", when: "August 29", image: { src: "/images/flyer-violence-march.webp", width: 1100, height: 1633, alt: "Flyer for the Violence and Killing March to stop the violence" } },
-  { title: "KEP Summer Program", when: "Summer", image: { src: "/images/flyer-summer-program.webp", width: 1100, height: 1621, alt: "Flyer for the KEP youth summer program, 4:30 to 7:00 PM" } },
-  { title: "Sound the Alarm Conference", when: "April 27, 2024", image: { src: "/images/flyer-sound-the-alarm.webp", width: 1100, height: 1375, alt: "Flyer for Sound the Alarm, a conference for men and women" } },
+export const events: KepEvent[] = [
+  { slug: "the-gathering", title: "The Gathering", date: "2026-07-18", when: "July 18, 2026", blurb: "A free concert with a triple album release party.", image: { src: "/images/flyer-the-gathering.webp", width: 1100, height: 1657, alt: "Flyer for The Gathering, a free concert event" } },
+  { slug: "stop-the-violence-march", title: "Stop the Violence March", date: "2026-08-29", when: "August 29", blurb: "A community march to stop the violence and killing.", image: { src: "/images/flyer-violence-march.webp", width: 1100, height: 1633, alt: "Flyer for the Violence and Killing March to stop the violence" } },
+  { slug: "kep-summer-program", title: "KEP Summer Program", when: "Summer", blurb: "Our youth summer program, 4:30 to 7:00 PM.", image: { src: "/images/flyer-summer-program.webp", width: 1100, height: 1621, alt: "Flyer for the KEP youth summer program, 4:30 to 7:00 PM" } },
+  { slug: "sound-the-alarm-conference", title: "Sound the Alarm Conference", date: "2024-04-27", when: "April 27, 2024", blurb: "A conference for men and women.", image: { src: "/images/flyer-sound-the-alarm.webp", width: 1100, height: 1375, alt: "Flyer for Sound the Alarm, a conference for men and women" } },
 ];
 
 // Giving funds. The slugs match public.funds in the database.

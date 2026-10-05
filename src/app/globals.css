@@ -104,6 +104,26 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
 @utility btn-secondary {
   @apply btn border border-ink/20 bg-transparent text-ink hover:border-ink/50;
 }
+/* Secondary action on dark backgrounds. */
+@utility btn-light {
+  @apply btn border border-white/40 bg-transparent text-white hover:border-white hover:bg-white/10;
+}
+/* Shared page rhythm: one width, one set of paddings, one heading scale. */
+@utility wrap {
+  @apply mx-auto max-w-7xl px-4 sm:px-6;
+}
+@utility section-y {
+  @apply py-12 sm:py-20;
+}
+@utility eyebrow {
+  @apply text-[12px] font-semibold uppercase tracking-[0.22em] sm:text-[13px];
+}
+@utility heading-2 {
+  @apply font-display text-[2.4rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98];
+}
+@utility surface-dark {
+  @apply bg-night text-white;
+}
 /* Quiet text action with an arrow that steps forward on hover. */
 @utility btn-quiet {
   @apply inline-flex min-h-12 items-center gap-2.5 text-[15px] font-semibold underline decoration-current/30 underline-offset-[6px] transition-[text-decoration-color] duration-300 hover:decoration-current;
