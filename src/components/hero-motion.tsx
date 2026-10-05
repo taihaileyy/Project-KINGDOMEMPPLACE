@@ -17,7 +17,9 @@ const FADE_OUT_S = 1.3; // seconds before the film's end that it starts to reced
 // film plays again only when the page is intentionally reloaded.
 let playedThisLoad = false;
 
-export function HeroMotion() {
+// `overlay` plays the film on top of another hero background and then simply
+// fades away, leaving that background exactly as it was (no layout change).
+export function HeroMotion({ overlay = false }: { overlay?: boolean }) {
   const layerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -46,7 +48,7 @@ export function HeroMotion() {
       section.style.setProperty("--hero-lift", `${lift}px`);
     };
     const settle = (instant: boolean) => {
-      if (!section || !small()) return;
+      if (overlay || !section || !small()) return;
       measure();
       section.dataset.settled = instant ? "instant" : "true";
     };
@@ -123,7 +125,20 @@ export function HeroMotion() {
       video.removeEventListener("ended", onEnded);
       video.pause();
     };
-  }, []);
+  }, [overlay]);
+
+  if (overlay) {
+    return (
+      <div ref={layerRef} data-phase="rest" aria-hidden="true" className="hero-stage pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="hero-haze-lit" />
+        <div className="hero-art hero-motion">
+          <video ref={videoRef} muted playsInline disablePictureInPicture preload="none" tabIndex={-1} />
+        </div>
+        {/* Keeps the words readable while the film plays, then fades away with it. */}
+        <div className="hero-read absolute inset-0 bg-[linear-gradient(90deg,rgb(5_7_13/0.9)_0%,rgb(5_7_13/0.6)_34%,rgb(5_7_13/0.1)_58%,transparent_70%)] max-lg:bg-[linear-gradient(0deg,rgb(5_7_13/0.95)_0%,rgb(5_7_13/0.8)_38%,rgb(5_7_13/0.1)_56%,transparent_68%)]" />
+      </div>
+    );
+  }
 
   return (
     <div ref={layerRef} data-phase="rest" aria-hidden="true" className="hero-bg hero-stage absolute inset-0 -z-20 overflow-hidden">
