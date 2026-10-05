@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { ChevronDown } from "lucide-react";
 import { Explore } from "@/components/home/explore";
+import { HeroMotion } from "@/components/hero-motion";
 import { WorshipBackdrop } from "@/components/home/worship-backdrop";
 import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
 import { HomeWatch } from "@/components/home/home-watch";
@@ -30,6 +31,7 @@ export default function Home() {
         className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[88svh] flex-col overflow-hidden bg-night text-white sm:min-h-[84svh]"
       >
         <WorshipBackdrop />
+        <HeroMotion overlay />
         <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-6 !pt-28 pb-[3.5rem] sm:px-6 sm:!pt-44 sm:pb-28 lg:pb-32">
           <p style={d(60)} className="rise text-[12.5px] font-semibold uppercase tracking-[0.3em] text-[#5c6bff] sm:text-sm">Kingdom Empowerment Place</p>
           <h1

@@ -273,6 +273,8 @@ h1, h2, h3, .font-display { font-variant-numeric: lining-nums; }
 }
 
 .hero-motion { opacity: 0; }
+.hero-read { opacity: 0; transition: opacity 1.5s cubic-bezier(0.45, 0, 0.55, 1); }
+.hero-stage[data-phase="in"] .hero-read { opacity: 1; transition: opacity 0.5s ease-out; }
 /* The film is bright and playing from the first moment. */
 .hero-stage[data-phase="in"] .hero-motion { opacity: 1; transition: opacity 0.5s ease-out; }
 .hero-stage[data-phase="in"] .hero-haze-lit { opacity: 1; }
