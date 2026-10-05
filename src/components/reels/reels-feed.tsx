@@ -186,13 +186,13 @@ export function ReelsFeed({ items, startId }: { items: MediaItem[]; startId?: st
                     <button type="button" onClick={() => like(m.id)} aria-pressed={s.liked} aria-label={s.liked ? "Unlike" : "Like"} className={btn}>
                       <svg viewBox="0 0 24 24" className={`size-6 ${s.liked ? "text-[#ff4d6d]" : ""}`} fill={s.liked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.2C1.7 8.1 3.5 5 6.6 5c1.9 0 3.4 1 4.4 2.5C12 6 13.5 5 15.4 5c3.1 0 4.9 3.1 3.8 6.3-1.7 4.6-7.2 9.2-7.2 9.2Z" strokeLinejoin="round" /></svg>
                     </button>
-                    <span className="mt-1 text-xs font-semibold tabular-nums">{s.likes > 0 ? fmt(s.likes) : "Like"}</span>
+                    <span className="mt-1 text-xs font-semibold tabular-nums">{fmt(s.likes)}</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <button type="button" onClick={() => setCommentsFor(m.id)} aria-label={`Comments (${s.comments})`} className={btn}>
                       <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 5.5h16v10H9.5L5 19.5v-4H4z" strokeLinejoin="round" /></svg>
                     </button>
-                    <span className="mt-1 text-xs font-semibold tabular-nums">{s.comments > 0 ? fmt(s.comments) : "Comment"}</span>
+                    <span className="mt-1 text-xs font-semibold tabular-nums">{fmt(s.comments)}</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <button type="button" onClick={() => share(m)} aria-label="Share" className={btn}>

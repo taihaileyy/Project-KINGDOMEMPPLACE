@@ -4,9 +4,9 @@ import { DashboardBand } from "@/components/app-shell";
 import { Field, Notice } from "@/components/paradise/admin-ui";
 import { MediaField } from "@/components/paradise/media-field";
 import { deleteMedia, saveMedia } from "@/app/admin/videos/actions";
-import { events, programs } from "@/content/site";
+import { programs, recentEvents } from "@/content/site";
 import { requireMediaStaff } from "@/lib/auth";
-import { sourceLabel, type MediaItem } from "@/lib/media";
+import { slugify, sourceLabel, type MediaItem } from "@/lib/media";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Videos" };
@@ -39,7 +39,7 @@ function Fields({ it }: { it?: Row }) {
             <select name="program" defaultValue={program} className="field-input"><option value="">None</option>{programs.map((p) => <option key={p.slug} value={p.slug}>{p.name}</option>)}</select>
           </Field>
           <Field label="With an event">
-            <select name="event" defaultValue={event} className="field-input"><option value="">None</option>{events.map((e) => <option key={e.slug} value={e.slug}>{e.title}</option>)}</select>
+            <select name="event" defaultValue={event} className="field-input"><option value="">None</option>{recentEvents.map((e) => <option key={e.title} value={slugify(e.title)}>{e.title}</option>)}</select>
           </Field>
         </div>
       </fieldset>
