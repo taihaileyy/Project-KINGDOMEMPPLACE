@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Home } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
+import { ActionForm } from "@/components/action-form";
 import { SubmitButton } from "@/components/submit-button";
 import { EmptyState, Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { requireStaff } from "@/lib/auth";
@@ -54,7 +55,7 @@ export default async function AdminHousing() {
                 {a.staff_note && <p className="mt-2 text-sm text-muted">Note: {a.staff_note}</p>}
 
                 {a.status !== "approved" ? (
-                  <form action={decideApplication} className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <ActionForm action={decideApplication} className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
                     <input type="hidden" name="id" value={a.id} />
                     <input name="note" placeholder="Note (optional)" maxLength={2000} aria-label="Note" className="field-input" />
                     <div className="flex flex-wrap gap-2">
@@ -62,14 +63,14 @@ export default async function AdminHousing() {
                       <SubmitButton name="status" value="approved" className="btn-primary">Approve</SubmitButton>
                       <SubmitButton name="status" value="declined" className="btn border border-danger/40 text-danger">Decline</SubmitButton>
                     </div>
-                  </form>
+                  </ActionForm>
                 ) : (
-                  <form action={moveIn} className="mt-4 grid items-end gap-3 sm:grid-cols-[auto_1fr_auto]">
+                  <ActionForm action={moveIn} className="mt-4 grid items-end gap-3 sm:grid-cols-[auto_1fr_auto]">
                     <input type="hidden" name="id" value={a.id} />
                     <div><label className="field-label" htmlFor={`d-${a.id}`}>Move-in date</label><input id={`d-${a.id}`} name="date" type="date" defaultValue={today()} required className="field-input" /></div>
                     <div><label className="field-label" htmlFor={`r-${a.id}`}>Room</label><input id={`r-${a.id}`} name="room" maxLength={60} className="field-input" /></div>
                     <SubmitButton className="btn-primary">Move in</SubmitButton>
-                  </form>
+                  </ActionForm>
                 )}
               </li>
             ))}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { DashboardBand } from "@/components/app-shell";
+import { ActionForm } from "@/components/action-form";
 import { SubmitButton } from "@/components/submit-button";
 import { Panel, StatusPill } from "@/components/portal-ui";
 import { canManageStudio, requireCapability } from "@/lib/auth";
@@ -51,11 +52,11 @@ export default async function AdminStudio({ searchParams }: { searchParams: Prom
               <p className="text-[15px]">{longDay(r.preferred_date)}, {t12(r.start_time)} to {t12(addMin(r.start_time, r.duration_minutes))} · {r.attendees} {r.attendees === 1 ? "person" : "people"}</p>
               <p className="text-sm text-muted">{r.email}{r.phone ? ` · ${r.phone}` : ""}</p>
               {r.details && <p className="mt-2 rounded-xl bg-surface p-3 text-[15px]">{r.details}</p>}
-              <form action={decideStudio} className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]">
+              <ActionForm action={decideStudio} className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]">
                 <input type="hidden" name="id" value={r.id} />
                 <input name="note" aria-label="Note to add" placeholder="Note (optional)" maxLength={500} className="field-input" />
                 <span className="flex gap-2"><SubmitButton name="status" value="approved" className="btn-primary">Approve</SubmitButton><SubmitButton name="status" value="declined" className="btn border border-danger/40 text-danger">Decline</SubmitButton></span>
-              </form>
+              </ActionForm>
             </li>
           ))}</ul>
         )}
@@ -83,18 +84,18 @@ export default async function AdminStudio({ searchParams }: { searchParams: Prom
       </Panel>
 
       <Panel id="blocks" title="Blocked times">
-        <form action={addBlock} className="grid items-end gap-3 px-2 sm:grid-cols-[9rem_7rem_7rem_1fr_auto]">
+        <ActionForm action={addBlock} className="grid items-end gap-3 px-2 sm:grid-cols-[9rem_7rem_7rem_1fr_auto]">
           <div><label className="field-label" htmlFor="bdate">Date</label><input id="bdate" name="date" type="date" min={today} required className="field-input" /></div>
           <div><label className="field-label" htmlFor="bstart">From</label><input id="bstart" name="start" type="time" defaultValue="00:00" className="field-input" /></div>
           <div><label className="field-label" htmlFor="bend">To</label><input id="bend" name="end" type="time" defaultValue="23:59" className="field-input" /></div>
           <div><label className="field-label" htmlFor="breason">Reason</label><input id="breason" name="reason" maxLength={200} placeholder="Maintenance, church event..." className="field-input" /></div>
           <SubmitButton className="btn-primary">Block time</SubmitButton>
-        </form>
+        </ActionForm>
         <ul className="mt-4">
           {((blocks ?? []) as Block[]).map((b) => (
             <li key={b.id} className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-2 py-2.5 text-[15px]">
               <span>{longDay(b.block_date)} · {t12(b.start_time)} to {t12(b.end_time)}{b.reason ? ` · ${b.reason}` : ""}</span>
-              <form action={removeBlock}><input type="hidden" name="id" value={b.id} /><SubmitButton className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Remove</SubmitButton></form>
+              <ActionForm action={removeBlock}><input type="hidden" name="id" value={b.id} /><SubmitButton className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Remove</SubmitButton></ActionForm>
             </li>
           ))}
         </ul>

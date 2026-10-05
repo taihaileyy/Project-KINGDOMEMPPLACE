@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DashboardBand } from "@/components/app-shell";
+import { ActionForm } from "@/components/action-form";
 import { Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { SubmitButton } from "@/components/submit-button";
 import { hasRole, requireStaff } from "@/lib/auth";
@@ -77,10 +78,10 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
               <li key={String(r.id)} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line px-3 py-1.5">
                 <span className="font-semibold capitalize">{roleLabel(r)}</span>
                 {isSuper && (
-                  <form action={revokeRole}>
+                  <ActionForm action={revokeRole}>
                     <input type="hidden" name="id" value={String(r.id)} /><input type="hidden" name="person" value={id} />
                     <SubmitButton pendingLabel="Removing..." className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Remove</SubmitButton>
-                  </form>
+                  </ActionForm>
                 )}
               </li>
             ))}

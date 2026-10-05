@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DashboardBand } from "@/components/app-shell";
+import { ActionForm } from "@/components/action-form";
 import { SubmitButton } from "@/components/submit-button";
 import { Panel, StatusPill } from "@/components/portal-ui";
 import { canManageEvents, requireCapability } from "@/lib/auth";
@@ -47,11 +48,11 @@ export default async function EditEvent({ params }: { params: Promise<{ id: stri
                   <span className="block font-semibold">{r.name}{r.guests ? ` +${r.guests}` : ""}</span>
                   <span className="text-sm text-muted">{r.email}{r.phone ? ` · ${r.phone}` : ""}</span>
                 </span>
-                <form action={checkIn} className="flex items-center gap-3">
+                <ActionForm action={checkIn} className="flex items-center gap-3">
                   <input type="hidden" name="id" value={r.id} /><input type="hidden" name="event" value={id} />
                   {r.checked_in_at && <StatusPill status="completed" />}
                   <SubmitButton name="in" value={r.checked_in_at ? "0" : "1"} className={r.checked_in_at ? "text-sm font-semibold text-muted underline" : "btn-primary"}>{r.checked_in_at ? "Undo" : "Check in"}</SubmitButton>
-                </form>
+                </ActionForm>
               </li>
             ))}</ul>
           )}

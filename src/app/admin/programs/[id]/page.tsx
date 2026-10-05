@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DashboardBand } from "@/components/app-shell";
+import { ActionForm } from "@/components/action-form";
 import { SubmitButton } from "@/components/submit-button";
 import { EmptyState, Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { Users } from "lucide-react";
@@ -32,10 +33,10 @@ export default async function ProgramRoster({ params }: { params: Promise<{ id: 
     </span>
   );
   const Decide = ({ r, status, label, cls }: { r: Row; status: string; label: string; cls: string }) => (
-    <form action={decideEnrollment}>
+    <ActionForm action={decideEnrollment}>
       <input type="hidden" name="id" value={r.id} /><input type="hidden" name="program" value={id} />
       <SubmitButton name="status" value={status} className={cls}>{label}</SubmitButton>
-    </form>
+    </ActionForm>
   );
 
   return (
@@ -74,13 +75,13 @@ export default async function ProgramRoster({ params }: { params: Promise<{ id: 
 
       {isAdmin && (
         <Panel id="settings" title="Program settings">
-          <form action={saveProgramSettings} className="grid gap-3 px-2 sm:grid-cols-[8rem_auto_auto_auto] sm:items-end">
+          <ActionForm action={saveProgramSettings} className="grid gap-3 px-2 sm:grid-cols-[8rem_auto_auto_auto] sm:items-end">
             <input type="hidden" name="id" value={id} />
             <div><label className="field-label" htmlFor="capacity">Spots (0 = no limit)</label><input id="capacity" name="capacity" type="number" min={0} defaultValue={(program.capacity as number | null) ?? 0} className="field-input" /></div>
             <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="requires_approval" defaultChecked={program.requires_approval as boolean} className="size-4" /> Staff approve each request</label>
             <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="is_active" defaultChecked={program.is_active as boolean} className="size-4" /> Show on the website</label>
             <SubmitButton className="btn-primary">Save</SubmitButton>
-          </form>
+          </ActionForm>
         </Panel>
       )}
     </div>
