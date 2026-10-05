@@ -10,7 +10,8 @@ export const metadata: Metadata = { title: "People" };
 type Row = {
   id: string; first_name: string; last_name: string; email: string | null; phone: string | null; created_at: string;
   address_line1: string | null; city: string | null; state: string | null; postal_code: string | null;
-  church_memberships: { status: string }[] | null;
+  // One membership per person, so the database returns a single record (or none), not a list.
+  church_memberships: { status: string } | { status: string }[] | null;
 };
 
 export default async function AdminPeople({ searchParams }: { searchParams: Promise<{ q?: string; member?: string }> }) {
@@ -27,8 +28,8 @@ export default async function AdminPeople({ searchParams }: { searchParams: Prom
   if (term) query = query.or(`first_name.ilike.%${term}%,last_name.ilike.%${term}%,email.ilike.%${term}%`);
   const { data } = await query;
   let rows = (data ?? []) as unknown as Row[];
-  if (member === "1") rows = rows.filter((r) => r.church_memberships?.some((m) => m.status === "active"));
-  const isMember = (r: Row) => r.church_memberships?.some((m) => m.status === "active");
+  const isMember = (r: Row) => [r.church_memberships ?? []].flat().some((m) => m.status === "active");
+  if (member === "1") rows = rows.filter(isMember);
   const address = (r: Row) => [r.address_line1, r.city, [r.state, r.postal_code].filter(Boolean).join(" ")].filter(Boolean).join(", ");
 
   return (
