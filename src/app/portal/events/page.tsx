@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { CalendarDays } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { EmptyState, Panel, StatusPill } from "@/components/portal-ui";
 import { eventDate, eventTime, isUpcoming, type CatalogEvent } from "@/lib/catalog";
 import { requireAccess } from "@/lib/portal";
@@ -32,7 +33,7 @@ export default async function MyEvents() {
         {cancel && !r.checked_in_at && (
           <form action={cancelRegistration}>
             <input type="hidden" name="id" value={r.id} />
-            <button className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Cancel</button>
+            <SubmitButton className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Cancel</SubmitButton>
           </form>
         )}
       </span>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { CalendarClock, CircleDollarSign, Home, Target, Wallet } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
+import { SubmitButton } from "@/components/submit-button";
 import { EmptyState, Panel, StatusPill, fmtDate } from "@/components/portal-ui";
 import { requireAccess } from "@/lib/portal";
 import { createClient } from "@/lib/supabase/server";
@@ -69,7 +70,7 @@ export default async function MyHousing({ searchParams }: { searchParams: Promis
           {(latest.status === "submitted" || latest.status === "in_review") && (
             <form action={withdrawApplication} className="mt-4 px-2">
               <input type="hidden" name="id" value={latest.id} />
-              <button className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Withdraw my application</button>
+              <SubmitButton className="text-sm font-semibold text-muted underline underline-offset-4 hover:text-danger">Withdraw my application</SubmitButton>
             </form>
           )}
           {(latest.status === "declined" || latest.status === "withdrawn") && <div className="mt-4 px-2"><Link href="/portal/housing/apply" className="btn-primary">Apply again</Link></div>}
@@ -117,7 +118,7 @@ export default async function MyHousing({ searchParams }: { searchParams: Promis
                     <form action={toggleGoal}>
                       <input type="hidden" name="id" value={g.id} />
                       <input type="hidden" name="done" value={g.done_at ? "0" : "1"} />
-                      <button className="text-sm font-semibold text-blue hover:underline">{g.done_at ? "Undo" : "Mark done"}</button>
+                      <SubmitButton className="text-sm font-semibold text-blue hover:underline">{g.done_at ? "Undo" : "Mark done"}</SubmitButton>
                     </form>
                   )}
                 </li>
@@ -127,7 +128,7 @@ export default async function MyHousing({ searchParams }: { searchParams: Promis
               <form action={addGoal} className="mt-4 grid gap-3 px-2 sm:grid-cols-[1fr_auto_auto] sm:items-end">
                 <div><label className="field-label" htmlFor="goal">New goal</label><input id="goal" name="title" required maxLength={200} className="field-input" placeholder="Find steady work" /></div>
                 <div><label className="field-label" htmlFor="target">By (optional)</label><input id="target" name="target" type="date" className="field-input" /></div>
-                <button className="btn-primary">Add goal</button>
+                <SubmitButton className="btn-primary">Add goal</SubmitButton>
               </form>
             )}
           </Panel>
