@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, HandHeart, Mic } from "lucide-react";
+import { HandHeart, Images, Mic } from "lucide-react";
 import { Arrow } from "@/components/arrow";
 import { houseImages, images } from "@/content/site";
 
@@ -13,9 +13,9 @@ const shade = "absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(5_7_13/0.9)_0
 const cta = "mt-2 inline-flex items-center gap-1.5 self-start border-b border-[#5c6bff] pb-0.5 whitespace-nowrap text-[0.7rem] font-medium sm:text-[0.95rem]";
 
 const quick = [
-  { href: "/studio/book", label: "Studio", Icon: Mic },
-  { href: "/events", label: "Events", Icon: CalendarDays },
-  { href: "/give", label: "Give", Icon: HandHeart },
+  { href: "/studio/book", label: "Book", full: "Book the studio", Icon: Mic },
+  { href: "/gallery", label: "Gallery", full: "Gallery", Icon: Images },
+  { href: "/give", label: "Give", full: "Give", Icon: HandHeart },
 ];
 
 export function Explore() {
@@ -59,9 +59,9 @@ export function Explore() {
 
         <p data-reveal className="mt-6 text-[12.5px] font-semibold uppercase tracking-[0.24em] text-blue sm:mt-10 sm:text-sm">More at KEP</p>
         <ul className="mt-3 grid grid-cols-3 gap-2.5 sm:gap-4">
-          {quick.map(({ href, label, Icon }) => (
+          {quick.map(({ href, label, full, Icon }) => (
             <li key={href}>
-              <Link href={href} className="flex min-h-[4.25rem] items-center justify-center gap-1.5 rounded-lg border border-ink/12 bg-white/60 px-2 text-[0.92rem] font-medium transition-colors hover:border-blue hover:bg-white sm:min-h-16 sm:gap-2.5 sm:text-lg">
+              <Link href={href} aria-label={full} className="flex min-h-[4.25rem] items-center justify-center gap-1.5 rounded-lg border border-ink/12 bg-white/60 px-2 text-[0.92rem] font-medium transition-colors hover:border-blue hover:bg-white sm:min-h-16 sm:gap-2.5 sm:text-lg">
                 <Icon aria-hidden="true" className="size-6 shrink-0 text-blue sm:size-7" strokeWidth={1.5} />
                 {label}
                 <span className="text-blue"><Arrow /></span>
