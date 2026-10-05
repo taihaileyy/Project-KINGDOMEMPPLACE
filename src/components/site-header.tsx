@@ -3,21 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useSignedIn } from "@/lib/use-signed-in";
 import { OPEN_MENU_EVENT } from "@/components/mobile-tabs";
 import { MenuButton, SideDrawer, isActivePath, type DrawerGroup } from "@/components/side-drawer";
 import { Wordmark } from "@/components/wordmark";
 import { siteNav } from "@/content/site";
-
-// Public pages stay static, so the header doesn't ask the server who is signed
-// in. It only looks for Supabase's session cookie to pick which links to show;
-// /portal still checks the session properly on the server.
-function useSignedIn() {
-  const [signedIn, setSignedIn] = useState(false);
-  useEffect(() => {
-    setSignedIn(/(?:^|;\s*)sb-[^=]+-auth-token(?:\.\d+)?=/.test(document.cookie));
-  }, []);
-  return signedIn;
-}
 
 // The slide-out menu groups every page under a plain heading, each with an
 // icon and a one-line description, so people can find their way in by need.
@@ -42,6 +32,7 @@ const drawerGroups: DrawerGroup[] = [
   {
     title: "Discover",
     items: [
+      { href: "/impact", title: "Our impact", line: "What we do together, in numbers.", icon: "dashboard" },
       { href: "/about", title: "About KEP", line: "Our story, our leaders and where to find us.", icon: "about" },
       { href: "/create-your-world", title: "Create Your World", line: "An interactive Bible journey.", icon: "paradise" },
       { href: "/gallery", title: "Gallery", line: "Photos from life at KEP.", icon: "gallery" },

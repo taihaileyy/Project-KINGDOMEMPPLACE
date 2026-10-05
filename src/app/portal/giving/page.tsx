@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { HandHeart } from "lucide-react";
 import { DashboardBand } from "@/components/app-shell";
-import { requireUser } from "@/lib/auth";
+import { requireAccess } from "@/lib/portal";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "My Giving" };
@@ -20,7 +20,7 @@ type Gift = {
 const money = (cents: number) => (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
 
 export default async function MyGiving() {
-  await requireUser("/portal/giving");
+  await requireAccess("giving", "/portal/giving");
   const supabase = await createClient();
   // RLS returns only this person's gifts.
   const { data } = await supabase

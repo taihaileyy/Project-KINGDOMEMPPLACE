@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JoinChurch } from "@/components/join/join-church";
 import { PageIntro, Section } from "@/components/section";
 import { ScheduleCards } from "@/components/schedule-views";
 import { fullAddress, images, org } from "@/content/site";
@@ -15,7 +16,7 @@ export default function ChurchPage() {
         lead={`Worship, the Word and a church family that shows up for each other. Led by ${org.pastors}.`}
       >
         <Link href="#visit" className="btn-primary">Plan your visit</Link>
-        <Link href="/signup" className="btn-secondary">Register with the church</Link>
+        <Link href="#join" className="btn-secondary">Join the church</Link>
       </PageIntro>
 
       <Section>
@@ -54,6 +55,10 @@ export default function ChurchPage() {
             <p className="mt-4 font-semibold text-blue">Get directions</p>
           </a>
         </div>
+      </Section>
+
+      <Section dark id="join" title="Join the church" lead="Become part of the KEP church family. Joining is free, and you can see your membership, programs and events together in My KEP.">
+        <JoinChurch />
       </Section>
     </>
   );

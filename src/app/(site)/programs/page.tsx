@@ -3,11 +3,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArtsArt } from "@/components/arts-art";
 import { PageIntro, Section } from "@/components/section";
-import { programs } from "@/content/site";
+import { fetchPrograms } from "@/lib/catalog";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = { title: "Programs" };
 
-export default function ProgramsPage() {
+export default async function ProgramsPage() {
+  const programs = await fetchPrograms();
   return (
     <>
       <PageIntro

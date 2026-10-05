@@ -47,3 +47,31 @@ export async function updatePassword(_: FormState, form: FormData): Promise<Form
   if (error) return { error: "We couldn't update your password. Try a different one." };
   return { notice: "Your password has been changed." };
 }
+
+// ── My KEP: change your own church, program and event records ─────────────
+// Each is a plain form action; the database function checks it is your record.
+
+export async function leaveChurch(): Promise<void> {
+  await requireUser("/portal/church");
+  const supabase = await createClient();
+  await supabase.rpc("leave_church");
+  revalidatePath("/portal", "layout");
+}
+
+export async function withdrawEnrollment(form: FormData): Promise<void> {
+  await requireUser("/portal/programs");
+  const id = z.string().uuid().safeParse(form.get("id"));
+  if (!id.success) return;
+  const supabase = await createClient();
+  await supabase.rpc("withdraw_enrollment", { p_id: id.data });
+  revalidatePath("/portal", "layout");
+}
+
+export async function cancelRegistration(form: FormData): Promise<void> {
+  await requireUser("/portal/events");
+  const id = z.string().uuid().safeParse(form.get("id"));
+  if (!id.success) return;
+  const supabase = await createClient();
+  await supabase.rpc("cancel_event_registration", { p_id: id.data });
+  revalidatePath("/portal", "layout");
+}
