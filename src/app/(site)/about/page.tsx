@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { BookPromo } from "@/components/home/book-promo";
 import { PageIntro, Section } from "@/components/section";
 import { fullAddress, images, org } from "@/content/site";
 
@@ -26,9 +25,9 @@ export default function AboutPage() {
           </div>
         </div>
       </Section>
-      <section id="pastors" className="scroll-mt-20 bg-surface">
+      <section className="bg-surface">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1fr_1.2fr] lg:items-center">
-          <Image {...images.pastors} alt={images.pastors.alt} sizes="(min-width: 1024px) 40vw, 100vw" className="aspect-[4/5] w-full rounded-[var(--radius-card)] object-cover object-top" />
+          <Image {...images.drMorgan} alt={images.drMorgan.alt} sizes="(min-width: 1024px) 40vw, 100vw" className="aspect-[4/5] w-full rounded-[var(--radius-card)] object-cover" />
           <div>
             <h2 className="font-display text-4xl font-medium sm:text-5xl">Our pastors</h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
@@ -37,9 +36,6 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
-      <section aria-label="A Good Soldier, by Lawrence Morgan">
-        <div className="wrap section-y"><BookPromo /></div>
       </section>
       <Section title="Find us" id="contact">
         <div className="grid gap-4 sm:grid-cols-3">

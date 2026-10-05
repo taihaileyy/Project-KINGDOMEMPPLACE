@@ -2,33 +2,38 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
 import { HeroMotion } from "@/components/hero-motion";
+import { ChipNav } from "@/components/home/chip-nav";
 import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
 import { HomeWatch } from "@/components/home/home-watch";
-import { Pillars } from "@/components/home/pillars";
-import { Upcoming } from "@/components/home/upcoming";
-import { images } from "@/content/site";
+import { EventsCarousel } from "@/components/home/events-carousel";
+import { BookPromo } from "@/components/home/book-promo";
+import { ImpactSection } from "@/components/home/impact-section";
+import { ProgramsRail } from "@/components/home/programs-rail";
+import { ScheduleFooter, ScheduleHero } from "@/components/schedule-views";
+import { houseImages, images, org, programs, recentEvents } from "@/content/site";
 
 // Delay for staggered entrances (read by .mask-line and [data-reveal]).
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 
 // The official slogan, one beat at a time. The verb of each beat is set in italics.
 const heroLines: { verb: string; rest: string }[] = [
-  { verb: "Engage", rest: " the community." },
-  { verb: "Equip", rest: " the people." },
+  { verb: "Engage", rest: " the community," },
+  { verb: "Equip", rest: " the people," },
   { verb: "Empower", rest: " the nation." },
 ];
+
+const h2 = "font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl";
 
 export default function Home() {
   return (
     <>
-      {/* Hero: the name, the slogan, one sentence, one main action. */}
+      {/* Hero: full-bleed, under the transparent header. */}
       <section
         aria-labelledby="hero-title"
         className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
       >
         <HeroMotion />
-        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-16 lg:pb-24">
-          <p style={d(60)} className="rise eyebrow mb-3 text-electric sm:mb-5">Kingdom Empowerment Place</p>
+        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
           <h1
             id="hero-title"
             className="max-w-6xl font-display text-[8.1vw] font-semibold leading-[1.1] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:font-medium sm:leading-[1]"
@@ -42,43 +47,189 @@ export default function Home() {
               </span>
             ))}
           </h1>
-          <p style={d(620)} className="rise mt-3 max-w-lg text-base font-medium leading-snug text-white/85 sm:mt-8 sm:text-lg sm:font-normal">
-            A church and community home in Baton Rouge, with programs, sober living and a media studio for the whole family.
+          <p style={d(620)} className="rise mt-2 max-w-lg text-base font-medium leading-snug text-white/85 sm:mt-8 sm:text-lg sm:font-normal">
+            Church and community home in Baton Rouge.
           </p>
-          <div style={d(760)} className="rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-10">
+          <div style={d(760)} className="rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-10">
             <Link href="/church#visit" className="btn-primary group">
               Plan your visit <Arrow />
             </Link>
-            <Link href="/#pillars" className="btn-quiet group text-white">
-              Explore KEP <Arrow />
+          </div>
+
+          <dl style={d(900)} className="rise mt-8 grid max-w-3xl gap-y-1.5 border-t border-white/15 pt-4 sm:mt-16 sm:grid-cols-3 sm:gap-6 sm:pt-6">
+            <ScheduleHero />
+            <div className="flex flex-wrap items-baseline gap-x-2 sm:block">
+              <dt className="text-[13px] text-chrome">Find us</dt>
+              <dd className="text-[14.5px] font-semibold sm:mt-1 sm:text-[15px]">
+                <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="underline decoration-white/30 underline-offset-4 hover:decoration-white">
+                  {org.address.line1}
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      {/* One app-like flow: shortcuts, the game, watch and listen, then swipeable rows. */}
+      <ChipNav />
+      <CreateWorldSpotlight />
+      <HomeWatch />
+      {/* Events */}
+      <section aria-labelledby="events-title" className="border-t border-ink/10 bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-20">
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 sm:gap-8">
+            <div className="max-w-2xl">
+              <h2 id="events-title" data-reveal="mask" className={h2}>
+                Events and gatherings
+              </h2>
+              <p data-reveal style={d(150)} className="mt-3 text-[15px] leading-relaxed text-muted sm:mt-6 sm:text-lg">
+                Conferences, workshops, church services, community events and program events.
+              </p>
+            </div>
+            <Link data-reveal href="/events" className="btn-quiet group text-ink">
+              View all events <Arrow />
             </Link>
+          </div>
+          <div className="mt-7 sm:mt-10">
+            <EventsCarousel events={recentEvents} />
           </div>
         </div>
       </section>
 
-      <Pillars />
-      <Upcoming />
-      <CreateWorldSpotlight />
-      <Leaders />
-      <HomeWatch />
+      {/* Scripture, full bleed */}
+      <section aria-label="Scripture" className="relative isolate overflow-hidden bg-night text-white">
+        <Image {...images.preaching} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-35" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgb(5_7_13/0.92)_0%,rgb(16_26_61/0.7)_60%,rgb(16_26_61/0.4)_100%)]" />
+        <figure className="mx-auto max-w-5xl px-4 py-14 text-center sm:px-6 sm:py-24">
+          <blockquote data-reveal="mask" className="font-display text-[1.7rem] font-normal italic leading-[1.2] sm:text-[clamp(2rem,4.6vw,4rem)] sm:leading-[1.15]">
+            &ldquo;For I know the plans I have for you,&rdquo; declares the Lord, &ldquo;plans to prosper you and not to
+            harm you, plans to give you hope and a future.&rdquo;
+          </blockquote>
+          <figcaption data-reveal style={d(250)} className="mt-6 text-[14px] tracking-[0.04em] text-chrome sm:mt-10 sm:text-[15px]">
+            Jeremiah 29:11
+          </figcaption>
+        </figure>
+      </section>
+
+      {/* Programs */}
+      <section aria-labelledby="programs-title" className="bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 sm:py-20">
+          <div className="grid gap-4 sm:gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+            <h2 id="programs-title" data-reveal="mask" className={h2}>
+              Programs built to empower our community
+            </h2>
+            <p data-reveal style={d(150)} className="max-w-md text-[15px] leading-relaxed text-muted sm:text-lg lg:justify-self-end">
+              One KEP account lets you explore and register. Some programs have requirements or need approval from our staff.
+            </p>
+          </div>
+          <div className="mt-7 sm:mt-10">
+            <ProgramsRail items={programs.map((p) => ({ href: `/programs/${p.slug}`, name: p.name, summary: p.summary, image: p.image, art: p.art }))} />
+          </div>
+        </div>
+      </section>
+
+
+      {/* Sober Living: one featured program. Costs, eligibility and how to apply
+          live on /housing. */}
+      <section aria-label="Sober Living Program" className="relative isolate overflow-hidden bg-night text-white">
+        <div className="sm:hidden">
+          <div data-reveal="image" className="relative aspect-[3/4]">
+            <Image {...houseImages.kitchen} alt={houseImages.kitchen.alt} sizes="100vw" className="h-full w-full object-cover" />
+          </div>
+          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,#05070d_0%,rgb(5_7_13/0.92)_34%,rgb(10_16_36/0.35)_66%,rgb(10_16_36/0.1)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 px-4 pb-11">
+            <SoberCopy />
+          </div>
+        </div>
+        <div className="mx-auto hidden max-w-7xl items-center gap-12 px-4 py-20 sm:grid sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
+          <div className="max-w-xl">
+            <SoberCopy />
+          </div>
+          <div className="grid h-[26rem] grid-cols-[1.2fr_1fr] grid-rows-2 gap-2 lg:h-[32rem]">
+            {[
+              { img: houseImages.kitchen, cls: "row-span-2" },
+              { img: houseImages.bedroom2, cls: "" },
+              { img: houseImages.dining, cls: "" },
+            ].map(({ img, cls }, i) => (
+              <figure key={img.src} data-reveal="image" style={d(i * 120)} className={`relative overflow-hidden ${cls}`}>
+                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 28vw, 40vw" className="object-cover" />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Church: the pastors under a church-window arch */}
+      <section aria-labelledby="church-title" className="bg-ivory">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+          <div data-reveal className="relative mx-auto w-full max-w-[17rem] sm:max-w-sm">
+            <div aria-hidden="true" className="absolute -inset-4 rounded-t-full border border-ink/15 sm:-inset-6" />
+            <div className="relative overflow-hidden rounded-t-full">
+              <Image
+                {...images.pastors}
+                alt={images.pastors.alt}
+                sizes="(min-width: 1024px) 30vw, 90vw"
+                data-parallax="0.05"
+                className="aspect-[4/5] w-full scale-110 object-cover object-top"
+              />
+            </div>
+          </div>
+          <div>
+            <h2 id="church-title" data-reveal="mask" className={h2}>
+              A church family that shows up
+            </h2>
+            <p data-reveal style={d(150)} className="mt-5 max-w-lg text-[16px] leading-relaxed text-muted sm:mt-6 sm:text-lg">
+              Led by {org.pastors}, KEP Church gathers every week to worship, study the Word and serve our
+              neighborhood. Come as you are.
+            </p>
+            <div data-reveal style={d(220)} className="mt-6 border-t border-ink/15 pt-4">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-blue">This week at KEP</p>
+              <ScheduleFooter className="mt-2 text-[15px] leading-7 text-ink" />
+            </div>
+            <div data-reveal style={d(300)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-9 sm:gap-y-4">
+              <Link href="/church" className="btn-primary group">
+                About the church <Arrow />
+              </Link>
+              <Link href="/signup" className="btn-quiet group text-ink">
+                Register with the church <Arrow />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our impact: live totals from KEP's records (Admin controls what shows) */}
+      <ImpactSection
+        facts={[
+          { value: String(programs.length), label: "Community programs", icon: "programs" },
+          { value: "Weekly", label: "Bible Study every Wednesday", icon: "church" },
+          { value: "1", label: "Media studio open to the community", icon: "studio" },
+          { value: "All ages", label: "Youth, adults and families welcome", icon: "ages" },
+        ]}
+      />
+
+      {/* Dr. Morgan's book and trailer: one compact card */}
+      <section aria-label="A Good Soldier, by Lawrence Morgan" className="bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-16">
+          <BookPromo />
+        </div>
+      </section>
 
       {/* Closing */}
-      <section aria-labelledby="closing-title" className="relative isolate overflow-hidden bg-night text-white">
+      <section className="relative isolate overflow-hidden bg-night text-white">
         <Image {...images.adultMinistry} alt="" sizes="100vw" data-parallax="0.08" className="absolute inset-0 -z-10 h-full w-full scale-[1.15] object-cover opacity-45" />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(5_7_13/0.9)_0%,rgb(16_26_61/0.55)_55%,rgb(16_26_61/0.2)_100%)]" />
-        <div className="wrap py-16 sm:py-28">
-          <h2 id="closing-title" data-reveal="mask" className="max-w-3xl font-display text-[2.7rem] font-medium leading-[1] sm:text-[clamp(3rem,7vw,6.5rem)] sm:leading-[0.98]">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-28">
+          <h2 data-reveal="mask" className="max-w-3xl font-display text-[2.7rem] font-medium leading-[1] sm:text-[clamp(3rem,7vw,6.5rem)] sm:leading-[0.98]">
             There&apos;s a place for you here.
           </h2>
           <p data-reveal style={d(150)} className="mt-5 max-w-lg text-[15.5px] leading-relaxed text-white/80 sm:mt-8 sm:text-lg">
-            Whether you are looking for a church home, a program for your family or a fresh start, we would love to meet you.
+            Create a free KEP account to register for events, join programs and keep up with everything happening at
+            Kingdom Empowerment Place.
           </p>
-          <div data-reveal style={d(250)} className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 sm:mt-10">
-            <Link href="/church#visit" className="btn-primary group">
-              Plan your visit <Arrow />
-            </Link>
-            <Link href="/programs" className="btn-light group">
-              Join a program
+          <div data-reveal style={d(250)} className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3 sm:mt-10 sm:gap-y-4">
+            <Link href="/signup" className="btn-primary group">
+              Create an account <Arrow />
             </Link>
             <Link href="/give" className="btn-quiet group text-white">
               Give <Arrow />
@@ -90,28 +241,26 @@ export default function Home() {
   );
 }
 
-// A short introduction to the pastors; the full story and the book live on /about.
-function Leaders() {
+// The Sober Living copy, shared by the phone (over the photo) and wider layouts.
+function SoberCopy() {
   return (
-    <section aria-labelledby="leaders-title" className="bg-ivory">
-      <div className="wrap section-y grid items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
-        <figure data-reveal="image" className="relative overflow-hidden rounded-[var(--radius-card)] shadow-[0_30px_70px_-34px_rgb(5_7_13/0.7)]">
-          <Image {...images.pastors} alt={images.pastors.alt} sizes="(min-width: 1024px) 52vw, 100vw" className="aspect-[4/3] w-full object-cover object-[50%_20%] sm:aspect-[16/11]" />
-        </figure>
-        <div>
-          <p data-reveal className="eyebrow text-blue">Meet our leaders</p>
-          <h2 id="leaders-title" data-reveal="mask" className="heading-2 mt-3">Dr. Lawrence Morgan &amp; Lady Kennetta Morgan</h2>
-          <p data-reveal style={d(150)} className="mt-5 max-w-lg text-[16px] leading-relaxed text-muted sm:text-lg">
-            Pastors, mentors and neighbors, they founded KEP to bring worship, opportunity and restoration to one
-            place in Baton Rouge.
-          </p>
-          <div data-reveal style={d(250)} className="mt-7">
-            <Link href="/about#pastors" className="btn-primary group">
-              Meet the Morgans <Arrow />
-            </Link>
-          </div>
-        </div>
+    <>
+      <p data-reveal className="mb-4 inline-block rounded-full border border-white/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/90">Featured program</p>
+      <h2 data-reveal="mask" className="font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:leading-[0.98] lg:text-7xl">
+        Sober Living Program
+      </h2>
+      <p data-reveal style={d(150)} className="mt-4 text-[15.5px] leading-relaxed text-white/80 sm:mt-6 sm:text-lg">
+        A stable, sober home with structure, community and support toward work and your goals. Many of our
+        residents come to us after a treatment program.
+      </p>
+      <div data-reveal style={d(250)} className="mt-6 sm:mt-8">
+        <Link href="/housing" className="btn-primary group">
+          Explore Sober Living <Arrow />
+        </Link>
       </div>
-    </section>
+      <p data-reveal style={d(300)} className="mt-4 text-[13px] text-chrome">
+        Costs, eligibility and how to apply are on the program page.
+      </p>
+    </>
   );
 }

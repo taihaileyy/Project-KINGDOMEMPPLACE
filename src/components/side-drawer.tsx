@@ -10,7 +10,6 @@ import {
   HandHeart,
   House,
   Images,
-  ChevronDown,
   Info,
   KeyRound,
   LayoutDashboard,
@@ -31,7 +30,6 @@ export const drawerIcons = {
   events: CalendarDays,
   programs: Users,
   housing: House,
-  home: House,
   studio: Mic,
   give: HandHeart,
   about: Info,
@@ -44,11 +42,8 @@ export const drawerIcons = {
 } satisfies Record<string, LucideIcon>;
 export type DrawerIcon = keyof typeof drawerIcons;
 
-// `icon` is optional: rows inside an accordion group are plain text.
-export type DrawerItem = { href: string; title: string; line?: string; icon?: DrawerIcon };
-// A group with `collapsible` is an accordion: its title is a button that opens
-// the rows beneath it. `href` adds an "Overview" row that opens the parent page.
-export type DrawerGroup = { title?: string; items: DrawerItem[]; collapsible?: boolean; href?: string };
+export type DrawerItem = { href: string; title: string; line?: string; icon: DrawerIcon };
+export type DrawerGroup = { title?: string; items: DrawerItem[] };
 
 export function isActivePath(pathname: string, href: string) {
   if (href === "/portal" || href === "/admin") return pathname === href;
@@ -76,13 +71,6 @@ export function SideDrawer({
   footer?: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [expanded, setExpanded] = useState<string | null>(null);
-  // Open the accordion group that holds the current page whenever the menu opens.
-  useEffect(() => {
-    if (!open) return;
-    const here = groups.find((g) => g.collapsible && g.title && (isActivePath(pathname, g.href ?? "") || g.items.some((i) => !i.href.includes("#") && isActivePath(pathname, i.href))));
-    setExpanded(here?.title ?? null);
-  }, [open, groups, pathname]);
   // Rendered into <body> once the page has loaded: inside the header, the
   // entrance animation's transform would otherwise pin it to the header's
   // height, so the first open showed a clipped panel.
@@ -160,55 +148,39 @@ export function SideDrawer({
         </div>
 
         <nav aria-label={label} className="flex-1 overflow-y-auto px-3 pb-4">
-          {groups.map((group, gi) => {
-            const accordion = Boolean(group.collapsible && group.title);
-            const isOpen = !accordion || expanded === group.title;
-            const rows: DrawerItem[] = accordion && group.href ? [{ href: group.href, title: "Overview" }, ...group.items] : group.items;
-            const panelId = `drawer-group-${gi}`;
-            return (
-              <section key={group.title ?? gi} className={group.title || accordion ? "mt-1" : "mt-1 first:mt-2"}>
-                {accordion ? (
-                  <h2>
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      aria-controls={panelId}
-                      onClick={() => setExpanded(isOpen ? null : group.title ?? null)}
-                      className="flex w-full min-h-12 items-center justify-between rounded-2xl px-3 py-2 text-left font-display text-[26px] font-medium leading-tight hover:bg-white/10"
+          {groups.map((group, gi) => (
+            <section key={group.title ?? gi} className="mt-4 first:mt-2">
+              {group.title && <h2 className="px-3 font-display text-[28px] font-medium leading-tight">{group.title}</h2>}
+              <ul className="mt-2 grid gap-0.5">
+                {group.items.map(({ href, title, line, icon }, ii) => {
+                  const Icon = drawerIcons[icon];
+                  return (
+                    <li
+                      key={href}
+                      className={open ? "rise" : ""}
+                      style={{ "--d": `${120 + (gi * 3 + ii) * 40}ms` } as React.CSSProperties}
                     >
-                      {group.title}
-                      <ChevronDown aria-hidden="true" className={`size-6 text-chrome transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} strokeWidth={1.6} />
-                    </button>
-                  </h2>
-                ) : (
-                  group.title && <h2 className="px-3 font-display text-[28px] font-medium leading-tight">{group.title}</h2>
-                )}
-                <ul id={panelId} hidden={!isOpen} className={`${accordion ? "mb-2 ml-3 border-l border-white/10 pl-2" : "mt-2"} grid gap-0.5`}>
-                  {rows.map(({ href, title, line, icon }, ii) => {
-                    const Icon = icon ? drawerIcons[icon] : null;
-                    const current = !href.includes("#") && isActivePath(pathname, href);
-                    return (
-                      <li key={href} className={open ? "rise" : ""} style={{ "--d": `${100 + (gi * 3 + ii) * 35}ms` } as React.CSSProperties}>
-                        <Link
-                          href={href}
-                          aria-current={current ? "page" : undefined}
-                          className={`group relative flex items-center gap-4 rounded-2xl px-3 hover:bg-white/10 aria-[current=page]:bg-electric/15 before:absolute before:inset-y-3 before:left-0 before:w-[3px] before:rounded-full before:bg-electric before:opacity-0 aria-[current=page]:before:opacity-100 ${Icon ? "py-2.5" : "min-h-11 py-2"}`}
-                        >
-                          {Icon && (
-                            <Icon aria-hidden="true" className="size-7 shrink-0 text-chrome group-hover:text-white group-aria-[current=page]:text-electric" strokeWidth={1.5} />
-                          )}
-                          <span>
-                            <span className={`block font-semibold leading-tight ${accordion ? "text-[17px]" : "text-lg"}`}>{title}</span>
-                            {line && <span className="mt-0.5 block text-[14px] leading-snug text-white/65">{line}</span>}
-                          </span>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            );
-          })}
+                      <Link
+                        href={href}
+                        aria-current={isActivePath(pathname, href) ? "page" : undefined}
+                        className="group relative flex items-center gap-4 rounded-2xl px-3 py-2.5 before:absolute before:inset-y-3 before:left-0 before:w-[3px] before:rounded-full before:bg-electric before:opacity-0 hover:bg-white/10 aria-[current=page]:bg-electric/15 aria-[current=page]:before:opacity-100"
+                      >
+                        <Icon
+                          aria-hidden="true"
+                          className="size-7 shrink-0 text-chrome group-hover:text-white group-aria-[current=page]:text-electric"
+                          strokeWidth={1.5}
+                        />
+                        <span>
+                          <span className="block text-lg font-semibold leading-tight">{title}</span>
+                          {line && <span className="mt-0.5 block text-[15px] leading-snug text-white/70">{line}</span>}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))}
         </nav>
 
         {footer && <div className="border-t border-white/10 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">{footer}</div>}

@@ -1,34 +1,40 @@
+import Image from "next/image";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CollectionVideos } from "@/components/media/collection-videos";
-import { EventsBoard } from "@/components/home/events-board";
-import { PageIntro } from "@/components/section";
+import { PageIntro, Section } from "@/components/section";
+import { ScheduleEvents } from "@/components/schedule-views";
+import { recentEvents } from "@/content/site";
 
-export const metadata: Metadata = { title: "Media & Events" };
-
-// One connected space: events, messages, photos and the studio.
-const hub = [
-  { href: "/events#upcoming", label: "Upcoming events" },
-  { href: "/events#past", label: "Past events" },
-  { href: "/watch", label: "Watch & Listen" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/studio", label: "Media Studio" },
-  { href: "/studio/book", label: "Book the Studio" },
-];
+export const metadata: Metadata = { title: "Events" };
 
 export default function EventsPage() {
   return (
     <>
-      <PageIntro title="Media & Events" lead="Worship, conferences, youth activities and community gatherings, with the messages, photos and studio that go with them.">
-        <ul className="flex flex-wrap gap-2">
-          {hub.map((h) => (
-            <li key={h.href}>
-              <Link href={h.href} className="inline-flex min-h-11 items-center rounded-full border border-ink/20 px-4 text-[14px] font-semibold transition-colors hover:border-blue hover:text-blue">{h.label}</Link>
+      <PageIntro
+        title="Events"
+        lead="Worship, conferences, workshops, youth activities and community gatherings. Online registration is coming soon."
+      />
+      <Section title="Every week">
+        <ScheduleEvents />
+      </Section>
+      <Section title="Recently at KEP">
+        <ul className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+          {recentEvents.map((e) => (
+            <li key={e.title}>
+              <Image
+                src={e.image.src}
+                alt={e.image.alt}
+                width={e.image.width}
+                height={e.image.height}
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                className="w-full rounded-[var(--radius-card)]"
+              />
+              <p className="mt-3 font-bold">{e.title}</p>
+              <p className="text-sm text-muted">{e.when}</p>
             </li>
           ))}
         </ul>
-      </PageIntro>
-      <EventsBoard />
+      </Section>
       <CollectionVideos prefix="event:" title="Watch from our events" lead="Highlights and recordings from KEP gatherings." />
     </>
   );
