@@ -32,7 +32,7 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
   if (hasRole(session, "church_staff") || hasRole(session, "finance_admin")) {
     pending.push(
       Promise.all([
-        supabase.from("people").select("id", head).is("merged_into_id", null),
+        supabase.from("people").select("id", head).is("merged_into_id", null).is("deleted_at", null),
         supabase.from("church_memberships").select("id", head).eq("status", "active"),
       ]).then(([p, m]) => {
         cards.push({ href: "/admin/people", label: "People", value: String(p.count ?? 0), Icon: UsersRound });

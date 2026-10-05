@@ -14,14 +14,15 @@ type Row = {
   church_memberships: { status: string } | { status: string }[] | null;
 };
 
-export default async function AdminPeople({ searchParams }: { searchParams: Promise<{ q?: string; member?: string }> }) {
+export default async function AdminPeople({ searchParams }: { searchParams: Promise<{ q?: string; member?: string; deleted?: string }> }) {
   await requireStaff(["church_staff", "finance_admin"]);
-  const { q, member } = await searchParams;
+  const { q, member, deleted } = await searchParams;
   const supabase = await createClient();
   let query = supabase
     .from("people")
     .select("id, first_name, last_name, email, phone, created_at, address_line1, city, state, postal_code, church_memberships(status)")
     .is("merged_into_id", null)
+    .is("deleted_at", null)
     .order("last_name")
     .limit(300);
   const term = (q ?? "").trim().replace(/[%,()]/g, "");
@@ -34,6 +35,7 @@ export default async function AdminPeople({ searchParams }: { searchParams: Prom
 
   return (
     <div className="grid gap-6">
+      {deleted && <p role="status" className="rounded-[var(--radius-control)] border border-success/30 bg-success/5 px-4 py-3 text-sm text-success">The account was deleted.</p>}
       <DashboardBand title="People" lead="Everyone with a KEP record: members, participants, residents and guests. Select a name for the full record." />
       <Panel id="people" title={`${rows.length} ${member === "1" ? "church members" : "people"}`}>
         <form className="mb-3 flex flex-wrap items-center gap-3 px-2">
