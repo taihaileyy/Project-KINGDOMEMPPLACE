@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/arrow";
-import { HeroMotion } from "@/components/hero-motion";
+import { ArrowDown } from "lucide-react";
+import { Discover } from "@/components/home/discover";
+import { WorshipBackdrop } from "@/components/home/worship-backdrop";
 import { ChipNav } from "@/components/home/chip-nav";
 import { CreateWorldSpotlight } from "@/components/home/create-world-spotlight";
 import { HomeWatch } from "@/components/home/home-watch";
@@ -9,7 +11,7 @@ import { EventsCarousel } from "@/components/home/events-carousel";
 import { BookPromo } from "@/components/home/book-promo";
 import { ImpactSection } from "@/components/home/impact-section";
 import { ProgramsRail } from "@/components/home/programs-rail";
-import { ScheduleFooter, ScheduleHero } from "@/components/schedule-views";
+import { ScheduleFooter } from "@/components/schedule-views";
 import { houseImages, images, org, programs, recentEvents } from "@/content/site";
 
 // Delay for staggered entrances (read by .mask-line and [data-reveal]).
@@ -17,8 +19,8 @@ const d = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 
 // The official slogan, one beat at a time. The verb of each beat is set in italics.
 const heroLines: { verb: string; rest: string }[] = [
-  { verb: "Engage", rest: " the community," },
-  { verb: "Equip", rest: " the people," },
+  { verb: "Engage", rest: " the community." },
+  { verb: "Equip", rest: " the people." },
   { verb: "Empower", rest: " the nation." },
 ];
 
@@ -27,49 +29,51 @@ const h2 = "font-display text-[2.5rem] font-medium leading-[1] sm:text-6xl sm:le
 export default function Home() {
   return (
     <>
-      {/* Hero: full-bleed, under the transparent header. */}
+      {/* Hero: a worship sanctuary at night, the slogan, one action, a scroll cue
+          and a soft curve into the cream Discover section. */}
       <section
         aria-labelledby="hero-title"
-        className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[100svh] flex-col overflow-hidden bg-night text-white"
+        className="hero-section relative isolate -mt-[var(--header-h)] flex min-h-[64svh] flex-col overflow-hidden bg-night text-white sm:min-h-[84svh]"
       >
-        <HeroMotion />
-        <div className="hero-copy mx-auto mt-auto w-full max-w-7xl px-4 pb-28 pt-40 sm:px-6 sm:pb-10 lg:pb-20">
+        <WorshipBackdrop />
+        <div className="hero-copy mx-auto w-full max-w-7xl px-6 !pt-[11rem] pb-[3.5rem] sm:px-6 sm:!pt-44 sm:pb-28 lg:pb-32">
+          <p style={d(60)} className="rise text-[12.5px] font-semibold uppercase tracking-[0.3em] text-[#5c6bff] sm:text-sm">Kingdom Empowerment Place</p>
           <h1
             id="hero-title"
-            className="max-w-6xl font-display text-[8.1vw] font-semibold leading-[1.1] tracking-[-0.01em] sm:text-[clamp(2.9rem,6.6vw,6.6rem)] sm:font-medium sm:leading-[1]"
+            className="mt-3.5 font-display text-[clamp(2.1rem,9.2vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.005em] sm:mt-6 sm:text-[clamp(3rem,5.4vw,5.4rem)] sm:leading-[1]"
           >
             {heroLines.map((line, i) => (
               <span key={line.verb} className="mask-line whitespace-nowrap">
                 <span style={d(120 + i * 260)}>
-                  <em className="italic">{line.verb}</em>
+                  <em className="italic text-[#aab6ff]">{line.verb}</em>
                   {line.rest}
                 </span>
               </span>
             ))}
           </h1>
-          <p style={d(620)} className="rise mt-2 max-w-lg text-base font-medium leading-snug text-white/85 sm:mt-8 sm:text-lg sm:font-normal">
-            Church and community home in Baton Rouge.
+          <p style={d(620)} className="rise mt-5 max-w-md text-[1.1rem] leading-snug text-white/90 sm:mt-8 sm:text-xl">
+            Faith. Community. Opportunity.
+            <br />
+            A place for the whole family.
           </p>
-          <div style={d(760)} className="rise mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 sm:mt-10">
-            <Link href="/church#visit" className="btn-primary group">
+          <div style={d(760)} className="rise mt-6 flex w-[min(14rem,62%)] flex-col items-center sm:mt-10 sm:w-60">
+            <Link href="/church#visit" className="btn-primary group w-full !min-h-[3.25rem] !rounded-[5px] text-[1.05rem] active:scale-[0.98]">
               Plan your visit <Arrow />
             </Link>
+            <a href="#discover" className="mt-5 flex flex-col items-center gap-0.5 text-[15px] text-white/65 transition-colors hover:text-white sm:mt-7">
+              Explore KEP
+              <ArrowDown aria-hidden="true" className="size-5 animate-bounce [animation-duration:2.4s]" strokeWidth={1.5} />
+            </a>
           </div>
-
-          <dl style={d(900)} className="rise mt-8 grid max-w-3xl gap-y-1.5 border-t border-white/15 pt-4 sm:mt-16 sm:grid-cols-3 sm:gap-6 sm:pt-6">
-            <ScheduleHero />
-            <div className="flex flex-wrap items-baseline gap-x-2 sm:block">
-              <dt className="text-[13px] text-chrome">Find us</dt>
-              <dd className="text-[14.5px] font-semibold sm:mt-1 sm:text-[15px]">
-                <a href={org.mapsUrl} target="_blank" rel="noopener noreferrer" className="underline decoration-white/30 underline-offset-4 hover:decoration-white">
-                  {org.address.line1}
-                </a>
-              </dd>
-            </div>
-          </dl>
         </div>
+        {/* The curve: the cream section rises at both edges, dipping softly in the middle. */}
+        <svg aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" className="absolute inset-x-0 bottom-[-1px] h-10 w-full sm:h-20">
+          <path d="M0 34 C 280 96 640 96 980 56 C 1180 34 1320 14 1440 8 L1440 90 L0 90 Z" fill="#f5f0e6" />
+          <path d="M0 34 C 280 96 640 96 980 56 C 1180 34 1320 14 1440 8" fill="none" stroke="#fff" strokeOpacity="0.7" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+        </svg>
       </section>
 
+      <Discover />
       {/* One app-like flow: shortcuts, the game, watch and listen, then swipeable rows. */}
       <ChipNav />
       <CreateWorldSpotlight />
