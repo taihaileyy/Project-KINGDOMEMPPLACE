@@ -47,7 +47,7 @@ export async function signUp(_: FormState, form: FormData): Promise<FormState> {
 
   const { first_name, last_name, password } = parsed.data;
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password,
     options: {
@@ -63,6 +63,9 @@ export async function signUp(_: FormState, form: FormData): Promise<FormState> {
   if (error && error.code !== "user_already_exists") {
     return { error: "We couldn't create your account just now. Please try again in a minute." };
   }
+  // When the project doesn't require email confirmation, sign-up signs the
+  // person straight in, so there's nothing to wait for.
+  if (data?.session) redirect(safeNext(form.get("next")));
   return { notice: `Almost done. We sent a confirmation link to ${parsed.data.email}. Open it to activate your account.` };
 }
 

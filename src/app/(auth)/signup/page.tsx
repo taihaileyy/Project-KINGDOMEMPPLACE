@@ -5,7 +5,8 @@ import { AuthForm } from "../auth-form";
 
 export const metadata: Metadata = { title: "Create your account" };
 
-export default function SignupPage() {
+export default async function SignupPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
+  const { next } = await searchParams;
   return (
     <div className="card p-6 sm:p-8">
       <h1 className="text-3xl font-medium">Create your KEP account</h1>
@@ -16,6 +17,7 @@ export default function SignupPage() {
       <div className="mt-8">
         <AuthForm
           action={signUp}
+          hidden={{ next: next ?? "/portal" }}
           submitLabel="Create account"
           fields={[
             { name: "first_name", label: "First name", autoComplete: "given-name" },
@@ -33,7 +35,7 @@ export default function SignupPage() {
       </div>
       <p className="mt-6 text-sm text-muted">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-blue hover:underline">
+        <Link href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="font-semibold text-blue hover:underline">
           Log in
         </Link>
       </p>
